@@ -5,12 +5,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
 import Home from './Screens/Home';
-import Expense from './Screens/Expense';
-import Income from './Screens/Income';
+import Transaction from './Screens/Transaction';
+import Budget from './Screens/Budget';
+import Setting from './Screens/Setting';
+import { AddButton } from './Components/AddButton';
 //Screen names
 const homeName = "Home";
-const expenseName = "Expense";
-
+const transactionName = "Transaction";
+const budgetName="Budget";
+const otherscreenName="Add";
+const settingName = "Setting";
 
 const Tab = createBottomTabNavigator();
 function AppNavigation() {
@@ -19,6 +23,7 @@ function AppNavigation() {
             <Tab.Navigator
                 initialRouteName={homeName}
                 screenOptions={({ route }) => ({
+                    tabBarShowLabel: false,
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
                         let rn = route.name;
@@ -26,25 +31,34 @@ function AppNavigation() {
                         if (rn === homeName) {
                             iconName = focused ? 'home' : 'home-outline';
 
-                        } else if (rn === expenseName) {
-                            iconName = focused ? 'list' : 'list-outline';
+                        } else if (rn === transactionName) {
+                            iconName = focused ? 'swap-horizontal' : 'swap-horizontal-outline';
+                        } else if (rn === budgetName){
+                            iconName = focused ? 'pie-chart' : 'pie-chart-outline';
+                        } else if(rn === otherscreenName) {
+                            return <AddButton />
+                        } else if(rn === settingName) {
+                            iconName = focused ? 'settings' : 'settings-outline';
                         }
 
                         return <Ionicons name={iconName} size={size} color={color} />;
                     },
                 })}
                 tabBarOptions={{
-                    activeTintColor: 'tomato',
+                    activeTintColor: '#7F3DFF',
                     inactiveTintColor: 'grey',
                     labelStyle: { paddingBottom: 10, fontSize: 10 },
                     style: { padding: 10, height: 70 }
                 }}
             >
-                <Tab.Screen name={homeName} component={Home} />
-                <Tab.Screen name={expenseName} component={Expense} />
+                <Tab.Screen name={homeName} component={Home} options={{ headerShown: false }} />
+                <Tab.Screen name={transactionName} component={Transaction} options={{ headerShown: false }} />
+                <Tab.Screen name={otherscreenName} component={Home} options={{ headerShown: false }} />
+                <Tab.Screen name={budgetName} component={Budget} options={{ headerShown: false }} />
+                <Tab.Screen name={settingName} component={Setting} options={{ headerShown: false }} />
             </Tab.Navigator>
         </NavigationContainer>
-     );
+    );
 }
 
 export default AppNavigation;
