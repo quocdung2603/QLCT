@@ -2,22 +2,25 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // Screens
-import Home from './Screens/Home';
-import Transaction from './Screens/Transaction';
-import Budget from './Screens/Budget';
-import Setting from './Screens/Setting';
+import Home from './Screens/Home_Screen/Home';
+import Transaction from './Screens/Transaction_Screen/Transaction';
+import Budget from './Screens/Budget_Screen/Budget';
+import Setting from './Screens/Setting_Screen/Setting';
 import { AddButton } from './Components/AddButton';
+import Income from './Screens/Home_Screen/Income';
 //Screen names
 const homeName = "Home";
 const transactionName = "Transaction";
 const budgetName="Budget";
 const otherscreenName="Add";
 const settingName = "Setting";
+const incomeName = "Income";
 
 const Tab = createBottomTabNavigator();
-function AppNavigation() {
+const Stack = createNativeStackNavigator();
+const AppNavigation = () => {
     return ( 
         <NavigationContainer>
             <Tab.Navigator
@@ -53,11 +56,19 @@ function AppNavigation() {
             >
                 <Tab.Screen name={homeName} component={Home} options={{ headerShown: false }} />
                 <Tab.Screen name={transactionName} component={Transaction} options={{ headerShown: false }} />
-                <Tab.Screen name={otherscreenName} component={Home} options={{ headerShown: false }} />
+                <Tab.Screen name={otherscreenName} component={StackNavigator} options={{ headerShown: false }} />
                 <Tab.Screen name={budgetName} component={Budget} options={{ headerShown: false }} />
                 <Tab.Screen name={settingName} component={Setting} options={{ headerShown: false }} />
             </Tab.Navigator>
         </NavigationContainer>
+    );
+}
+
+const StackNavigator = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name={incomeName} component={Income} options={{ headerShown: false }} />
+        </Stack.Navigator>
     );
 }
 
