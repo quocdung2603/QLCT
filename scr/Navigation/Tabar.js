@@ -2,13 +2,16 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import 'react-native-gesture-handler';
 // Screens
-import Home from './Screens/Home';
-import Transaction from './Screens/Transaction';
-import Budget from './Screens/Budget';
-import Setting from './Screens/Setting';
-import { AddButton } from './Components/AddButton';
+import Home from '../Screens/Home';
+import Transaction from '../Screens/Transaction';
+import Budget from '../Screens/Budget';
+import Setting from '../Screens/Setting';
+
+
+
+import { AddButton } from '../Components/AddButton';
 //Screen names
 const homeName = "Home";
 const transactionName = "Transaction";
@@ -17,9 +20,8 @@ const otherscreenName="Add";
 const settingName = "Setting";
 
 const Tab = createBottomTabNavigator();
-function AppNavigation() {
+function Tabar() {
     return ( 
-        <NavigationContainer>
             <Tab.Navigator
                 initialRouteName={homeName}
                 screenOptions={({ route }) => ({
@@ -57,8 +59,7 @@ function AppNavigation() {
                 <Tab.Screen name={budgetName} component={Budget} options={{ headerShown: false }} />
                 <Tab.Screen name={settingName} component={Setting} options={{ headerShown: false }} />
             </Tab.Navigator>
-        </NavigationContainer>
     );
 }
 
-export default AppNavigation;
+export default Tabar;
