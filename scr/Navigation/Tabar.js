@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+<<<<<<< HEAD:scr/Index.js
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // Screens
 import Home from './Screens/Home_Screen/Home';
@@ -10,6 +11,18 @@ import Budget from './Screens/Budget_Screen/Budget';
 import Setting from './Screens/Setting_Screen/Setting';
 import { AddButton } from './Components/AddButton';
 import Income from './Screens/Home_Screen/Income';
+=======
+import 'react-native-gesture-handler';
+// Screens
+import Home from '../Screens/Home';
+import Transaction from '../Screens/Transaction';
+import Budget from '../Screens/Budget';
+import Setting from '../Screens/Setting';
+
+
+
+import { AddButton } from '../Components/AddButton';
+>>>>>>> f650c1f8985c896c2aa2b69f22fdfe08244efd29:scr/Navigation/Tabar.js
 //Screen names
 const homeName = "Home";
 const transactionName = "Transaction";
@@ -19,10 +32,13 @@ const settingName = "Setting";
 const incomeName = "Income";
 
 const Tab = createBottomTabNavigator();
+<<<<<<< HEAD:scr/Index.js
 const Stack = createNativeStackNavigator();
 const AppNavigation = () => {
+=======
+function Tabar() {
+>>>>>>> f650c1f8985c896c2aa2b69f22fdfe08244efd29:scr/Navigation/Tabar.js
     return ( 
-        <NavigationContainer>
             <Tab.Navigator
                 initialRouteName={homeName}
                 screenOptions={({ route }) => ({
@@ -60,10 +76,10 @@ const AppNavigation = () => {
                 <Tab.Screen name={budgetName} component={Budget} options={{ headerShown: false }} />
                 <Tab.Screen name={settingName} component={Setting} options={{ headerShown: false }} />
             </Tab.Navigator>
-        </NavigationContainer>
     );
 }
 
+<<<<<<< HEAD:scr/Index.js
 const StackNavigator = () => {
     return (
         <Stack.Navigator>
@@ -73,3 +89,6 @@ const StackNavigator = () => {
 }
 
 export default AppNavigation;
+=======
+export default Tabar;
+>>>>>>> f650c1f8985c896c2aa2b69f22fdfe08244efd29:scr/Navigation/Tabar.js

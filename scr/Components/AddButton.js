@@ -86,7 +86,7 @@ const AddButton = () => {
             >
                 <TouchableHighlight
                     onPress={() => {
-                        navigation.navigate("Income");
+                        navigation.navigate("Expense");
                     }}
                     style={{
                         alignItems: "center",
@@ -97,7 +97,7 @@ const AddButton = () => {
                         backgroundColor: "#00A86B",
                     }}
                 >
-                    <MaterialCommunityIcons name="cash-plus" size={20} color="#F8F8F8" />
+<MaterialCommunityIcons name="cash-plus" size={20} color="#F8F8F8" />
                 </TouchableHighlight>
             </Animated.View>
             <TouchableHighlight
@@ -124,4 +124,8 @@ const AddButton = () => {
     );
 };
 
+<<<<<<< HEAD
 export {AddButton};
+=======
+export {AddButton};
+>>>>>>> f650c1f8985c896c2aa2b69f22fdfe08244efd29

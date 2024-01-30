@@ -1,16 +1,18 @@
 import React from 'react';
 import {
+    Alert,
     SafeAreaView,
     ScrollView,
     StatusBar,
     StyleSheet,
     Text,
+    TouchableOpacity,
     View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-const Home = () => {
+const Home = ({navigation}) => {
     return (
         <View style={{flexDirection:'column', flex: 1}}>
             <View style={{flexDirection: 'row', margin: 10, alignItems: 'center'}}>
@@ -64,7 +66,11 @@ const Home = () => {
                     <Text>Today</Text>
                 </View>
                 <View style={{ alignItems: 'center', paddingVertical: 10}}>
-                    <Text>Week</Text>
+                    <TouchableOpacity onPress={()=>{
+                        navigation.navigate("test");
+                    }}>
+                        <Text>Week</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={{alignItems: 'center', paddingVertical: 10}}>
                     <Text>Month</Text>
