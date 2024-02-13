@@ -1,15 +1,14 @@
 import * as React from "react";
 import { Text, View } from "react-native";
 
-function test() {
+const HomeSchedule = () => {
     return ( 
         <View>
             <Text>
-                Màn hình test navigation
+                Màn hình test schedule
             </Text>
         </View>
     );
 }
 
-export default test;
-
+export default HomeSchedule;

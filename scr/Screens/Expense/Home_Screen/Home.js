@@ -12,22 +12,28 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import Octicons from 'react-native-vector-icons/Octicons';
 const Home = ({navigation}) => {
     return (
         <View style={{flexDirection:'column', flex: 1}}>
             <View style={{flexDirection: 'row', margin: 10, alignItems: 'center'}}>
-                <View style={{borderWidth:3, borderRadius: 25, justifyContent: 'center', alignItems: 'center', marginRight: 'auto'}}>
-                    <AntDesign name='user' size={30} color='#000'/>
-                </View>
+                <TouchableOpacity 
+                    //onPress={() => navigation.openDrawer()}
+                    style={{justifyContent: 'center', alignItems: 'center', marginRight: 'auto'}}>
+                    <Octicons name='three-bars' size={30} color='#000'/>
+                </TouchableOpacity>
                 <View style={{justifyContent: 'center', alignItems: 'center', flexDirection:'row'}}>
                     <AntDesign name='down' size={30} color='black'/>
                     <View style={{borderColor:'grey', borderWidth:1}}>
                         <Text style={{color:'black',fontSize:20}}>October</Text>
                     </View>
                 </View>
-                <View style={{justifyContent: 'center', alignItems: 'center', marginLeft: 'auto'}}>
+                <TouchableOpacity 
+                    onPress={() => {navigation.navigate("Notification")}}
+                    style={{justifyContent: 'center', alignItems: 'center', marginLeft: 'auto'}}
+                >
                     <AntDesign name='bells' size={30} color='black'/>
-                </View>
+                </TouchableOpacity>
             </View>
             <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', margin: 5}}>
                 <Text style={{fontSize:20}}>Account Balance</Text>

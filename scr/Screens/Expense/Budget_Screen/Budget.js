@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Text,
     View,
+    TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -14,7 +15,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const Budget = ()  => {
+const Budget = ({navigation})  => {
     return (
         <View style={{flex:1, flexDirection:'column', backgroundColor:'#7F3DFF'}}>
             <View style={{flexDirection:'row', marginTop:100, marginBottom:40, marginHorizontal:20, justifyContent:'center', alignContent:'center'}}>
@@ -35,9 +36,11 @@ const Budget = ()  => {
                         <Text style={{fontSize:18, color:'grey'}}>Let's make one so you in control.</Text>
                     </View>
                 </View>
-                <View style={{flexDirection:'row', backgroundColor:'#7F3DFF', marginHorizontal:80, justifyContent:'center', alignContent:'center', borderRadius:10}}>
+                <TouchableOpacity 
+                    onPress={() => {navigation.navigate("CreateBudget")}}
+                    style={{flexDirection:'row', backgroundColor:'#7F3DFF', marginHorizontal:80, justifyContent:'center', alignContent:'center', borderRadius:10}}>
                     <Text style={{fontSize:20, color:'white',paddingVertical:10,}}>Create a Budget</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         </View>
     );

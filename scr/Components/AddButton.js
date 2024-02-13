@@ -63,7 +63,7 @@ const AddButton = () => {
                 }}
             >
                 <TouchableHighlight
-                    onPress={() => {}}
+                    onPress={() => { navigation.navigate("Expense") }}
                     style={{
                         alignItems: "center",
                         justifyContent: "center",
@@ -86,7 +86,7 @@ const AddButton = () => {
             >
                 <TouchableHighlight
                     onPress={() => {
-                        navigation.navigate("Expense");
+                        navigation.navigate("Income");
                     }}
                     style={{
                         alignItems: "center",
@@ -97,17 +97,17 @@ const AddButton = () => {
                         backgroundColor: "#00A86B",
                     }}
                 >
-<MaterialCommunityIcons name="cash-plus" size={20} color="#F8F8F8" />
+                    <MaterialCommunityIcons name="cash-plus" size={20} color="#F8F8F8" />
                 </TouchableHighlight>
             </Animated.View>
             <TouchableHighlight
-                onPress={toggleView}
+                onPress={(toggleView)}
                 underlayColor="#2882D8"
                 style={{
                     alignItems: "center",
                     justifyContent: "center",
-                    width: SIZE/2+15,
-                    height: SIZE/2+15,
+                    width: SIZE / 2 + 15,
+                    height: SIZE / 2 + 15,
                     borderRadius: SIZE / 2,
                     backgroundColor: "#7F3DFF",
                 }}
@@ -124,8 +124,4 @@ const AddButton = () => {
     );
 };
 
-<<<<<<< HEAD
-export {AddButton};
-=======
-export {AddButton};
->>>>>>> f650c1f8985c896c2aa2b69f22fdfe08244efd29
+export { AddButton };

@@ -9,17 +9,20 @@ import {
     TextInput,
     View,
     Switch,
+    TouchableOpacity
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 const Income = () => {
+    const navigation = useNavigation();
     return (
         <View style={{ flex: 1, backgroundColor: '#00A86B', flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
-                <View style={{ marginRight: 'auto' }}>
+                <TouchableOpacity style={{ marginRight: 'auto' }} onPress={() => {navigation.goBack()}}>
                     <AntDesign name='arrowleft' size={30} color='white' />
-                </View>
+                </TouchableOpacity>
                 <Text style={{ color: 'white', fontSize: 20, marginEnd: 'auto' }}>Income</Text>
             </View>
             <View style={{ marginTop: 100, flexDirection: 'column', marginHorizontal:10 }}>
