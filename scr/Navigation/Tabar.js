@@ -12,6 +12,7 @@ import Setting from '../Screens/Expense/Setting_Screen/Setting';
 
 
 import { AddButton } from '../Components/AddButton';
+import { Alert } from 'react-native';
 //Screen names
 const homeName = "Home";
 const transactionName = "Transaction";
@@ -21,7 +22,7 @@ const settingName = "Setting";
 const incomeName = "Income";
 
 const Tab = createBottomTabNavigator();
-function Tabar() {
+function Tabar({route}) {
     return ( 
             <Tab.Navigator
                 initialRouteName={homeName}

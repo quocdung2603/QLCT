@@ -3,7 +3,7 @@ import React from "react";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import { DrawerItem, createDrawerNavigator } from "@react-navigation/drawer";
 
 // Screens
 import Home from '../Screens/Expense/Home_Screen/Home';
@@ -15,23 +15,24 @@ import Expense from '../Screens/Expense/Home_Screen/Expense';
 import Income from '../Screens/Expense/Home_Screen/Income';
 import Notification from '../Screens/Expense/Home_Screen/Notification';
 import CreateBudget from '../Screens/Expense/Budget_Screen/CreateBudget';
+import test from '../Screens/Test';
+import Header from '../Components/Header';
+import DrawerDesign from '../Components/Drawer';
+import TabarSchedule from '../Screens/Schedule/TabarSchedule';
+import HomeSchedule from '../Screens/Schedule/HomeSchedule';
 const Stack= createStackNavigator();
+const Drawer= createDrawerNavigator();
 
 function App(props) {
     return ( 
-        <NavigationContainer  initialRouteName="TabBar" screenOptions={{
+        <NavigationContainer  screenOptions={{     
             headerShown: false}}>
-            <Stack.Navigator>
-                <Stack.Screen name="Tabar" component={Tabar} options={{headerShown:false}}/>
-                <Stack.Screen name="Home" component={Home} options={{headerShown:false}}/>
-                <Stack.Screen name="Transaction" component={Transaction} options={{headerShown:false}}/>
-                <Stack.Screen name="Budget" component={Budget} options={{headerShown:false}}/>
-                <Stack.Screen name="Setting" component={Setting} options={{headerShown:false}}/>
-                <Stack.Screen name="Expense" component={Expense} options={{headerShown:false}}/>
-                <Stack.Screen name="Income" component={Income} options={{headerShown:false}}/>
-                <Stack.Screen name="Notification" component={Notification} options={{headerShown:false}}/>
-                <Stack.Screen name="CreateBudget" component={CreateBudget} options={{headerShown:false}}/>
-            </Stack.Navigator>
+            <Drawer.Navigator
+                drawerContent={props=><DrawerDesign {...props}/>}
+            >
+                <Drawer.Screen name='Home' component={Tabar}/>
+                <Drawer.Screen name='Schedule' component={TabarSchedule}/>
+            </Drawer.Navigator>
         </NavigationContainer>
     );
 }
