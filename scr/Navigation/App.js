@@ -20,6 +20,7 @@ import Header from '../Components/Header';
 import DrawerDesign from '../Components/Drawer';
 import TabarSchedule from '../Screens/Schedule/TabarSchedule';
 import HomeSchedule from '../Screens/Schedule/HomeSchedule';
+import DetailBudget from '../Screens/Expense/Budget_Screen/DetailBudget';
 const Stack= createStackNavigator();
 const Drawer= createDrawerNavigator();
 
@@ -32,6 +33,8 @@ function App(props) {
             >
                 <Drawer.Screen name='Home' component={Tabar}/>
                 <Drawer.Screen name='Schedule' component={TabarSchedule}/>
+                <Drawer.Screen name='CreateBudget' component={CreateBudget}/>
+                <Drawer.Screen name='DetailBudget' component={DetailBudget}/>
             </Drawer.Navigator>
         </NavigationContainer>
     );
