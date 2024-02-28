@@ -18,7 +18,7 @@ const Home = ({ navigation }) => {
         <View style={{ flexDirection: 'column', flex: 1 }}>
             <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
                 <TouchableOpacity
-                    onPress={() => Alert.alert("haha")}
+                    onPress={() => navigation.openDrawer()}
                     style={{ justifyContent: 'center', alignItems: 'center', marginRight: 'auto' }}>
                     <Octicons name='three-bars' size={30} color='#000' />
                 </TouchableOpacity>

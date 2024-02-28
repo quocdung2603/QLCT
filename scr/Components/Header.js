@@ -20,7 +20,7 @@ function Header() {
                     <AntDesign name='bells' size={30} color='black' />
                 </TouchableOpacity>
             </View>
-     );
+    );
 }
 
 export default Header;

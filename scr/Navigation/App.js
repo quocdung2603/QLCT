@@ -18,8 +18,12 @@ import CreateBudget from '../Screens/Expense/Budget_Screen/CreateBudget';
 import test from '../Screens/Test';
 import Header from '../Components/Header';
 import DrawerDesign from '../Components/Drawer';
-import TabarSchedule from '../Screens/Schedule/TabarSchedule';
-import HomeSchedule from '../Screens/Schedule/HomeSchedule';
+
+//schedule
+import TabarSchedule from './TabarSchedule';
+import HomeSchedule from '../Screens/Schedule/Home_Screens/HomeSchedule';
+import AddSchedule from '../Screens/Schedule/Home_Screens/AddSchedule';
+
 const Stack= createStackNavigator();
 const Drawer= createDrawerNavigator();
 
@@ -30,8 +34,12 @@ function App(props) {
             <Drawer.Navigator
                 drawerContent={props=><DrawerDesign {...props}/>}
             >
-                <Drawer.Screen name='Home' component={Tabar}/>
-                <Drawer.Screen name='Schedule' component={TabarSchedule}/>
+                <Drawer.Screen name='Home' component={Tabar} options={{headerShown:false}}/>
+                <Drawer.Screen name='Schedule' component={TabarSchedule} options={{headerShown:false}}/>
+                <Drawer.Screen name='Income' component={Income} options={{headerShown:false}}/>
+                <Drawer.Screen name='Expense' component={Expense} options={{headerShown:false}}/>
+                <Drawer.Screen name='Notification' component={Notification} options={{headerShown:false}}/>
+                <Drawer.Screen name='CreateBudget' component={CreateBudget} options={{headerShown:false}}/>
             </Drawer.Navigator>
         </NavigationContainer>
     );

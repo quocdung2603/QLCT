@@ -4,17 +4,21 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import 'react-native-gesture-handler';
 // Screens
-import HomeSchedule from './HomeSchedule';
-import TestSchedule from './TestSchedule';
+import HomeSchedule from '../Screens/Schedule/Home_Screens/HomeSchedule';
+import TestSchedule from '../Screens/Schedule/TestSchedule';
+import ClockHome from '../Screens/Schedule/Clock_Screens/ClockHome';
 
 
-
-import { AddButton } from '../Components/AddButton';
+import { AddButton2 } from '../Components/AddButton2';
 import { Alert } from 'react-native';
-import test from '../Test';
+import test from '../Screens/Test';
+import SettingSchedule from '../Screens/Schedule/Setting_Screens/SettingSchedule';
 //Screen names
 const homeName = "HomeSchedule";
 const testSchedule="Test";
+const clockName = "ClockHome";
+const settingName="SettingSchedule";
+const otherscreenName = "AddButton";
 
 const Tab = createBottomTabNavigator();
 function TabarSchedule({route}) {
@@ -32,6 +36,15 @@ function TabarSchedule({route}) {
                         } else if (rn === testSchedule) {
                             iconName = focused ? 'swap-horizontal' : 'swap-horizontal-outline';
                         } 
+                        else if (rn === clockName) {
+                            iconName = focused ? 'time' : 'time-outline';
+                        }
+                        else if (rn === settingName) {
+                            iconName = focused ? 'settings' : 'settings-outline';
+                        }
+                        else if(rn === otherscreenName) {
+                            return <AddButton2/>
+                        }
                         return <Ionicons name={iconName} size={size} color={color} />;
                     },
                 })}
@@ -43,7 +56,10 @@ function TabarSchedule({route}) {
                 }}
             >
                 <Tab.Screen name={homeName} component={HomeSchedule} options={{ headerShown: false }} />
+                <Tab.Screen name={clockName} component={ClockHome} options={{ headerShown: false }} />
+                <Tab.Screen name={otherscreenName} component={HomeSchedule} options={{ headerShown: false }} />
                 <Tab.Screen name={testSchedule} component={TestSchedule} options={{ headerShown: false }} />
+                <Tab.Screen name={settingName} component={SettingSchedule} options={{ headerShown: false }} />
             </Tab.Navigator>
     );
 }
