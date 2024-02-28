@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Button,
     SafeAreaView,
@@ -8,74 +8,143 @@ import {
     Text,
     TextInput,
     View,
-    Switch,
     TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Slider from '@react-native-community/slider';
-
-import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Entypo from 'react-native-vector-icons/Entypo';
+import { Slider, Icon } from '@rneui/themed';
+import DropdownComponent from '../../../Components/DropDownBudget';
+import { Dropdown } from 'react-native-element-dropdown';
+import { Switch } from '@rneui/themed';
 
+const data = [
+    { label: 'Shopping', value: '1' },
+    { label: 'Market', value: '2' },
+    { label: 'Item 3', value: '3' },
+    { label: 'Item 4', value: '4' },
+    { label: 'Item 5', value: '5' },
+    { label: 'Item 6', value: '6' },
+    { label: 'Item 7', value: '7' },
+    { label: 'Item 8', value: '8' },
+];
 const CreateBudget = () => {
+    const [ValueBudget, setValueBudget] = useState(0);
     const navigation = useNavigation();
+
+    const [typeBudget, setTypeBudget] = useState(0);
+    const CircleIconWithNumber = ({ icon, number }) => {
+        return (
+            <View style={styles.circle}>
+                <Text style={styles.number}>{ValueBudget}</Text>
+            </View>
+        );
+    };
+
+    const renderItem = item => {
+        return (
+            <View style={styles.item}>
+                <Text style={styles.textItem}>{item.label}</Text>
+                {item.value === typeBudget && (
+                    <AntDesign
+                        style={styles.icon}
+                        color="black"
+                        name="Safety"
+                        size={20}
+                    />
+                )}
+            </View>
+        );
+    };
+    const [checked, setChecked] = useState(false);
+
+
     return (
         <View style={{ flex: 1, backgroundColor: '#7F3DFF', flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
-                <TouchableOpacity style={{ marginRight: 'auto' }} onPress={() => { navigation.goBack()}}>
-                    <AntDesign name='arrowleft' size={30} color='white' />
+                <TouchableOpacity style={{ marginRight: 'auto' }} onPress={() => { navigation.goBack() }}>
+                    <AntDesign name='arrowleft' size={20} color='white' />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', fontSize: 20, marginEnd: 'auto' }}>Create Budget</Text>
             </View>
-            <View style={{flexDirection: 'column', marginHorizontal:10, marginTop:'auto'}}>
-                <Text style={{ fontSize: 20, color: 'white' }}>How Much do you want to spend? </Text>
-                <TextInput
-                    autoComplete='false'
-                    keyboardType='decimal-pad'
-                    style={{ backgroundColor: 'white', borderWidth: 1, borderColor: 'white', marginHorizontal: 10, marginVertical: 10, borderRadius: 10 }} />
+            <View style={{ flexDirection: 'column', marginHorizontal: 20, marginTop: 'auto' }}>
+                <Text style={{ fontSize: 15, color: '#BEBEBE' }}>How Much do you want to spend? </Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontSize: 60, color: 'white' }}>
+                        $
+                    </Text>
+                    <TextInput
+                        onChangeText={(txt) => setValueBudget(txt)}
+                    >
+                        <Text style={{ fontSize: 50, color: 'white', }}>
+                            {ValueBudget}
+                        </Text>
+                    </TextInput>
+                </View>
             </View>
-            <View style={{flexDirection:'column', borderWidth:1, borderColor:'white', borderTopLeftRadius:20, borderTopRightRadius:20, backgroundColor:'white', paddingVertical:20}}>
-                <View style={{flexDirection:'row', marginHorizontal:10, marginVertical:10, borderWidth:1, borderRadius:10,borderColor:'grey', padding:10}}>
-                    <Text style={{fontSize:20, color:'grey'}}>Category</Text>
-                    <View style={{marginStart:'auto'}}>
-                        <AntDesign name='down' size={30} color='grey' />
+            <View style={{ height: 400, flexDirection: 'column', borderWidth: 1, borderColor: 'white', borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: 'white', paddingVertical: 20 }}>
+                <Dropdown
+                    style={styles.dropdown}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={data}
+                    search
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Select item"
+                    searchPlaceholder="Search..."
+                    value={typeBudget}
+                    onChange={item => {
+                        setTypeBudget(item.value);
+                    }}
+                    renderLeftIcon={() => (
+                        <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+                    )}
+                    renderItem={renderItem}
+                />
+                <View style={{height: 120, padding: 10}}>
+                    <View style={{ flexDirection: 'row', margin: 10 }}>
+                        <View style={{ flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
+                            <Text style={{ color: 'black', fontSize: 20, marginRight: 'auto' }}>Receive Alert</Text>
+                            <Text style={{ color: 'grey', fontSize: 15, marginRight: 'auto' }}>Receive alert when it reachs some points</Text>
+                        </View>
+                        <View style={{ marginStart: 'auto', justifyContent: 'center', alignContent: 'center' }}>
+                            <Switch
+                                value={checked}
+                                onValueChange={(value) => setChecked(value)}
+                            />
+                        </View>
                     </View>
+                    {
+                        checked &&
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
+                            <View style={[styles.contentView]}>
+                                <Slider
+                                    style={{ borderRadius: 20 }}
+                                    value={ValueBudget}
+                                    onValueChange={setValueBudget}
+                                    maximumValue={500000}
+                                    minimumValue={0}
+                                    step={1}
+                                    minimumTrackTintColor="#7F3DFF"
+                                    maximumTrackTintColor="#BEBEBE"
+                                    allowTouchTrack
+                                    trackStyle={{ height: 10, backgroundColor: '#7F3DFF', borderRadius: 20 }}
+                                    thumbStyle={{ height: 30, width: 50, backgroundColor: '#7F3DFF' }}
+                                    thumbProps={{
+                                        children: (
+                                            <CircleIconWithNumber />
+                                        ),
+                                    }}
+                                />
+                            </View>
+                        </View>
+                    }
                 </View>
-                <View style={{ flexDirection: 'row', margin: 10}}>
-                    <View style={{flexDirection:'column', justifyContent: 'center', alignContent: 'center' }}>
-                        <Text style={{ color: 'black', fontSize: 20, marginRight:'auto'}}>Receive Alert</Text>
-                        <Text style={{ color: 'grey', fontSize: 15, marginRight:'auto'}}>Receive alert when it reachs some points</Text>
-                    </View>
-                    <View style={{ marginStart: 'auto',justifyContent: 'center', alignContent: 'center'  }}>
-                        <Switch
-                        //trackColor={{ false: 'grey', true: 'skyblue' }}
-                        //thumbColor={isEnabledChangePassword2factor ? 'skyblue' : 'grey'}
-                        // onValueChange={() => {
-                        //     isEnabledChangePassword2factor == false
-                        //         ? (
-                        //             setEnabledChangePassword2factor(true),
-                        //             setCheck2factor(true)
-                        //         ) : (setEnabledChangePassword2factor(false))
-                        // }}
-                        //value={isEnabledChangePassword2factor}
-                        // style={{
-                        //     paddingEnd: 10
-                        // }}
-                        />
-                    </View>
-                </View>
-                <View style={{flexDirection:'row', justifyContent: 'center', alignContent: 'center'}}>
-                    <Slider
-                        style={{width: 300, height: 50}}
-                        minimumValue={0}
-                        maximumValue={1}
-                        minimumTrackTintColor="#7F3DFF"
-                        maximumTrackTintColor="#000000"
-                    />
-                </View>
-                <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:20, marginHorizontal:50, backgroundColor:'#7F3DFF', borderRadius:20, paddingVertical:10}}>
-                    <Text style={{fontSize:20, color:'white'}}>Continue</Text>
+                <View style={{ marginTop: 100, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginVertical: 20, marginHorizontal: 50, backgroundColor: '#7F3DFF', borderRadius: 20, paddingVertical: 10 }}>
+                    <Text style={{ fontSize: 20, color: 'white' }}>Continue</Text>
                 </View>
             </View>
         </View>
@@ -83,3 +152,69 @@ const CreateBudget = () => {
 }
 
 export default CreateBudget
+
+const styles = StyleSheet.create({
+    contentView: {
+        width: 320,
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        marginTop: 20
+    },
+    circle: {
+        width: 50,
+        height: 30,
+        borderRadius: 30,
+        backgroundColor: '#7F3DFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 4
+    },
+    number: {
+        color: 'white',
+        fontSize: 12,
+        textAlign: 'center'
+    },
+    dropdown: {
+        margin: 16,
+        height: 50,
+        backgroundColor: 'white',
+        borderRadius: 12,
+        padding: 12,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 1.41,
+
+        elevation: 2,
+    },
+    icon: {
+        marginRight: 5,
+    },
+    item: {
+        padding: 17,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    textItem: {
+        flex: 1,
+        fontSize: 16,
+    },
+    placeholderStyle: {
+        fontSize: 16,
+    },
+    selectedTextStyle: {
+        fontSize: 16,
+    },
+    iconStyle: {
+        width: 20,
+        height: 20,
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
+    },
+});

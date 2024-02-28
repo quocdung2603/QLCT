@@ -24,6 +24,7 @@ import TabarSchedule from './TabarSchedule';
 import HomeSchedule from '../Screens/Schedule/Home_Screens/HomeSchedule';
 import AddSchedule from '../Screens/Schedule/Home_Screens/AddSchedule';
 
+import DetailBudget from '../Screens/Expense/Budget_Screen/DetailBudget';
 const Stack= createStackNavigator();
 const Drawer= createDrawerNavigator();
 
