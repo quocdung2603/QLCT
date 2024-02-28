@@ -55,7 +55,7 @@ const AddButton2 = () => {
             }}
         >
             <TouchableHighlight
-                onPress={(toggleView)}
+                onPress={() => { navigation.navigate('AddSchedule')}}
                 underlayColor="#2882D8"
                 style={{
                     alignItems: "center",

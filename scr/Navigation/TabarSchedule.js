@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import 'react-native-gesture-handler';
 // Screens
 import HomeSchedule from '../Screens/Schedule/Home_Screens/HomeSchedule';
-import TestSchedule from '../Screens/Schedule/TestSchedule';
+import TakeNote from '../Screens/Schedule/Note_Screens/TakeNote';
 import ClockHome from '../Screens/Schedule/Clock_Screens/ClockHome';
 
 
@@ -15,7 +15,7 @@ import test from '../Screens/Test';
 import SettingSchedule from '../Screens/Schedule/Setting_Screens/SettingSchedule';
 //Screen names
 const homeName = "HomeSchedule";
-const testSchedule="Test";
+const noteName="TakeNote";
 const clockName = "ClockHome";
 const settingName="SettingSchedule";
 const otherscreenName = "AddButton";
@@ -33,8 +33,8 @@ function TabarSchedule({route}) {
                         if (rn === homeName) {
                             iconName = focused ? 'home' : 'home-outline';
 
-                        } else if (rn === testSchedule) {
-                            iconName = focused ? 'swap-horizontal' : 'swap-horizontal-outline';
+                        } else if (rn === noteName) {
+                            iconName = focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline';
                         } 
                         else if (rn === clockName) {
                             iconName = focused ? 'time' : 'time-outline';
@@ -58,7 +58,7 @@ function TabarSchedule({route}) {
                 <Tab.Screen name={homeName} component={HomeSchedule} options={{ headerShown: false }} />
                 <Tab.Screen name={clockName} component={ClockHome} options={{ headerShown: false }} />
                 <Tab.Screen name={otherscreenName} component={HomeSchedule} options={{ headerShown: false }} />
-                <Tab.Screen name={testSchedule} component={TestSchedule} options={{ headerShown: false }} />
+                <Tab.Screen name={noteName} component={TakeNote} options={{ headerShown: false }} />
                 <Tab.Screen name={settingName} component={SettingSchedule} options={{ headerShown: false }} />
             </Tab.Navigator>
     );
