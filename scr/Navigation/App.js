@@ -25,7 +25,7 @@ import HomeSchedule from '../Screens/Schedule/Home_Screens/HomeSchedule';
 import AddSchedule from '../Screens/Schedule/Home_Screens/AddSchedule';
 import AddNote from '../Screens/Schedule/Note_Screens/AddNote';
 import DetailNote from '../Screens/Schedule/Note_Screens/DetailNote';
-
+import EditNote from '../Screens/Schedule/Note_Screens/EditNote';
 const Stack= createStackNavigator();
 const Drawer= createDrawerNavigator();
 
@@ -48,6 +48,7 @@ function App(props) {
                 <Drawer.Screen name='AddSchedule' component={AddSchedule} options={{headerShown:false}}/>
                 <Drawer.Screen name='AddNote' component={AddNote} options={{headerShown:false}}/>
                 <Drawer.Screen name='DetailNote' component={DetailNote} options={{headerShown:false}}/>
+                <Drawer.Screen name='EditNote' component={EditNote} options={{headerShown:false}}/>
             </Drawer.Navigator>
         </NavigationContainer>
     );
