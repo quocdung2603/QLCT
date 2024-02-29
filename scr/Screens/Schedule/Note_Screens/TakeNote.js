@@ -32,7 +32,7 @@ const TakeNote = ({navigation}) => {
                 </TouchableOpacity>
             </View>
             <TouchableOpacity 
-                onPress={() => {}}
+                onPress={() => {navigation.navigate("DetailNote")}}
                 style={{flexDirection:'column', margin:10, borderColor:'#D3BDFF', borderWidth:1, borderRadius:10, padding:10, backgroundColor:'#D3BDFF'}}
             >
                 <View style={{flexDirection:'row', marginBottom:10}}>
@@ -45,6 +45,7 @@ const TakeNote = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={{marginStart:'auto'}}
+                        onPress={()=> {navigation.navigate("EditNote")}}
                     >
                         <MaterialIcons name="edit" size={30} color='#00A86B'/>
                     </TouchableOpacity>
@@ -54,7 +55,7 @@ const TakeNote = ({navigation}) => {
                         <Ionicons name="trash-bin" size={30} color='#464A4C'/>
                     </TouchableOpacity>
                 </View>
-                <Text style={{fontWeight:'bold', fontSize:25, margin:10}}>Mạng trường như cặc</Text>
+                <Text style={{fontWeight:'bold', fontSize:25, margin:10}}>Mạng trường như c*c</Text>
             </TouchableOpacity>
         </View>
     );
