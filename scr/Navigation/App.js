@@ -18,12 +18,13 @@ import CreateBudget from '../Screens/Expense/Budget_Screen/CreateBudget';
 import test from '../Screens/Test';
 import Header from '../Components/Header';
 import DrawerDesign from '../Components/Drawer';
-
+import DetailBudget from '../Screens/Expense/Budget_Screen/DetailBudget';
 //schedule
 import TabarSchedule from './TabarSchedule';
 import HomeSchedule from '../Screens/Schedule/Home_Screens/HomeSchedule';
 import AddSchedule from '../Screens/Schedule/Home_Screens/AddSchedule';
-import DetailBudget from '../Screens/Expense/Budget_Screen/DetailBudget';
+import AddNote from '../Screens/Schedule/Note_Screens/AddNote';
+
 const Stack= createStackNavigator();
 const Drawer= createDrawerNavigator();
 
@@ -44,6 +45,7 @@ function App(props) {
                 {/* Schedule */}
                 <Drawer.Screen name='Schedule' component={TabarSchedule} options={{headerShown:false}}/>
                 <Drawer.Screen name='AddSchedule' component={AddSchedule} options={{headerShown:false}}/>
+                <Drawer.Screen name='AddNote' component={AddNote} options={{headerShown:false}}/>
             </Drawer.Navigator>
         </NavigationContainer>
     );
