@@ -10,7 +10,8 @@ import {
     View,
     Switch,
     TouchableOpacity,
-    Alert
+    Alert,
+    Modal
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -18,6 +19,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useData } from '../../../../DataContext';
+import { TimeDatePicker, Modes } from "react-native-time-date-picker";
+import moment from "moment";
 const dataCategory = [
     { label: 'Shopping', value: 'Shopping' },
     { label: 'Market', value: 'Market' },
@@ -32,6 +35,10 @@ const dataType = [
     { label: 'Tiền mặt', value: '1' },
     { label: 'Chuyển khoản', value: '2' },
 ];
+const databudget = [
+    { label: 'budget A', value: '1' },
+    { label: 'budget B', value: '1' },
+];
 const Income = () => {
     const {addCollect,updateAccountBalanece}=useData();
     const navigation = useNavigation();
@@ -39,6 +46,12 @@ const Income = () => {
     const [category,setCategory] = useState("");
     const [type,setType]=useState("");
     const [note,setNote]=useState("");
+    //pick time 
+    const now = moment().valueOf();
+    const [DateModalS, setDateModalS]= useState(false);
+    const [valueDateS, setValueDateS]= useState('Pick Date');
+    const [TimeModalS, setTimeModalS]= useState(false);
+    const [valueTimeS, setValueTimeS]= useState('Pick Time');
     const renderItem = item => {
         return (
             <View style={styles.item}>
@@ -78,7 +91,7 @@ const Income = () => {
                 </TouchableOpacity>
                 <Text style={{ color: 'white', fontSize: 20, marginEnd: 'auto' }}>Income</Text>
             </View>
-            <View style={{ marginTop: 100, flexDirection: 'column', marginHorizontal:10 }}>
+            <View style={{ marginTop: 20, flexDirection: 'column', marginHorizontal:10 }}>
                 <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'white' }}>How Much ? </Text>
                 <TextInput
                     value={money}
@@ -88,7 +101,7 @@ const Income = () => {
                     style={{ backgroundColor: 'white', borderWidth: 1, borderColor: 'white', marginHorizontal: 10, marginVertical: 10, borderRadius: 10 }} />
             </View>
             <View style={{flex:1,flexDirection:'column', borderWidth:1, borderColor:'white', borderTopLeftRadius:20, borderTopRightRadius:20, backgroundColor:'white'}}>
-            <Dropdown
+                <Dropdown
                     style={styles.dropdown}
                     placeholderStyle={styles.placeholderStyle}
                     selectedTextStyle={styles.selectedTextStyle}
@@ -102,7 +115,7 @@ const Income = () => {
                     placeholder="Select item"
                     searchPlaceholder="Search..."
                     value={category}
-                    onChange={item =>{
+                    onChange={item => {
                         setCategory(item.value);
                     }}
                     renderLeftIcon={() => (
@@ -124,7 +137,111 @@ const Income = () => {
                     placeholder="Select item"
                     searchPlaceholder="Search..."
                     value={type}
-                    onChange={item =>{
+                    onChange={item => {
+                        setType(item.value);
+                    }}
+                    renderLeftIcon={() => (
+                        <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+                    )}
+                    renderItem={renderItem}
+                />
+                <View style={{flexDirection:'row', margin:10}}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', alignSelf:'center' }}>Date</Text>
+                    <TouchableOpacity
+                        onPress={() => { setDateModalS(true) }}
+                        style={{ borderWidth: 1, borderRadius: 10, marginLeft: 10, padding: 10, flexDirection: 'row' }}
+                    >
+                        <Text style={{ fontSize: 15, marginRight: 15 }}>{valueDateS}</Text>
+                        <AntDesign name='calendar' size={20} style={{ marginLeft: 15 }} />
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', alignSelf:'center', marginLeft:15 }}>Hour</Text>
+                    <TouchableOpacity
+                        onPress={() => {setTimeModalS(true)}}
+                        style={{borderWidth:1, borderRadius:10, marginLeft:10, padding:10, flexDirection:'row'}}
+                    >
+                        <Text style={{fontSize:15, marginRight:10}}>{valueTimeS}</Text>
+                        <AntDesign name='clockcircleo' size={20} style={{marginLeft:10}} />
+                    </TouchableOpacity>
+                </View>
+                {/*date time start */}
+                <Modal 
+                    animationType="fade"
+                    transparent={true}
+                    visible={DateModalS}
+                    onRequestClose={() => { setDateModalS(false) }}
+                    style={{borderW:1, backgroundColor:'green'}}
+                >
+                    <TouchableOpacity
+                        style={styles.modalBackground}
+                        onPress={() => { setDateModalS(false) }}
+                    >
+                        <View style={styles.modalContent}>
+                            <TimeDatePicker
+                                selectedDate={now}
+                                onMonthYearChange={(month) => {
+                                    console.log("month: ", month);
+                                }}
+                                onSelectedChange={(selected) => {
+                                    console.log("selected: ", selected);
+                                }}
+                                onTimeChange={(time) => {
+                                    console.log("time: ", time);
+                                }}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                </Modal>
+                <Modal 
+                    animationType="fade"
+                    transparent={true}
+                    visible={TimeModalS}
+                    onRequestClose={() => { setTimeModalS(false) }}
+                    style={{borderW:1, backgroundColor:'green'}}
+                >
+                    <TouchableOpacity
+                        style={styles.modalBackground}
+                        onPress={() => { setTimeModalS(false) }}
+                    >
+                        <View style={styles.modalContent}>
+                            <TimeDatePicker
+                                selectedDate={now}
+                                mode={Modes.time}
+                                options={{
+                                    daysStyle: {
+                                        borderRadius: 16,
+                                        borderWidth: 0.5,
+                                        borderColor: "#f1f1f1",
+                                    },
+                                    is24Hour: true,
+                                }}
+                                onMonthYearChange={(month) => {
+                                    console.log("month: ", month);
+                                }}
+                                onSelectedChange={(selected) => {
+                                    console.log("selected: ", selected);
+                                }}
+                                onTimeChange={(time) => {
+                                    console.log("time: ", time);
+                                }}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                </Modal>
+                <Dropdown
+                    style={styles.dropdown}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={databudget}
+                    search
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Select item"
+                    searchPlaceholder="Search..."
+                    value={type}
+                    onChange={item => {
                         setType(item.value);
                     }}
                     renderLeftIcon={() => (
@@ -202,7 +319,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     dropdown: {
-        margin: 16,
+        margin: 10,
         height: 50,
         backgroundColor: 'white',
         borderRadius: 12,
@@ -243,5 +360,38 @@ const styles = StyleSheet.create({
     inputSearchStyle: {
         height: 40,
         fontSize: 16,
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    touchable: {
+        borderWidth: 1,
+        borderRadius: 10,
+        marginLeft: 10,
+        padding: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    text: {
+        fontSize: 15,
+        marginRight: 15,
+    },
+    icon: {
+        marginLeft: 15,
+    },
+    modalBackground: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContent: {
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 10,
+        width:400,
+        height:400,
     },
 });
