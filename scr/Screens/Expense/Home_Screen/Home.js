@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {
     Alert,
     SafeAreaView,
@@ -13,7 +13,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Octicons from 'react-native-vector-icons/Octicons';
+import { useData } from '../../../../DataContext';
 const Home = ({ navigation }) => {
+    const [openIcoms,setOpenIcoms] = useState(false);
+    const {accountBalance}=useData();
     return (
         <View style={{ flexDirection: 'column', flex: 1 }}>
             <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
@@ -39,7 +42,7 @@ const Home = ({ navigation }) => {
                 <Text style={{ fontSize: 20 }}>Account Balance</Text>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', margin: 5 }}>
-                <Text style={{ fontSize: 30, color: 'black', fontWeight: 'bold' }}>$9400</Text>
+                <Text style={{ fontSize: 30, color: 'black', fontWeight: 'bold' }}>{accountBalance}</Text>
             </View>
             <View style={{ flexDirection: 'row', marginHorizontal: 20, marginVertical: 10 }}>
                 <View style={{

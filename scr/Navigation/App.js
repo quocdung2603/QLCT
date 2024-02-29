@@ -4,6 +4,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { DrawerItem, createDrawerNavigator } from "@react-navigation/drawer";
+import { DataProvider } from '../../DataContext';
 
 // Screens
 import Home from '../Screens/Expense/Home_Screen/Home';
@@ -30,24 +31,26 @@ const Drawer= createDrawerNavigator();
 
 function App(props) {
     return ( 
-        <NavigationContainer  screenOptions={{     
-            headerShown: false}}>
-            <Drawer.Navigator
-                drawerContent={props=><DrawerDesign {...props}/>}
-            >
-                {/* Expense */}
-                <Drawer.Screen name='Home' component={Tabar} options={{headerShown:false}}/>
-                <Drawer.Screen name='Income' component={Income} options={{headerShown:false}}/>
-                <Drawer.Screen name='Expense' component={Expense} options={{headerShown:false}}/>
-                <Drawer.Screen name='Notification' component={Notification} options={{headerShown:false}}/>
-                <Drawer.Screen name='CreateBudget' component={CreateBudget} options={{headerShown:false}}/>
-                <Drawer.Screen name='DetailBudget' component={DetailBudget} options={{headerShown:false}}/>
-                {/* Schedule */}
-                <Drawer.Screen name='Schedule' component={TabarSchedule} options={{headerShown:false}}/>
-                <Drawer.Screen name='AddSchedule' component={AddSchedule} options={{headerShown:false}}/>
-                <Drawer.Screen name='AddNote' component={AddNote} options={{headerShown:false}}/>
-            </Drawer.Navigator>
-        </NavigationContainer>
+        <DataProvider>
+            <NavigationContainer  screenOptions={{     
+                headerShown: false}}>
+                <Drawer.Navigator
+                    drawerContent={props=><DrawerDesign {...props}/>}
+                >
+                    {/* Expense */}
+                    <Drawer.Screen name='Home' component={Tabar} options={{headerShown:false}}/>
+                    <Drawer.Screen name='Income' component={Income} options={{headerShown:false}}/>
+                    <Drawer.Screen name='Expense' component={Expense} options={{headerShown:false}}/>
+                    <Drawer.Screen name='Notification' component={Notification} options={{headerShown:false}}/>
+                    <Drawer.Screen name='CreateBudget' component={CreateBudget} options={{headerShown:false}}/>
+                    <Drawer.Screen name='DetailBudget' component={DetailBudget} options={{headerShown:false}}/>
+                    {/* Schedule */}
+                    <Drawer.Screen name='Schedule' component={TabarSchedule} options={{headerShown:false}}/>
+                    <Drawer.Screen name='AddSchedule' component={AddSchedule} options={{headerShown:false}}/>
+                    <Drawer.Screen name='AddNote' component={AddNote} options={{headerShown:false}}/>
+                </Drawer.Navigator>
+            </NavigationContainer>
+        </DataProvider>
     );
 }
 
