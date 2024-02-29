@@ -49,6 +49,8 @@ function App(props) {
                     <Drawer.Screen name='Schedule' component={TabarSchedule} options={{headerShown:false}}/>
                     <Drawer.Screen name='AddSchedule' component={AddSchedule} options={{headerShown:false}}/>
                     <Drawer.Screen name='AddNote' component={AddNote} options={{headerShown:false}}/>
+                    <Drawer.Screen name='DetailNote' component={DetailNote} options={{headerShown:false}}/>
+                    <Drawer.Screen name='EditNote' component={EditNote} options={{headerShown:false}}/>
                 </Drawer.Navigator>
             </NavigationContainer>
         </DataProvider>
