@@ -54,7 +54,7 @@ const TakeNote = ({navigation}) => {
                         <Ionicons name="trash-bin" size={30} color='#464A4C'/>
                     </TouchableOpacity>
                 </View>
-                <Text style={{fontWeight:'bold', fontSize:25, margin:10}}>Mạng trường như cặc</Text>
+                <Text style={{fontWeight:'bold', fontSize:25, margin:10}}>Mạng trường như c*c</Text>
             </TouchableOpacity>
         </View>
     );
