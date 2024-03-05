@@ -21,6 +21,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { useData } from '../../../../DataContext';
 import { TimeDatePicker, Modes } from "react-native-time-date-picker";
 import moment from "moment";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const dataCategory = [
     { label: 'Shopping', value: 'Shopping' },
     { label: 'Market', value: 'Market' },
@@ -39,13 +40,13 @@ const databudget = [
     { label: 'budget A', value: '1' },
     { label: 'budget B', value: '1' },
 ];
-const Expense = () => {
-    const {addCollect,updateAccountBalanece}=useData();
-    const navigation = useNavigation();
+const Expense = ({navigation}) => {
+    const {subtractCollect,srtUpdateAccountBalanece}=useData();
     const [money,setMoney]=useState(0);
     const [category,setCategory] = useState("");
     const [type,setType]=useState("");
     const [note,setNote]=useState("");
+    const [budget,setBudget]=useState("");
     //pick time 
     const now = moment().valueOf();
     const [DateModalS, setDateModalS]= useState(false);
@@ -67,21 +68,28 @@ const Expense = () => {
             </View>
         );
     };
-    const handleAdd = ()=>{
-        //Alert.alert(category);
-        const item = {
-            money: money,
-            category: category,
-            type: type,
-            description: note,
-            
+    const handleStr = async ()=>{
+        try {
+            const item = {
+                money: money,
+                category: category,
+                type: type,
+                date: valueDateS,
+                time: valueTimeS,
+                budget: budget,
+                description: note,
+            }
+            srtUpdateAccountBalanece(money);
+            subtractCollect(item);
+            setMoney(0);
+            setCategory("");
+            setType("");
+            setNote("");
+            navigation.navigate('Transaction');
+        } catch (error) {
+            Alert.alert("lỗi");
+            console.log(error);
         }
-        updateAccountBalanece(money);
-        addCollect(item);
-        setMoney(0);
-        setCategory("");
-        setType("");
-        setNote("");
     }
     return (
         <View style={{ flex: 1, backgroundColor: '#FD3C4A', flexDirection: 'column' }}>
@@ -179,9 +187,11 @@ const Expense = () => {
                             <TimeDatePicker
                                 selectedDate={now}
                                 onMonthYearChange={(month) => {
+                                    setValueDateS(month)
                                     console.log("month: ", month);
                                 }}
                                 onSelectedChange={(selected) => {
+                                    setValueDateS(selected);
                                     console.log("selected: ", selected);
                                 }}
                                 onTimeChange={(time) => {
@@ -215,9 +225,11 @@ const Expense = () => {
                                     is24Hour: true,
                                 }}
                                 onMonthYearChange={(month) => {
+                                    setValueTimeS(month);
                                     console.log("month: ", month);
                                 }}
                                 onSelectedChange={(selected) => {
+                                    setValueTimeS(selected);
                                     console.log("selected: ", selected);
                                 }}
                                 onTimeChange={(time) => {
@@ -242,7 +254,7 @@ const Expense = () => {
                     searchPlaceholder="Search..."
                     value={type}
                     onChange={item => {
-                        setType(item.value);
+                        setBudget(item.value);
                     }}
                     renderLeftIcon={() => (
                         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
@@ -288,7 +300,7 @@ const Expense = () => {
                         />
                     </View>
                 </View> */}
-                <TouchableOpacity onPress={handleAdd} style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:20, marginHorizontal:50, backgroundColor:'#7F3DFF', borderRadius:20, paddingVertical:10}}>
+                <TouchableOpacity onPress={handleStr} style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:20, marginHorizontal:50, backgroundColor:'#7F3DFF', borderRadius:20, paddingVertical:10}}>
                     <Text style={{fontSize:20, color:'white'}}>Save</Text>
                 </TouchableOpacity>
             </View>

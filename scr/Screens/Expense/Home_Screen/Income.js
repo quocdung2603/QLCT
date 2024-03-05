@@ -21,6 +21,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { useData } from '../../../../DataContext';
 import { TimeDatePicker, Modes } from "react-native-time-date-picker";
 import moment from "moment";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const dataCategory = [
     { label: 'Shopping', value: 'Shopping' },
     { label: 'Market', value: 'Market' },
@@ -45,6 +46,7 @@ const Income = () => {
     const [money,setMoney]=useState(0);
     const [category,setCategory] = useState("");
     const [type,setType]=useState("");
+    const [budget,setBudget]=useState("");
     const [note,setNote]=useState("");
     //pick time 
     const now = moment().valueOf();
@@ -67,21 +69,28 @@ const Income = () => {
             </View>
         );
     };
-    const handleAdd = ()=>{
-        //Alert.alert(category);
-        const item = {
-            money: money,
-            category: category,
-            type: type,
-            description: note,
-            
+    const handleAdd = async ()=>{
+        try {
+            const item = {
+                money: money,
+                category: category,
+                type: type,
+                date: valueDateS,
+                time: valueTimeS,
+                budget: budget,
+                description: note,
+            }
+            updateAccountBalanece(money);
+            addCollect(item);
+            setMoney(0);
+            setCategory("");
+            setType("");
+            setNote("");
+            navigation.navigate('Transaction');
+        } catch (error) {
+            Alert.alert("lỗi");
+            console.log(error);
         }
-        updateAccountBalanece(money);
-        addCollect(item);
-        setMoney(0);
-        setCategory("");
-        setType("");
-        setNote("");
     }
     return (
         <View style={{ flex: 1, backgroundColor: '#00A86B', flexDirection: 'column' }}>
@@ -94,7 +103,7 @@ const Income = () => {
             <View style={{ marginTop: 20, flexDirection: 'column', marginHorizontal:10 }}>
                 <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'white' }}>How Much ? </Text>
                 <TextInput
-                    value={money}
+                    value={money.toString()}
                     onChangeText={item => {setMoney(item)}}
                     autoComplete='false'
                     keyboardType='decimal-pad'
@@ -112,7 +121,7 @@ const Income = () => {
                     maxHeight={300}
                     labelField="label"
                     valueField="value"
-                    placeholder="Select item"
+                    placeholder="Lý do nhận tiền"
                     searchPlaceholder="Search..."
                     value={category}
                     onChange={item => {
@@ -134,7 +143,7 @@ const Income = () => {
                     maxHeight={300}
                     labelField="label"
                     valueField="value"
-                    placeholder="Select item"
+                    placeholder="Chọn loại"
                     searchPlaceholder="Search..."
                     value={type}
                     onChange={item => {
@@ -179,9 +188,11 @@ const Income = () => {
                             <TimeDatePicker
                                 selectedDate={now}
                                 onMonthYearChange={(month) => {
+                                    setValueDateS(month)
                                     console.log("month: ", month);
                                 }}
                                 onSelectedChange={(selected) => {
+                                    setValueDateS(selected);
                                     console.log("selected: ", selected);
                                 }}
                                 onTimeChange={(time) => {
@@ -215,9 +226,11 @@ const Income = () => {
                                     is24Hour: true,
                                 }}
                                 onMonthYearChange={(month) => {
+                                    setValueTimeS(month);
                                     console.log("month: ", month);
                                 }}
                                 onSelectedChange={(selected) => {
+                                    setValueTimeS(selected);
                                     console.log("selected: ", selected);
                                 }}
                                 onTimeChange={(time) => {
@@ -238,11 +251,11 @@ const Income = () => {
                     maxHeight={300}
                     labelField="label"
                     valueField="value"
-                    placeholder="Select item"
+                    placeholder="Chọn mục chi tiêu"
                     searchPlaceholder="Search..."
                     value={type}
                     onChange={item => {
-                        setType(item.value);
+                        setBudget(item.value);
                     }}
                     renderLeftIcon={() => (
                         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
@@ -255,7 +268,7 @@ const Income = () => {
                         onChangeText={item => { setNote(item)}}
                         autoComplete='false'
                         keyboardType='default'
-                        placeholder='Description'
+                        placeholder='Ghi chú'
                     />
                 </View>
                 <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:10}}>
@@ -335,7 +348,7 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     icon: {
-        marginRight: 5,
+        marginRight: 10,
     },
     item: {
         padding: 17,

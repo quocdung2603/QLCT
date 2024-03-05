@@ -13,9 +13,17 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Setting = () =>{
     const navigation = useNavigation();
+    const handleClear= async ()=>{
+        try {
+            await AsyncStorage.clear();
+            console.log('Dữ liệu đã được xóa thành công từ AsyncStorage.');
+          } catch (error) {
+            console.error('Lỗi khi xóa dữ liệu từ AsyncStorage:', error);
+          }
+    }
     return (    
         <View style={{flex:1, flexDirection:'column', backgroundColor:'white',}}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center', margin:10 }}>
@@ -59,6 +67,9 @@ const Setting = () =>{
                     <AntDesign name='right' size={25} color='#000' />
                 </View>
             </View>
+            <TouchableOpacity onPress={handleClear} style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:20, marginHorizontal:50, backgroundColor:'#7F3DFF', borderRadius:20, paddingVertical:10}}>
+                    <Text style={{fontSize:20, color:'white'}}>Clear Data</Text>
+            </TouchableOpacity>
         </View>
     );
 }

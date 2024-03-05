@@ -14,7 +14,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useData } from '../../../../DataContext';
 
 const Transaction = () => {
-    const { collect } = useData();
+    const { hTransaction } = useData();
     return (
         <View style={{ flex: 1, flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', margin: 10 }}>
@@ -57,7 +57,7 @@ const Transaction = () => {
                 <Text style={{ fontWeight: 'bold', fontSize: 25, color: '#000' }}>Yesterday</Text>
                 <ScrollView>
                     {
-                        collect.map((item,index) => (
+                        hTransaction.map((item,index) => (
                             <View key={index} style={{ flexDirection: 'row', marginVertical: 5, marginHorizontal: 25, borderWidth: 1, borderColor: '#FCFCFC', backgroundColor: '#FCFCFC', padding: 5 }}>
                                 <View style={{ backgroundColor: '#FCEED4', padding: 10, borderRadius: 10 }}>
                                     <FontAwesome6 name='bowl-food' size={30} color='#FCAC12' />
@@ -67,11 +67,14 @@ const Transaction = () => {
                                     <Text style={{ fontSize: 15 }}>{item.description}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'column', marginStart: 'auto' }}>
-                                    <Text style={{ fontSize: 18, marginBottom: 9, color: 'red', fontWeight: 'bold' }}>+{item.money}</Text>
+                                    {
+                                        item.typeTransaction=="add" ? 
+                                        <Text style={{ fontSize: 18, marginBottom: 9, color: 'red', fontWeight: 'bold' }}>+{item.money}</Text>:
+                                        <Text style={{ fontSize: 18, marginBottom: 9, color: 'red', fontWeight: 'bold' }}>-{item.money}</Text>
+                                    }
                                     <Text style={{ fontSize: 15 }}>10:00 AM</Text>
                                 </View>
                             </View>
-
                         ))
                     }
                 </ScrollView>

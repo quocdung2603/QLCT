@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Alert,
     SafeAreaView,
@@ -14,9 +14,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Octicons from 'react-native-vector-icons/Octicons';
 import { useData } from '../../../../DataContext';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Home = ({ navigation }) => {
     const [openIcoms,setOpenIcoms] = useState(false);
-    const {accountBalance}=useData();
+    const {accountBalance} = useData();
     return (
         <View style={{ flexDirection: 'column', flex: 1 }}>
             <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>

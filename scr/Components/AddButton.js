@@ -11,10 +11,11 @@ const AddButton = () => {
 
     const toggleView = () => {
         Animated.timing(mode, {
-            toValue: mode._value === 0 ? 1 : 0,
-            duration: 300,
+          toValue: mode._value === 0 ? 1 : 0,
+          duration: 300,
+          useNativeDriver: false, // hoặc true, tùy thuộc vào yêu cầu của bạn
         }).start();
-    };
+      };
 
     const firstX = mode.interpolate({
         inputRange: [0, 1],
