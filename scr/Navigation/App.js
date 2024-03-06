@@ -9,6 +9,7 @@ import { DataProvider } from '../../DataContext';
 // Screens
 import Home from '../Screens/Expense/Home_Screen/Home';
 import Transaction from '../Screens/Expense/Transaction_Screen/Transaction';
+import FinancialReport from '../Screens/Expense/Transaction_Screen/FinancialReport';
 import Budget from '../Screens/Expense/Budget_Screen/Budget';
 import Setting from '../Screens/Expense/Setting_Screen/Setting';
 import Tabar from "./Tabar";
@@ -47,6 +48,8 @@ function App(props) {
                     <Drawer.Screen name='Notification' component={Notification} options={{headerShown:false}}/>
                     <Drawer.Screen name='CreateBudget' component={CreateBudget} options={{headerShown:false}}/>
                     <Drawer.Screen name='DetailBudget' component={DetailBudget} options={{headerShown:false}}/>
+                    <Drawer.Screen name='Transaction' component={Transaction} options={{headerShown:false}}/>
+                    <Drawer.Screen name='FinancialReport' component={FinancialReport} options={{headerShown:false}}/>
                     {/* Schedule */}
                     <Drawer.Screen name='Schedule' component={TabarSchedule} options={{headerShown:false}}/>
                     <Drawer.Screen name='AddSchedule' component={AddSchedule} options={{headerShown:false}}/>

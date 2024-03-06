@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Text,
     View,
+    TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -14,15 +15,17 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const FinancialReport = ()  => {
+const FinancialReport = ({navigation})  => {
     return (
-        <View style={{flex:1, flexDirection:'column'}}>
-            <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
+        <View style={{flex:1, flexDirection:'column', padding:10}}>
+            <TouchableOpacity   
+                onPress={() => {navigation.navigate("Transaction")}}
+                style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
                 <View style={{ marginRight: 'auto' }}>
                     <AntDesign name='arrowleft' size={30} color='#000' />
                 </View>
                 <Text style={{ color: '#000', fontSize: 20, marginEnd: 'auto' }}>Financial Report</Text>
-            </View>
+            </TouchableOpacity>
             <View style={{flexDirection:'row', margin:10}}>
                 <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', borderWidth:1, borderColor:'grey', paddingHorizontal:5, borderRadius:10, marginEnd:'auto'}} >
                     <View>

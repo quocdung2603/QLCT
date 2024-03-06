@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Text,
     View,
+    TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -13,7 +14,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useData } from '../../../../DataContext';
 
-const Transaction = () => {
+const Transaction = ({navigation}) => {
     const { hTransaction } = useData();
     const [data,setData]=useState([]);
     useEffect(()=>{
@@ -26,7 +27,7 @@ const Transaction = () => {
         setData(dt);
     },[hTransaction])
     return (
-        <View style={{ flex: 1, flexDirection: 'column' }}>
+        <View style={{ flex: 1, flexDirection: 'column', padding:10}}>
             <View style={{ flexDirection: 'row', margin: 10 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'center', borderWidth: 1, borderColor: 'grey', paddingHorizontal: 5, borderRadius: 10, marginEnd: 'auto' }} >
                     <View>
@@ -38,12 +39,14 @@ const Transaction = () => {
                     <FontAwesome name='bars' size={25} color='black' />
                 </View>
             </View>
-            <View style={{ flexDirection: 'row', margin: 10, borderWidth: 1, borderRadius: 10, paddingVertical: 10, backgroundColor: '#EEE5FF', borderColor: '#EEE5FF', justifyContent: 'center', alignContent: 'center' }}>
+            <TouchableOpacity 
+                onPress={() => {navigation.navigate("FinancialReport")}}
+                style={{ flexDirection: 'row', margin: 10, borderWidth: 1, borderRadius: 10, paddingVertical: 10, backgroundColor: '#EEE5FF', borderColor: '#EEE5FF', justifyContent: 'center', alignContent: 'center' }}>
                 <Text style={{ fontSize: 20, color: '#A97CFF', marginEnd: 'auto' }}>See your financial report</Text>
                 <View style={{ marginStart: 'auto' }}>
                     <AntDesign name='right' size={25} color='#A97CFF' />
                 </View>
-            </View>
+            </TouchableOpacity>
             <View style={{ flexDirection: 'column', margin: 10 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 25, color: '#000' }}>Today</Text>
                 <ScrollView>
