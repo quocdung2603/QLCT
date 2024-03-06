@@ -10,12 +10,12 @@ const DataProvider = ({ children }) => {
     const [hTransaction,setHtransaction]=useState([]);
     //AccountBalanece
     const updateAccountBalanece = async (newData) => {
-      const tmp =parseInt(newData)+accountBalance;
+      const tmp =BigInt(newData)+accountBalance;
       setAccountBalance(tmp);
       await AsyncStorage.setItem("accountBalance",tmp.toString());
     };
     const srtUpdateAccountBalanece = async (newData) => {
-      const tmp =accountBalance- parseInt(newData);
+      const tmp =accountBalance- BigInt(newData);
       setAccountBalance(tmp);
       await AsyncStorage.setItem("accountBalance",tmp.toString());
     };
@@ -60,7 +60,6 @@ const DataProvider = ({ children }) => {
         console.log(error);
       }
     }
-
 
 
 

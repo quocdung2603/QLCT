@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -15,6 +15,16 @@ import { useData } from '../../../../DataContext';
 
 const Transaction = () => {
     const { hTransaction } = useData();
+    const [data,setData]=useState([]);
+    useEffect(()=>{
+        const dt=[];
+        hTransaction.map((item)=>{
+            item.date=new Date(item.date);
+            dt.push(item);
+        })
+        dt.sort((a,b)=> a.date-b.date);
+        setData(dt);
+    },[hTransaction])
     return (
         <View style={{ flex: 1, flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', margin: 10 }}>
@@ -57,7 +67,7 @@ const Transaction = () => {
                 <Text style={{ fontWeight: 'bold', fontSize: 25, color: '#000' }}>Yesterday</Text>
                 <ScrollView>
                     {
-                        hTransaction.map((item,index) => (
+                        data.map((item,index) => (
                             <View key={index} style={{ flexDirection: 'row', marginVertical: 5, marginHorizontal: 25, borderWidth: 1, borderColor: '#FCFCFC', backgroundColor: '#FCFCFC', padding: 5 }}>
                                 <View style={{ backgroundColor: '#FCEED4', padding: 10, borderRadius: 10 }}>
                                     <FontAwesome6 name='bowl-food' size={30} color='#FCAC12' />
@@ -69,10 +79,10 @@ const Transaction = () => {
                                 <View style={{ flexDirection: 'column', marginStart: 'auto' }}>
                                     {
                                         item.typeTransaction=="add" ? 
-                                        <Text style={{ fontSize: 18, marginBottom: 9, color: 'red', fontWeight: 'bold' }}>+{item.money}</Text>:
+                                        <Text style={{ fontSize: 18, marginBottom: 9, color: 'green', fontWeight: 'bold' }}>+{item.money}</Text>:
                                         <Text style={{ fontSize: 18, marginBottom: 9, color: 'red', fontWeight: 'bold' }}>-{item.money}</Text>
                                     }
-                                    <Text style={{ fontSize: 15 }}>10:00 AM</Text>
+                                    <Text style={{ fontSize: 15 }}>{item.date.getHours()}:{item.date.getMinutes()}</Text>
                                 </View>
                             </View>
                         ))
