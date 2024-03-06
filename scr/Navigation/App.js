@@ -24,6 +24,8 @@ import DetailBudget from '../Screens/Expense/Budget_Screen/DetailBudget';
 import TabarSchedule from './TabarSchedule';
 import HomeSchedule from '../Screens/Schedule/Home_Screens/HomeSchedule';
 import AddSchedule from '../Screens/Schedule/Home_Screens/AddSchedule';
+import EditSchedule from '../Screens/Schedule/Home_Screens/EditSchedule';
+import DetailSchedule from '../Screens/Schedule/Home_Screens/DetailSchedule';
 import AddNote from '../Screens/Schedule/Note_Screens/AddNote';
 import DetailNote from '../Screens/Schedule/Note_Screens/DetailNote';
 import EditNote from '../Screens/Schedule/Note_Screens/EditNote';
@@ -48,6 +50,8 @@ function App(props) {
                     {/* Schedule */}
                     <Drawer.Screen name='Schedule' component={TabarSchedule} options={{headerShown:false}}/>
                     <Drawer.Screen name='AddSchedule' component={AddSchedule} options={{headerShown:false}}/>
+                    <Drawer.Screen name='EditSchedule' component={EditSchedule} options={{headerShown:false}}/>
+                    <Drawer.Screen name='DetailSchedule' component={DetailSchedule} options={{headerShown:false}}/>
                     <Drawer.Screen name='AddNote' component={AddNote} options={{headerShown:false}}/>
                     <Drawer.Screen name='DetailNote' component={DetailNote} options={{headerShown:false}}/>
                     <Drawer.Screen name='EditNote' component={EditNote} options={{headerShown:false}}/>

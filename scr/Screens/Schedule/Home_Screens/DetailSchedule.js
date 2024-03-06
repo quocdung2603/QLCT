@@ -19,7 +19,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 //datetime 
 import { TimeDatePicker, Modes } from "react-native-time-date-picker";
 import moment from "moment";
-const AddSchedule = ({navigation}) => {
+const DetailSchedule = ({navigation}) => {
     const now = moment().valueOf();
     const [DateModalS, setDateModalS]= useState(false);
     const [valueDateS, setValueDateS]= useState('Pick Date');
@@ -38,7 +38,7 @@ const AddSchedule = ({navigation}) => {
                 <TouchableOpacity style={{ marginRight: 'auto' }} onPress={() => {navigation.navigate('HomeSchedule')}}>
                     <AntDesign name='arrowleft' size={30} color='#000' />
                 </TouchableOpacity>
-                <Text style={{ color: '#000', fontSize: 20, marginEnd: 'auto' }}>Add Schedule</Text>
+                <Text style={{ color: '#000', fontSize: 20, marginEnd: 'auto' }}>Edit Schedule</Text>
             </View>
             <View style={{flexDirection:'column', margin:10}}>
                 <View style={{ flexDirection: 'row', marginHorizontal:10, alignItems:'center', marginVertical:10 }}>
@@ -290,4 +290,4 @@ const styles = StyleSheet.create({
         height:400,
     },
 });
-export default AddSchedule;
+export default DetailSchedule;
