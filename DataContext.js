@@ -10,12 +10,12 @@ const DataProvider = ({ children }) => {
     const [hTransaction,setHtransaction]=useState([]);
     //AccountBalanece
     const updateAccountBalanece = async (newData) => {
-      const tmp =BigInt(newData)+accountBalance;
+      const tmp =parseInt(newData)+parseInt(accountBalance);
       setAccountBalance(tmp);
       await AsyncStorage.setItem("accountBalance",tmp.toString());
     };
     const srtUpdateAccountBalanece = async (newData) => {
-      const tmp =accountBalance- BigInt(newData);
+      const tmp =parseInt(accountBalance)- parseInt(newData);
       setAccountBalance(tmp);
       await AsyncStorage.setItem("accountBalance",tmp.toString());
     };
@@ -27,10 +27,16 @@ const DataProvider = ({ children }) => {
         const tmp = collect;
         tmp.push(newData);
         setCollect(tmp); 
+
         //transaction
         const tmp1= hTransaction;
         newData.typeTransaction="add";
+        newData.date= new Date(newData.date);
+        const t= new Date();
+        
         tmp1.push(newData);
+
+        tmp1.sort((a,b)=>b.date-a.date);
         setHtransaction(tmp1);
 
         //save data
@@ -49,9 +55,12 @@ const DataProvider = ({ children }) => {
          setSubtractCollect(tmp); 
          //transaction
          const tmp1= hTransaction;
-         newData.typeTransaction="subtract";
-         tmp1.push(newData);
-         setHtransaction(tmp1);
+        newData.typeTransaction="str";
+        newData.date= new Date(newData.date);
+        tmp1.push(newData);
+
+        tmp1.sort((a,b)=>b.date-a.date);
+        setHtransaction(tmp1);
  
          //save data
          await AsyncStorage.setItem("strCollect",JSON.stringify(tmp));
@@ -69,7 +78,10 @@ const DataProvider = ({ children }) => {
       const getAccountBalance=()=>{
         AsyncStorage.getItem("accountBalance")
           .then(value =>{
-            setAccountBalance(value);
+            if(value!=null)
+            setAccountBalance( parseInt(value));
+            else
+            setAccountBalance(0);
           })
       }
       const getCollect=()=>{
@@ -95,7 +107,16 @@ const DataProvider = ({ children }) => {
           .then(value=>{
             if(value!=null)
             {
-              setHtransaction(JSON.parse(value));
+              const tmp=JSON.parse(value);
+              const dt=[];
+              tmp.map((item)=>{
+                let t=item;
+                t.date=new Date(item.date);
+                dt.push(t);
+              })
+              const sortedTransactions = dt.sort((a, b) => b.date - a.date);
+              setHtransaction(sortedTransactions);
+
             }
             else
             setHtransaction([]);

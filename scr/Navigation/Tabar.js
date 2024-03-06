@@ -13,6 +13,7 @@ import Setting from '../Screens/Expense/Setting_Screen/Setting';
 
 import { AddButton } from '../Components/AddButton';
 import { Alert } from 'react-native';
+import { useData } from '../../DataContext';
 //Screen names
 const homeName = "Home";
 const transactionName = "Transaction";
@@ -23,6 +24,7 @@ const incomeName = "Income";
 
 const Tab = createBottomTabNavigator();
 function Tabar({route}) {
+    const { hTransaction } =useData();
     return ( 
             <Tab.Navigator
                 initialRouteName={homeName}
@@ -56,7 +58,7 @@ function Tabar({route}) {
                 }}
             >
                 <Tab.Screen name={homeName} component={Home} options={{ headerShown: false }} />
-                <Tab.Screen name={transactionName} component={Transaction} options={{ headerShown: false }} />
+                <Tab.Screen name={transactionName} component={Transaction} options={{ headerShown: false }}/>
                 <Tab.Screen name={otherscreenName} component={Home} options={{ headerShown: false }} />
                 <Tab.Screen name={budgetName} component={Budget} options={{ headerShown: false }} />
                 <Tab.Screen name={settingName} component={Setting} options={{ headerShown: false }} />

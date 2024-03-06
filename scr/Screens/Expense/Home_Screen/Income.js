@@ -86,7 +86,7 @@ const Income = () => {
             setCategory("");
             setType("");
             setNote("");
-            navigation.navigate('Transaction');
+            navigation.navigate('Home');
         } catch (error) {
             Alert.alert("lỗi");
             console.log(error);

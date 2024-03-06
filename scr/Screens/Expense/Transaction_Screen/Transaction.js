@@ -13,21 +13,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useData } from '../../../../DataContext';
-
-const Transaction = ({navigation}) => {
+import ItemTransaction from '../../../Components/ItemTransaction';
+const Transaction = ({ navigation }) => {
     const { hTransaction } = useData();
-    const [data,setData]=useState([]);
-    useEffect(()=>{
-        const dt=[];
-        hTransaction.map((item)=>{
-            item.date=new Date(item.date);
-            dt.push(item);
-        })
-        dt.sort((a,b)=> a.date-b.date);
-        setData(dt);
-    },[hTransaction])
     return (
-        <View style={{ flex: 1, flexDirection: 'column', padding:10}}>
+        <View style={{ flex: 1, flexDirection: 'column', padding: 10 }}>
             <View style={{ flexDirection: 'row', margin: 10 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'center', borderWidth: 1, borderColor: 'grey', paddingHorizontal: 5, borderRadius: 10, marginEnd: 'auto' }} >
                     <View>
@@ -39,59 +29,31 @@ const Transaction = ({navigation}) => {
                     <FontAwesome name='bars' size={25} color='black' />
                 </View>
             </View>
-            <TouchableOpacity 
-                onPress={() => {navigation.navigate("FinancialReport")}}
+            <TouchableOpacity
+                onPress={() => { navigation.navigate("FinancialReport") }}
                 style={{ flexDirection: 'row', margin: 10, borderWidth: 1, borderRadius: 10, paddingVertical: 10, backgroundColor: '#EEE5FF', borderColor: '#EEE5FF', justifyContent: 'center', alignContent: 'center' }}>
                 <Text style={{ fontSize: 20, color: '#A97CFF', marginEnd: 'auto' }}>See your financial report</Text>
                 <View style={{ marginStart: 'auto' }}>
                     <AntDesign name='right' size={25} color='#A97CFF' />
                 </View>
             </TouchableOpacity>
-            <View style={{ flexDirection: 'column', margin: 10 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 25, color: '#000' }}>Today</Text>
-                <ScrollView>
-                    <View style={{ flexDirection: 'row', marginVertical: 5, marginHorizontal: 25, borderWidth: 1, borderColor: '#FCFCFC', backgroundColor: '#FCFCFC', padding: 5 }}>
-                        <View style={{ backgroundColor: '#FCEED4', padding: 10, borderRadius: 10 }}>
-                            <FontAwesome6 name='bowl-food' size={30} color='#FCAC12' />
-                        </View>
-                        <View style={{ flexDirection: 'column', marginStart: 10 }}>
-                            <Text style={{ fontSize: 18, marginBottom: 9, fontWeight: 'bold', color: '#000' }}>Shopping</Text>
-                            <Text style={{ fontSize: 15 }}>Buy some</Text>
-                        </View>
-                        <View style={{ flexDirection: 'column', marginStart: 'auto' }}>
-                            <Text style={{ fontSize: 18, marginBottom: 9, color: 'red', fontWeight: 'bold' }}>-$120</Text>
-                            <Text style={{ fontSize: 15 }}>10:00 AM</Text>
-                        </View>
-                    </View>
-
-                </ScrollView>
-            </View>
-            <View style={{ flexDirection: 'column', margin: 10 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 25, color: '#000' }}>Yesterday</Text>
-                <ScrollView>
-                    {
-                        data.map((item,index) => (
-                            <View key={index} style={{ flexDirection: 'row', marginVertical: 5, marginHorizontal: 25, borderWidth: 1, borderColor: '#FCFCFC', backgroundColor: '#FCFCFC', padding: 5 }}>
-                                <View style={{ backgroundColor: '#FCEED4', padding: 10, borderRadius: 10 }}>
-                                    <FontAwesome6 name='bowl-food' size={30} color='#FCAC12' />
-                                </View>
-                                <View style={{ flexDirection: 'column', marginStart: 10 }}>
-                                    <Text style={{ fontSize: 18, marginBottom: 9, fontWeight: 'bold', color: '#000' }}>{item.category}</Text>
-                                    <Text style={{ fontSize: 15 }}>{item.description}</Text>
-                                </View>
-                                <View style={{ flexDirection: 'column', marginStart: 'auto' }}>
-                                    {
-                                        item.typeTransaction=="add" ? 
-                                        <Text style={{ fontSize: 18, marginBottom: 9, color: 'green', fontWeight: 'bold' }}>+{item.money}</Text>:
-                                        <Text style={{ fontSize: 18, marginBottom: 9, color: 'red', fontWeight: 'bold' }}>-{item.money}</Text>
-                                    }
-                                    <Text style={{ fontSize: 15 }}>{item.date.getHours()}:{item.date.getMinutes()}</Text>
-                                </View>
+            <ScrollView style={{ flexDirection: 'column', margin: 10 }}>
+                {
+                    hTransaction.map((item, index) => {
+                        const isDifferentMonth = index === 0 || item.date.getMonth() !== hTransaction[index - 1].date.getMonth();
+                        return (
+                            <View key={index}>
+                                {isDifferentMonth && (
+                                    <Text style={{ fontWeight: 'bold', fontSize: 25, color: '#000' }}>
+                                        {item.date.getMonth() + 1}/{item.date.getFullYear()}
+                                    </Text>
+                                )}
+                                <ItemTransaction item={item}></ItemTransaction>
                             </View>
-                        ))
-                    }
-                </ScrollView>
-            </View>
+                        );
+                    })
+                }
+            </ScrollView>
         </View>
     );
 }
