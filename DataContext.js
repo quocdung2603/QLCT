@@ -2,12 +2,12 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 const DataContext = createContext();
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert } from 'react-native';
 const DataProvider = ({ children }) => {
     const [accountBalance, setAccountBalance] = useState(0);
     const [collect,setCollect]=useState([]);
     const [strCollect,setSubtractCollect]=useState([]);
     const [hTransaction,setHtransaction]=useState([]);
+    const [budget,setBudget]=useState([]);
     //AccountBalanece
     const updateAccountBalanece = async (newData) => {
       const tmp =parseInt(newData)+parseInt(accountBalance);
@@ -70,7 +70,16 @@ const DataProvider = ({ children }) => {
       }
     }
 
+    //Budget
+    const addBudget = async (newData)=>{
+      const tmp = budget;
+      tmp.push(newData);
+      console.log(tmp);
+      setBudget(tmp);
 
+      //save data
+      await AsyncStorage.setItem("budget",JSON.stringify(tmp));
+    }
 
 
     //GetAlldata
@@ -122,13 +131,30 @@ const DataProvider = ({ children }) => {
             setHtransaction([]);
           })
       }
+      const getBudget = () => {
+          AsyncStorage.getItem("budget")
+            .then(value =>{
+                if(value!=null)
+                setBudget(JSON.parse(value));
+                else
+                setBudget([]);
+            })
+      }
+
       getStrCollect();
       gethTransaction();
       getCollect();
       getAccountBalance();
+      getBudget();
     },[])
   return (
-    <DataContext.Provider value={{ accountBalance,collect,hTransaction, updateAccountBalanece,addCollect,subtractCollect,srtUpdateAccountBalanece }}>
+    <DataContext.Provider value={{ accountBalance,collect,hTransaction, budget,
+    updateAccountBalanece,
+    addCollect,
+    subtractCollect,
+    srtUpdateAccountBalanece,
+    addBudget,
+     }}>
       {children}
     </DataContext.Provider>
   );

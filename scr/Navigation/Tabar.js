@@ -24,7 +24,7 @@ const incomeName = "Income";
 
 const Tab = createBottomTabNavigator();
 function Tabar({route}) {
-    const { hTransaction } =useData();
+    const {hTransaction,budget}=useData();
     return ( 
             <Tab.Navigator
                 initialRouteName={homeName}
