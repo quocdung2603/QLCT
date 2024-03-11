@@ -46,6 +46,7 @@ function App(props) {
                     <Drawer.Screen name='Income' component={Income} options={{headerShown:false}}/>
                     <Drawer.Screen name='Expense' component={Expense} options={{headerShown:false}}/>
                     <Drawer.Screen name='Notification' component={Notification} options={{headerShown:false}}/>
+                    <Drawer.Screen name='Budget' component={Budget} options={{headerShown:false}}/>
                     <Drawer.Screen name='CreateBudget' component={CreateBudget} options={{headerShown:false}}/>
                     <Drawer.Screen name='DetailBudget' component={DetailBudget} options={{headerShown:false}}/>
                     <Drawer.Screen name='Transaction' component={Transaction} options={{headerShown:false}}/>

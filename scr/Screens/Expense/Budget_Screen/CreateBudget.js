@@ -9,6 +9,7 @@ import {
     TextInput,
     View,
     TouchableOpacity,
+    
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -16,26 +17,28 @@ import { Slider, Icon } from '@rneui/themed';
 import DropdownComponent from '../../../Components/DropDownBudget';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Switch } from '@rneui/themed';
+import { useData } from '../../../../DataContext';
 
 const data = [
-    { label: 'Shopping', value: '1' },
-    { label: 'Market', value: '2' },
-    { label: 'Item 3', value: '3' },
-    { label: 'Item 4', value: '4' },
+    { label: 'Shopping', value: 'Shopping' },
+    { label: 'Market', value: 'Market' },
+    { label: 'Education', value: 'Education' },
+    { label: 'Save money', value: 'Save money' },
     { label: 'Item 5', value: '5' },
     { label: 'Item 6', value: '6' },
     { label: 'Item 7', value: '7' },
     { label: 'Item 8', value: '8' },
 ];
 const CreateBudget = () => {
-    const [ValueBudget, setValueBudget] = useState(0);
+    const {addBudget}=useData();
     const navigation = useNavigation();
-
+    const [ValueBudget, setValueBudget] = useState(0);
     const [typeBudget, setTypeBudget] = useState(0);
+    const [messageBudget,setMessageBudget]=useState(0);
     const CircleIconWithNumber = ({ icon, number }) => {
         return (
             <View style={styles.circle}>
-                <Text style={styles.number}>{ValueBudget}</Text>
+                <Text style={styles.number}>{messageBudget}</Text>
             </View>
         );
     };
@@ -56,7 +59,18 @@ const CreateBudget = () => {
         );
     };
     const [checked, setChecked] = useState(false);
-
+    const handleAdd=()=>{
+        const item = {
+            nameBudget: typeBudget,
+            value: ValueBudget,
+            messageBudget: messageBudget
+        }
+        addBudget(item);
+        setTypeBudget(0);
+        setMessageBudget(0);
+        setValueBudget("");
+        navigation.navigate("Home");
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: '#7F3DFF', flexDirection: 'column' }}>
@@ -123,11 +137,11 @@ const CreateBudget = () => {
                             <View style={[styles.contentView]}>
                                 <Slider
                                     style={{ borderRadius: 20 }}
-                                    value={ValueBudget}
-                                    onValueChange={setValueBudget}
-                                    maximumValue={500000}
+                                    value={messageBudget}
+                                    onValueChange={setMessageBudget}
+                                    maximumValue={ValueBudget}
                                     minimumValue={0}
-                                    step={1}
+                                    step={10}
                                     minimumTrackTintColor="#7F3DFF"
                                     maximumTrackTintColor="#BEBEBE"
                                     allowTouchTrack
@@ -143,9 +157,9 @@ const CreateBudget = () => {
                         </View>
                     }
                 </View>
-                <View style={{ marginTop: 100, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginVertical: 20, marginHorizontal: 50, backgroundColor: '#7F3DFF', borderRadius: 20, paddingVertical: 10 }}>
-                    <Text style={{ fontSize: 20, color: 'white' }}>Continue</Text>
-                </View>
+                <TouchableOpacity onPress={handleAdd} style={{ marginTop: 100, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginVertical: 20, marginHorizontal: 50, backgroundColor: '#7F3DFF', borderRadius: 20, paddingVertical: 10 }}>
+                    <Text style={{ fontSize: 20, color: 'white' }}>Save</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )

@@ -10,7 +10,10 @@ import {
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import LisCardBudget from '../../../Components/ListCardBudget';
+import ItemBudget from '../../../Components/ItemBudget';
+import { useData } from '../../../../DataContext';
 const Budget = ({ navigation }) => {
+    const { budget }=useData();
     return (
         <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#7F3DFF' }}>
             <ScrollView>       
@@ -23,9 +26,15 @@ const Budget = ({ navigation }) => {
                         <AntDesign name='right' size={25} color='#fff' />
                     </View>
                 </View>
-                <View style={{ flexDirection: 'column', flex: 1, backgroundColor: 'white', borderTopLeftRadius: 25, borderTopRightRadius: 25 }}>
+                <View style={{ flexDirection: 'column', flex: 1, backgroundColor: 'white', borderTopLeftRadius: 25, borderTopRightRadius: 25}}>
                     <View style={{ flexDirection: 'column', justifyContent: 'center', alignContent: 'center', flex: 1 }}>
-                        <LisCardBudget></LisCardBudget>
+                        <View style={{padding: 20}}>
+                            {
+                                budget.map((item, index) => (
+                                    <ItemBudget key={index}></ItemBudget>
+                                ))
+                            }
+                        </View>
                     </View>
                 </View>
             </ScrollView>
