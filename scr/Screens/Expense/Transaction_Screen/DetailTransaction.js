@@ -35,7 +35,7 @@ const DetailTransaction = () => {
                 <Text style={{color:'#fff',fontSize:18, marginEnd:10}}>January, 24 2024</Text>
                 <Text style={{color:'#fff',fontSize:18, marginStart:10}}>18:00</Text>
             </View>
-            <View style={{backgroundColor:'#fff',flexDirection:'row', padding:8, marginStart:15, marginEnd:15, marginTop:-25, borderTopRightRadius:10, borderTopLeftRadius:10, borderWidth:0.5, borderColor:'grey'}}>
+            <View style={{backgroundColor:'#fff',flexDirection:'row', padding:4, marginStart:15, marginEnd:15, marginTop:-25, borderTopRightRadius:10, borderTopLeftRadius:10, borderWidth:0.5, borderColor:'grey'}}>
                 <View style={{flexDirection:'column', justifyContent:'center', alignItems:'center', marginEnd:'auto'}}>
                     <Text style={{fontSize:18, color:'grey'}}>Type</Text>
                     <Text style={{fontSize:18, fontWeight:'bold', color:'#000'}}>Income</Text>
