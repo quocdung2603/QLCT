@@ -36,7 +36,6 @@ function Tabar({route}) {
 
                         if (rn === homeName) {
                             iconName = focused ? 'home' : 'home-outline';
-
                         } else if (rn === transactionName) {
                             iconName = focused ? 'swap-horizontal' : 'swap-horizontal-outline';
                         } else if (rn === budgetName){

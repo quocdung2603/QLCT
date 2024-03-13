@@ -4,9 +4,11 @@ import { Image, StyleSheet, Text, View, Alert, TouchableOpacity } from "react-na
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Slider, Icon } from '@rneui/themed';
 import { useNavigation } from "@react-navigation/native";
+import Item from "antd/es/list/Item";
 
 
-function ItemBudget() {
+function ItemBudget(props) {
+    const budget=props.budget;
     const navigate= useNavigation();
     const handleDetail =()=>{
         navigate.navigate("DetailBudget");
@@ -24,7 +26,7 @@ function ItemBudget() {
                                     borderWidth: 1
                                 }}>
                                     <View style={{ height: 18, width: 20, borderRadius: 20, backgroundColor: 'blue', marginRight: 10 }}></View>
-                                    <Text>Shopping</Text>
+                                    <Text>{budget.nameBudget}</Text>
                                 </View>
                             </TouchableOpacity>
                             <View style={{ height: 35 }}>
@@ -32,11 +34,11 @@ function ItemBudget() {
                             </View>
                         </View>
                         <View style={{ position: "relative", marginTop: 20 }}>
-                            <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'black' }}>Remaining $0</Text>
+                            <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'black' }}>Remaining ${budget.remaining}</Text>
                             <View style={[styles.contentView]}>
                                 <Slider
                                     style={{ borderRadius: 20 }}
-                                    maximumValue={500000}
+                                    maximumValue={budget.value}
                                     minimumValue={0}
                                     step={1}
                                     minimumTrackTintColor="#7F3DFF"
@@ -44,12 +46,20 @@ function ItemBudget() {
                                     allowTouchTrack
                                     trackStyle={{ height: 20, backgroundColor: "#7F3DFF", borderRadius: 20 }}
                                     thumbTintColor="transparent" // Ẩn chấm hình tròn
-                                    value={200000}
+                                    value={budget.remaining}
                                     disabled={true}
                                 />
                             </View>
-                            <Text style={{color: 'black', fontSize: 15}}>$1200 of $1000</Text>
-                            <Text style={{color: 'red', fontSize: 15}}>cảnh báo</Text>
+                            <Text style={{color: 'black', fontSize: 15}}>
+                                ${budget.value-budget.remaining} of 
+                                ${budget.value}
+                            </Text>
+                            {
+                                budget.remaining<=budget.messageBudget ? 
+                                <Text style={{color: 'red', fontSize: 15}}>cảnh báo</Text>
+                                :
+                                null
+                            }
                         </View>
                     </View>
      );

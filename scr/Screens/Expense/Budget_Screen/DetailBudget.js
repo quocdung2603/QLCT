@@ -10,9 +10,16 @@ import {
 } from 'react-native';
 import { Slider, Icon } from '@rneui/themed';
 import { Typography } from 'antd';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 const DetailBudget = ({navigation})  => {
     return (
         <View style={{flex:1, flexDirection:'column', backgroundColor:'white'}}>
+            <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
+                <TouchableOpacity style={{ marginRight: 'auto', backgroundColor: 'black' }} onPress={() => {navigation.goBack()}}>
+                    <AntDesign name='arrowleft' size={30} color='white' />
+                </TouchableOpacity>
+                <Text style={{ color: 'white', fontSize: 20, marginEnd: 'auto' }}>Income</Text>
+            </View>
             <View style={{flexDirection:'column', flex:0.95}}>
                 <View style={{flexDirection:'column', justifyContent:'center', alignItems:'center', flex:0.7}}>
                     <TouchableOpacity style={{height: 35 }}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Button,
     SafeAreaView,
@@ -36,17 +36,13 @@ const dataType = [
     { label: 'Tiền mặt', value: '1' },
     { label: 'Chuyển khoản', value: '2' },
 ];
-const databudget = [
-    { label: 'budget A', value: '1' },
-    { label: 'budget B', value: '1' },
-];
 const Income = () => {
-    const {addCollect,updateAccountBalanece}=useData();
+    const {addCollect,updateAccountBalanece,budget}=useData();
     const navigation = useNavigation();
     const [money,setMoney]=useState(0);
     const [category,setCategory] = useState("");
     const [type,setType]=useState("");
-    const [budget,setBudget]=useState("");
+    const [selectedBudget,setBudget]=useState("");
     const [note,setNote]=useState("");
     //pick time 
     const now = moment().valueOf();
@@ -77,7 +73,7 @@ const Income = () => {
                 type: type,
                 date: valueDateS,
                 time: valueTimeS,
-                budget: budget,
+                budget: selectedBudget,
                 description: note,
             }
             updateAccountBalanece(money);
@@ -92,6 +88,16 @@ const Income = () => {
             console.log(error);
         }
     }
+    const databudget = [];
+    useEffect(()=>{
+        budget.map((item)=>{
+            const it={
+                label: item.nameBudget,
+                value: item.nameBudget
+            }
+            databudget.push(it);
+        })
+    },[budget])
     return (
         <View style={{ flex: 1, backgroundColor: '#00A86B', flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>

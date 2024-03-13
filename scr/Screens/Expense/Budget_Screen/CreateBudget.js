@@ -9,7 +9,7 @@ import {
     TextInput,
     View,
     TouchableOpacity,
-    
+
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -30,11 +30,11 @@ const data = [
     { label: 'Item 8', value: '8' },
 ];
 const CreateBudget = () => {
-    const {addBudget}=useData();
+    const { addBudget } = useData();
     const navigation = useNavigation();
     const [ValueBudget, setValueBudget] = useState(0);
     const [typeBudget, setTypeBudget] = useState(0);
-    const [messageBudget,setMessageBudget]=useState(0);
+    const [messageBudget, setMessageBudget] = useState(0);
     const CircleIconWithNumber = ({ icon, number }) => {
         return (
             <View style={styles.circle}>
@@ -59,16 +59,18 @@ const CreateBudget = () => {
         );
     };
     const [checked, setChecked] = useState(false);
-    const handleAdd=()=>{
+    const handleAdd = () => {
         const item = {
             nameBudget: typeBudget,
             value: ValueBudget,
-            messageBudget: messageBudget
+            messageBudget: messageBudget,
+            remaining: ValueBudget
         }
-        addBudget(item);
-        setTypeBudget(0);
+        //console.log(item);
+         addBudget(item);
+         setTypeBudget(0);
         setMessageBudget(0);
-        setValueBudget("");
+        setValueBudget(0);
         navigation.navigate("Home");
     }
 
@@ -118,7 +120,7 @@ const CreateBudget = () => {
                     )}
                     renderItem={renderItem}
                 />
-                <View style={{height: 120, padding: 10}}>
+                <View style={{ height: 120, padding: 10 }}>
                     <View style={{ flexDirection: 'row', margin: 10 }}>
                         <View style={{ flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
                             <Text style={{ color: 'black', fontSize: 20, marginRight: 'auto' }}>Receive Alert</Text>
@@ -138,7 +140,9 @@ const CreateBudget = () => {
                                 <Slider
                                     style={{ borderRadius: 20 }}
                                     value={messageBudget}
-                                    onValueChange={setMessageBudget}
+                                    onValueChange={(e) => {
+                                        setMessageBudget(e);
+                                    }}
                                     maximumValue={ValueBudget}
                                     minimumValue={0}
                                     step={10}

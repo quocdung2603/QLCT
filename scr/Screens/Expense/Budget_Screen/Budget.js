@@ -13,7 +13,7 @@ import LisCardBudget from '../../../Components/ListCardBudget';
 import ItemBudget from '../../../Components/ItemBudget';
 import { useData } from '../../../../DataContext';
 const Budget = ({ navigation }) => {
-    const { budget }=useData();
+    const {budget}=useData();
     return (
         <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#7F3DFF' }}>
             <ScrollView>       
@@ -30,9 +30,11 @@ const Budget = ({ navigation }) => {
                     <View style={{ flexDirection: 'column', justifyContent: 'center', alignContent: 'center', flex: 1 }}>
                         <View style={{padding: 20}}>
                             {
-                                budget.map((item, index) => (
-                                    <ItemBudget key={index}></ItemBudget>
-                                ))
+                                budget.map((item, index) => {
+                                    return (
+                                        <ItemBudget key={index} budget={item}></ItemBudget>
+                                    )
+                                })
                             }
                         </View>
                     </View>

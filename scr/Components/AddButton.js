@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Animated, TouchableHighlight, View } from "react-native";
+import { Alert, Animated, TouchableHighlight, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 

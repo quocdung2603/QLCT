@@ -72,13 +72,18 @@ const DataProvider = ({ children }) => {
 
     //Budget
     const addBudget = async (newData)=>{
-      const tmp = budget;
-      tmp.push(newData);
-      console.log(tmp);
-      setBudget(tmp);
+      try {
+        const tmp = budget;
+        tmp.push(newData);
+        setBudget(tmp);
+        console.log(budget);
 
-      //save data
-      await AsyncStorage.setItem("budget",JSON.stringify(tmp));
+        //save data
+        await AsyncStorage.setItem("budget", JSON.stringify(tmp));
+      } catch (error) {
+        console.log("Lỗi thêm dữ liệu");
+      }
+
     }
 
 
@@ -147,8 +152,20 @@ const DataProvider = ({ children }) => {
       getAccountBalance();
       getBudget();
     },[])
+  useEffect(() => {
+    const getBudget = () => {
+      AsyncStorage.getItem("budget")
+        .then(value => {
+          if (value != null)
+            setBudget(JSON.parse(value));
+          else
+            setBudget([]);
+        })
+    }
+    getBudget();
+    },[budget])
   return (
-    <DataContext.Provider value={{ accountBalance,collect,hTransaction, budget,
+    <DataContext.Provider value={{ accountBalance,collect,hTransaction,budget,
     updateAccountBalanece,
     addCollect,
     subtractCollect,
