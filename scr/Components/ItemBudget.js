@@ -11,7 +11,8 @@ function ItemBudget(props) {
     const budget=props.budget;
     const navigate= useNavigation();
     const handleDetail =()=>{
-        navigate.navigate("DetailBudget");
+        const id=budget.nameBudget;
+        navigate.navigate("DetailBudget",{budget});
     }
     return ( 
         <View style={{ width: 350, height: 200, marginBottom: 10 }}>
@@ -50,10 +51,10 @@ function ItemBudget(props) {
                                     disabled={true}
                                 />
                             </View>
-                            <Text style={{color: 'black', fontSize: 15}}>
-                                ${budget.value-budget.remaining} of 
-                                ${budget.value}
+                            <Text style={{ color: 'black', fontSize: 15 }}>
+                                {budget.remaining <= budget.value ? (budget.value - budget.remaining) : 0} of ${budget.value}
                             </Text>
+
                             {
                                 budget.remaining<=budget.messageBudget ? 
                                 <Text style={{color: 'red', fontSize: 15}}>cảnh báo</Text>

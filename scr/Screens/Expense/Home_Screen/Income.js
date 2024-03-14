@@ -37,7 +37,7 @@ const dataType = [
     { label: 'Chuyển khoản', value: '2' },
 ];
 const Income = () => {
-    const {addCollect,updateAccountBalanece,budget}=useData();
+    const {budget,addCollect,updateAccountBalanece}=useData();
     const navigation = useNavigation();
     const [money,setMoney]=useState(0);
     const [category,setCategory] = useState("");
@@ -88,16 +88,18 @@ const Income = () => {
             console.log(error);
         }
     }
-    const databudget = [];
+    const [databudget,setDataBudget]=useState([]);
     useEffect(()=>{
+        const dt=[];
         budget.map((item)=>{
             const it={
                 label: item.nameBudget,
                 value: item.nameBudget
-            }
-            databudget.push(it);
+            };
+            dt.push(it);
         })
-    },[budget])
+        setDataBudget(dt);
+    },[])
     return (
         <View style={{ flex: 1, backgroundColor: '#00A86B', flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
@@ -246,7 +248,9 @@ const Income = () => {
                         </View>
                     </TouchableOpacity>
                 </Modal>
-                <Dropdown
+                {
+                    databudget && 
+                    <Dropdown
                     style={styles.dropdown}
                     placeholderStyle={styles.placeholderStyle}
                     selectedTextStyle={styles.selectedTextStyle}
@@ -259,15 +263,12 @@ const Income = () => {
                     valueField="value"
                     placeholder="Chọn mục chi tiêu"
                     searchPlaceholder="Search..."
-                    value={type}
+                    value={selectedBudget}
                     onChange={item => {
                         setBudget(item.value);
                     }}
-                    renderLeftIcon={() => (
-                        <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-                    )}
-                    renderItem={renderItem}
                 />
+                }
                 <View style={{flexDirection:'row', marginHorizontal:10, marginVertical:10, borderWidth:1, borderRadius:10,borderColor:'grey', padding:10}}>
                     <TextInput 
                         value={note}

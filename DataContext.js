@@ -22,7 +22,14 @@ const DataProvider = ({ children }) => {
 
     //Collect
     const addCollect = async (newData) =>{
-      try {     
+      try {   
+        const bd=newData.budget;
+        const id=budget.findIndex((item)=>item.nameBudget===bd);
+        if(id!=-1)
+        {
+            budget[id].remaining=parseInt(budget[id].remaining)+parseInt(newData.money);
+        }  
+
         //collect
         const tmp = collect;
         tmp.push(newData);
@@ -42,6 +49,7 @@ const DataProvider = ({ children }) => {
         //save data
         await AsyncStorage.setItem("collect",JSON.stringify(tmp));
         await AsyncStorage.setItem("hTransaction",JSON.stringify(tmp1));
+        await AsyncStorage.setItem("budget",JSON.stringify(budget));
       } catch (error) {
         console.log(error);
       }
@@ -49,6 +57,14 @@ const DataProvider = ({ children }) => {
 
     const subtractCollect = async (newData) =>{
       try {
+
+        const bd=newData.budget;
+        const id=budget.findIndex((item)=>item.nameBudget===bd);
+        if(id!=-1)
+        {
+            budget[id].remaining=parseInt(budget[id].remaining)+parseInt(newData.money);
+        }  
+
          //subtract
          const tmp = strCollect;
          tmp.push(newData);
@@ -65,6 +81,7 @@ const DataProvider = ({ children }) => {
          //save data
          await AsyncStorage.setItem("strCollect",JSON.stringify(tmp));
          await AsyncStorage.setItem("hTransaction",JSON.stringify(tmp1));
+         await AsyncStorage.setItem("budget",JSON.stringify(budget));
       } catch (error) {
         console.log(error);
       }
@@ -165,8 +182,7 @@ const DataProvider = ({ children }) => {
     getBudget();
     },[budget])
   return (
-    <DataContext.Provider value={{ accountBalance,collect,hTransaction,budget,
-    updateAccountBalanece,
+    <DataContext.Provider value={{ accountBalance,collect,hTransaction,budget, updateAccountBalanece,
     addCollect,
     subtractCollect,
     srtUpdateAccountBalanece,

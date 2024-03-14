@@ -21,6 +21,7 @@ import test from '../Screens/Test';
 import Header from '../Components/Header';
 import DrawerDesign from '../Components/Drawer';
 import DetailBudget from '../Screens/Expense/Budget_Screen/DetailBudget';
+import DetailTransaction from '../Screens/Expense/Transaction_Screen/DetailTransaction';
 //schedule
 import TabarSchedule from './TabarSchedule';
 import HomeSchedule from '../Screens/Schedule/Home_Screens/HomeSchedule';
@@ -51,6 +52,7 @@ function App(props) {
                     <Drawer.Screen name='DetailBudget' component={DetailBudget} options={{headerShown:false}}/>
                     <Drawer.Screen name='Transaction' component={Transaction} options={{headerShown:false}}/>
                     <Drawer.Screen name='FinancialReport' component={FinancialReport} options={{headerShown:false}}/>
+                    <Drawer.Screen name='DetailTransaction' component={DetailTransaction} options={{headerShown:false}}/>
                     {/* Schedule */}
                     <Drawer.Screen name='Schedule' component={TabarSchedule} options={{headerShown:false}}/>
                     <Drawer.Screen name='AddSchedule' component={AddSchedule} options={{headerShown:false}}/>

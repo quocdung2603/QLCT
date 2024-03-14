@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
     SafeAreaView,
@@ -10,8 +11,9 @@ import {
 } from 'react-native';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 function ItemTransaction({item}) {
+    const navigation = useNavigation();
     return (
-        <View style={{ flexDirection: 'row', marginVertical: 5, marginHorizontal: 25, borderWidth: 1, borderColor: '#FCFCFC', backgroundColor: '#FCFCFC', padding: 5 }}>
+        <TouchableOpacity onPress={()=>{ navigation.navigate("DetailTransaction",{item})}} style={{ flexDirection: 'row', marginVertical: 5, marginHorizontal: 25, borderWidth: 1, borderColor: '#FCFCFC', backgroundColor: '#FCFCFC', padding: 5 }}>
             <View style={{ backgroundColor: '#FCEED4', padding: 10, borderRadius: 10 }}>
                 <FontAwesome6 name='bowl-food' size={30} color='#FCAC12' />
             </View>
@@ -27,7 +29,7 @@ function ItemTransaction({item}) {
                 }
                 <Text style={{ fontSize: 15 }}>{item.date.getHours()}:{item.date.getMinutes()}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
