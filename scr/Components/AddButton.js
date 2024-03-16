@@ -10,7 +10,7 @@ const AddButton = () => {
     const mode = new Animated.Value(0);
 
     const toggleView = () => {
-        navigation.navigate("Income")
+        //navigation.navigate("Income")
         Animated.timing(mode, {
           toValue: mode._value === 0 ? 1 : 0,
           duration: 300,

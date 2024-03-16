@@ -16,7 +16,32 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import { useData } from '../../../../DataContext';
 import { Dropdown } from 'react-native-element-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import ChartHome from '../../../Components/ChartHome';
+import ChartHomeWeek from '../../../Components/ChartHomeWeek';
+import {
+    LineChart
+} from "react-native-chart-kit";
+const data = {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+        {
+            data: [20, 45, 28, 80, 99, 43],
+            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+            strokeWidth: 2 // optional
+        }
+    ],
+    legend: ["Rainy Days"] // optional
+};
+const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#08130D",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false // optional
+};
 const dataMonth = [
     { label: 'January ', value: '1' },
     { label: 'February', value: '2' },
@@ -32,9 +57,9 @@ const dataMonth = [
     { label: 'December', value: '2' },
 ];
 const Home = ({ navigation }) => {
-    const [openIcoms,setOpenIcoms] = useState(false);
-    const {accountBalance} = useData();
-    const [months, setMonths]=useState("");
+    const [openIcoms, setOpenIcoms] = useState(false);
+    const { accountBalance } = useData();
+    const [months, setMonths] = useState("");
     const renderItem = item => {
         return (
             <View style={styles.item}>
@@ -73,8 +98,9 @@ const Home = ({ navigation }) => {
             console.log(error);
         }
     }
+    const [typeChart,setTypeChart]=useState(0);
     return (
-        <View style={{ flexDirection: 'column', flex: 1}}>
+        <View style={{ flexDirection: 'column', flex: 1 }}>
             <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
                 <TouchableOpacity
                     onPress={() => navigation.openDrawer()}
@@ -142,16 +168,26 @@ const Home = ({ navigation }) => {
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginRight: 'auto', margin: 10 }}>
                 <Text style={{ fontSize: 20, color: 'black', fontWeight: 'bold' }}>Spend Frequence</Text>
             </View>
-            <View style={{ backgroundColor: 'yellow', height: 200 }}>
+            <View style={{  height: 250, marginBottom: 5 }}>
                 {/* bieu do chi tieu cac kieu */}
+                {
+                    typeChart==0 ? 
+                    <ChartHome></ChartHome>:
+                    <ChartHomeWeek></ChartHomeWeek>
+                }
+                
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', margin: 5 }}>
                 <View style={{ alignItems: 'center', paddingVertical: 10, borderWidth: 1, backgroundColor: 'yellow', paddingHorizontal: 20, borderRadius: 10 }}>
-                    <Text>Today</Text>
+                <TouchableOpacity onPress={() => {
+                        setTypeChart(0);
+                    }}>
+                        <Text>Today</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ alignItems: 'center', paddingVertical: 10 }}>
                     <TouchableOpacity onPress={() => {
-                        navigation.navigate("test");
+                        setTypeChart(1);
                     }}>
                         <Text>Week</Text>
                     </TouchableOpacity>
@@ -214,7 +250,7 @@ const styles = StyleSheet.create({
     dropdown: {
         margin: 10,
         height: 50,
-        width:150,
+        width: 150,
         backgroundColor: 'white',
         borderRadius: 12,
         padding: 12,

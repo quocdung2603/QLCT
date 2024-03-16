@@ -20,6 +20,26 @@ const DataProvider = ({ children }) => {
       await AsyncStorage.setItem("accountBalance",tmp.toString());
     };
 
+    const gethTransaction = ()=>{
+      AsyncStorage.getItem("hTransaction")
+        .then(value=>{
+          if(value!=null)
+          {
+            const tmp=JSON.parse(value);
+            const dt=[];
+            tmp.map((item)=>{
+              let t=item;
+              t.date=new Date(item.date);
+              dt.push(t);
+            })
+            const sortedTransactions = dt.sort((a, b) => a.date - b.date);
+            setHtransaction(sortedTransactions);
+          }
+          else
+          setHtransaction([]);
+        })
+    }
+
     //Collect
     const addCollect = async (newData) =>{
       try {   
@@ -50,6 +70,7 @@ const DataProvider = ({ children }) => {
         await AsyncStorage.setItem("collect",JSON.stringify(tmp));
         await AsyncStorage.setItem("hTransaction",JSON.stringify(tmp1));
         await AsyncStorage.setItem("budget",JSON.stringify(budget));
+        gethTransaction();
       } catch (error) {
         console.log(error);
       }
@@ -147,7 +168,6 @@ const DataProvider = ({ children }) => {
               })
               const sortedTransactions = dt.sort((a, b) => b.date - a.date);
               setHtransaction(sortedTransactions);
-
             }
             else
             setHtransaction([]);
@@ -181,6 +201,7 @@ const DataProvider = ({ children }) => {
     }
     getBudget();
     },[budget])
+    
   return (
     <DataContext.Provider value={{ accountBalance,collect,hTransaction,budget, updateAccountBalanece,
     addCollect,
