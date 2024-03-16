@@ -19,18 +19,20 @@ const chartConfig = {
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false, // optional\
+
 };
-function ChartHomeWeek() {
+function ChartHomeYear() {
     const { hTransaction } = useData();
     const [dataChart, setDataChart] = useState([]);
     const [titleChart, setTitleChart] = useState([]);
     const [data, setData] = useState(null);
     function getDataDate(timeNow) {
         let sum =0;
+        const yearNow= new Date().getFullYear();
         hTransaction.sort((a,b)=>a.date-b.date);
         hTransaction.map((item)=>{
             //console.log(item);
-            if(item.date.getDate()===timeNow.getDate() && item.date.getMonth()===timeNow.getMonth() && timeNow.getFullYear()===item.date.getFullYear())
+            if(item.date.getMonth()+1===timeNow && yearNow===item.date.getFullYear())
             {
                 const tmp = parseInt(item.money);
                 sum+=tmp;
@@ -39,39 +41,30 @@ function ChartHomeWeek() {
         return sum;
     }
     useEffect(() => {
-        const timeNow = new Date();
         const dt = [];
         const tt = [];
-        const currentDate = new Date();
+        //const currentDate = new Date();
 
-        // Lấy thứ của ngày hiện tại (0 - Chủ Nhật, 1 - Thứ Hai, ..., 6 - Thứ Bảy)
-        const currentDayOfWeek = currentDate.getDay();
-
-        // Lấy ngày đầu tiên của tuần
-        const startOfCurrentWeek = new Date(currentDate);
-        startOfCurrentWeek.setDate(currentDate.getDate() - currentDayOfWeek);
-
-        // Lấy ngày cuối cùng của tuần
-        const endOfCurrentWeek = new Date(currentDate);
-        endOfCurrentWeek.setDate(currentDate.getDate() + (6 - currentDayOfWeek));
-
-        // Tạo một mảng các ngày trong tuần
-        for (let i = 0; i < 7; i++) {
-            const day = new Date(startOfCurrentWeek);
-            day.setDate(startOfCurrentWeek.getDate() + i+1);
-            const money=getDataDate(day);
-            dt.push(money);
+        for(let i=1;i<=12;i++)
+        {
+            const tmp = getDataDate(i);
+            //console.log(tmp);
+            const title=i;
+            tt.push(title);
+            dt.push(tmp);
         }
+        
         
         setDataChart(dt);
         const dt1 = {
-            labels: ["THứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ nhật"],
+            labels: tt,
             datasets: [
                 {
                     data: dt,
                     color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
                     strokeWidth: 2,// optional
-                    height: 12
+                    height: 12,
+                    fontSize: 5
                 }
             ],
             legend: ["Rainy Days"] // optional
@@ -94,4 +87,4 @@ function ChartHomeWeek() {
     );
 }
 
-export default ChartHomeWeek;
+export default ChartHomeYear;

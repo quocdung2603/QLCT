@@ -18,30 +18,11 @@ import { Dropdown } from 'react-native-element-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ChartHome from '../../../Components/ChartHome';
 import ChartHomeWeek from '../../../Components/ChartHomeWeek';
+import ChartHomeYear from '../../../Components/CharHomeYear';
 import {
     LineChart
 } from "react-native-chart-kit";
-const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-        {
-            data: [20, 45, 28, 80, 99, 43],
-            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-            strokeWidth: 2 // optional
-        }
-    ],
-    legend: ["Rainy Days"] // optional
-};
-const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false // optional
-};
+import ChartHomeMonth from '../../../Components/ChartHomeMonth';
 const dataMonth = [
     { label: 'January ', value: '1' },
     { label: 'February', value: '2' },
@@ -99,6 +80,17 @@ const Home = ({ navigation }) => {
         }
     }
     const [typeChart,setTypeChart]=useState(0);
+    const customStyle= { 
+        alignItems: 'center', 
+        paddingVertical: 10, 
+        borderWidth: 1, 
+        backgroundColor: "yellow", 
+        paddingHorizontal: 20, borderRadius: 10 
+    }
+    const customStyleNone={
+        alignItems: 'center', 
+        paddingVertical: 10, 
+    }
     return (
         <View style={{ flexDirection: 'column', flex: 1 }}>
             <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
@@ -173,30 +165,41 @@ const Home = ({ navigation }) => {
                 {
                     typeChart==0 ? 
                     <ChartHome></ChartHome>:
-                    <ChartHomeWeek></ChartHomeWeek>
+                    typeChart==1 ?
+                    <ChartHomeWeek></ChartHomeWeek> :
+                    typeChart==2 ?
+                    <ChartHomeMonth></ChartHomeMonth> :
+                    <ChartHomeYear></ChartHomeYear>
                 }
-                
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', margin: 5 }}>
-                <View style={{ alignItems: 'center', paddingVertical: 10, borderWidth: 1, backgroundColor: 'yellow', paddingHorizontal: 20, borderRadius: 10 }}>
+                <View style={typeChart===0 ? customStyle : customStyleNone}>
                 <TouchableOpacity onPress={() => {
                         setTypeChart(0);
                     }}>
                         <Text>Today</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ alignItems: 'center', paddingVertical: 10 }}>
+                <View style={typeChart===1 ? customStyle : customStyleNone}>
                     <TouchableOpacity onPress={() => {
                         setTypeChart(1);
                     }}>
                         <Text>Week</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ alignItems: 'center', paddingVertical: 10 }}>
-                    <Text>Month</Text>
+                <View style={typeChart===2 ? customStyle : customStyleNone}>
+                    <TouchableOpacity onPress={() => {
+                        setTypeChart(2);
+                    }}>
+                        <Text>Month</Text>
+                    </TouchableOpacity>
                 </View>
-                <View style={{ alignItems: 'center', paddingVertical: 10 }}>
-                    <Text>Year</Text>
+                <View style={typeChart===3 ? customStyle : customStyleNone}>
+                <TouchableOpacity onPress={() => {
+                        setTypeChart(3);
+                    }}>
+                        <Text>Year</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignItems: 'center' }}>
