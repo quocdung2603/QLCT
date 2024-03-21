@@ -82,6 +82,7 @@ const Income = () => {
             setCategory("");
             setType("");
             setNote("");
+            setValueDateS('Pick Date');
             navigation.navigate('Home');
         } catch (error) {
             Alert.alert("lỗi");

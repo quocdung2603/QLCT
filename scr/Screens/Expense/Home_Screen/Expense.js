@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Button,
     SafeAreaView,
@@ -41,12 +41,12 @@ const databudget = [
     { label: 'budget B', value: '1' },
 ];
 const Expense = ({navigation}) => {
-    const {subtractCollect,srtUpdateAccountBalanece}=useData();
+    const {budget,subtractCollect,srtUpdateAccountBalanece}=useData();
     const [money,setMoney]=useState(0);
     const [category,setCategory] = useState("");
     const [type,setType]=useState("");
     const [note,setNote]=useState("");
-    const [budget,setBudget]=useState("");
+    const [selectedBudget,setBudget]=useState("");
     //pick time 
     const now = moment().valueOf();
     const [DateModalS, setDateModalS]= useState(false);
@@ -76,7 +76,7 @@ const Expense = ({navigation}) => {
                 type: type,
                 date: valueDateS,
                 time: valueTimeS,
-                budget: budget,
+                budget: selectedBudget,
                 description: note,
             }
             srtUpdateAccountBalanece(money);
@@ -91,6 +91,18 @@ const Expense = ({navigation}) => {
             console.log(error);
         }
     }
+    const [databudget,setDataBudget]=useState([]);
+    useEffect(()=>{
+        const dt=[];
+        budget.map((item)=>{
+            const it={
+                label: item.nameBudget,
+                value: item.nameBudget
+            };
+            dt.push(it);
+        })
+        setDataBudget(dt);
+    },[])
     return (
         <View style={{ flex: 1, backgroundColor: '#FD3C4A', flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
@@ -239,7 +251,9 @@ const Expense = ({navigation}) => {
                         </View>
                     </TouchableOpacity>
                 </Modal>
-                <Dropdown
+                {
+                    databudget && 
+                    <Dropdown
                     style={styles.dropdown}
                     placeholderStyle={styles.placeholderStyle}
                     selectedTextStyle={styles.selectedTextStyle}
@@ -250,17 +264,14 @@ const Expense = ({navigation}) => {
                     maxHeight={300}
                     labelField="label"
                     valueField="value"
-                    placeholder="Select item"
+                    placeholder="Chọn mục chi tiêu"
                     searchPlaceholder="Search..."
-                    value={type}
+                    value={selectedBudget}
                     onChange={item => {
                         setBudget(item.value);
                     }}
-                    renderLeftIcon={() => (
-                        <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-                    )}
-                    renderItem={renderItem}
                 />
+                }
                 <View style={{flexDirection:'row', marginHorizontal:10, marginVertical:10, borderWidth:1, borderRadius:10,borderColor:'grey', padding:10}}>
                     <TextInput 
                         value={note}

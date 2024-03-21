@@ -6,17 +6,26 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    Modal,
+    Button,
+    Alert
 } from 'react-native';
 import { Slider, Icon } from '@rneui/themed';
 import { Typography } from 'antd';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useData } from '../../../../DataContext';
 import ItemTransaction from '../../../Components/ItemTransaction';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const DetailBudget = ({navigation,route})  => {
     const id = route.params?.budget || 'Default Value';
-    const { hTransaction } = useData();
+    const { hTransaction , deleteBudget } = useData();
     const [transaction,setTransaction]=useState([]);
+    const [isConfirmationVisible, setIsConfirmationVisible] = useState(false);
+
+    const handleCloseConfirmation = () => {
+        setIsConfirmationVisible(false);
+    };
     useEffect(()=>{
         const dt=[];
         hTransaction.map((item)=>{
@@ -25,6 +34,12 @@ const DetailBudget = ({navigation,route})  => {
         })
         setTransaction(dt);
     },[id])
+    const handleConfirm = () => {
+        //Alert("Nó đã bấm xác nhận");
+        deleteBudget(id);
+        handleCloseConfirmation();
+        navigation.goBack();
+    };
     return (
         <View style={{flex:1, flexDirection:'column', backgroundColor:'white'}}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
@@ -32,6 +47,9 @@ const DetailBudget = ({navigation,route})  => {
                     <AntDesign name='arrowleft' size={30} color='#000' />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', fontSize: 20, marginEnd: 'auto' }}>Income</Text>
+                <TouchableOpacity style={{ marginStart: 'auto' }} onPress={() => { setIsConfirmationVisible(true) }}>
+                    <Ionicons name='trash' size={30} color='black' />
+                </TouchableOpacity>
             </View>
             <View style={{flexDirection:'column', flex:0.95}}>
                 <View style={{flexDirection:'column', justifyContent:'center', alignItems:'center', flex:0.7}}>
@@ -102,6 +120,22 @@ const DetailBudget = ({navigation,route})  => {
                 style={{flexDirection:'row', backgroundColor:'#7F3DFF', marginHorizontal:30, justifyContent:'center', alignContent:'center', borderRadius:10}}>
                 <Text style={{fontSize:20, color:'white',paddingVertical:10,}}>Edit Budget</Text>
             </TouchableOpacity>
+            <Modal
+                    visible={isConfirmationVisible}
+                    animationType="slide"
+                    transparent={true}
+                    onRequestClose={handleCloseConfirmation}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+                            <Text>Bạn xác nhận muốn xóa khum</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+                                <Button title="Hủy" onPress={handleCloseConfirmation} />
+                                <Button title="Xác nhận" onPress={handleConfirm} />
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
         </View>
     );
 }

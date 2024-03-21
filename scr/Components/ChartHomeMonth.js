@@ -23,7 +23,8 @@ const chartConfig = {
 
 
 };
-function ChartHomeMonth() {
+function ChartHomeMonth(props) {
+    const monthNow=props.monthNow;
     const { hTransaction } = useData();
     const [dataChart, setDataChart] = useState([]);
     const [titleChart, setTitleChart] = useState([]);
@@ -31,7 +32,7 @@ function ChartHomeMonth() {
     function getDataDate(timeNow) {
         let sum = 0;
         const yearNow = new Date().getFullYear();
-        const monthNow= new Date().getMonth()+1;
+        //const monthNow= new Date().getMonth()+1;
         hTransaction.sort((a, b) => a.date - b.date);
         hTransaction.map((item) => {
             //console.log(item);
@@ -46,7 +47,7 @@ function ChartHomeMonth() {
         const dt = [];
         const tt = [];
         //const currentDate = new Date();
-        const monthNow= new Date().getMonth()+1;
+        //const monthNow= new Date().getMonth()+1;
         let len=0;
         if((monthNow%2===0 && monthNow>5) || (monthNow%2!==0 && monthNow<=5))
         len=31;
@@ -68,7 +69,7 @@ function ChartHomeMonth() {
         }
         for (let i = 1; i <= len; i++) {
             const tmp = getDataDate(i);
-            console.log(tmp);
+            //console.log(tmp);
             const title = i;
             tt.push(title);
             dt.push(tmp);
@@ -88,7 +89,7 @@ function ChartHomeMonth() {
             legend: ["Rainy Days"] // optional
         };
         setData(dt1);
-    }, [hTransaction])
+    }, [hTransaction,monthNow])
     return (
         <ScrollView
             horizontal={true}

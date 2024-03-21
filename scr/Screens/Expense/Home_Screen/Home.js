@@ -19,28 +19,44 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ChartHome from '../../../Components/ChartHome';
 import ChartHomeWeek from '../../../Components/ChartHomeWeek';
 import ChartHomeYear from '../../../Components/CharHomeYear';
+import ItemTransaction from '../../../Components/ItemTransaction';
 import {
     LineChart
 } from "react-native-chart-kit";
 import ChartHomeMonth from '../../../Components/ChartHomeMonth';
 const dataMonth = [
-    { label: 'January ', value: '1' },
-    { label: 'February', value: '2' },
-    { label: 'March', value: '2' },
-    { label: 'April', value: '2' },
-    { label: 'May', value: '2' },
-    { label: 'June', value: '2' },
-    { label: 'July', value: '2' },
-    { label: 'August', value: '2' },
-    { label: 'September', value: '2' },
-    { label: 'October', value: '2' },
-    { label: 'November', value: '2' },
-    { label: 'December', value: '2' },
+    { label: 'January ', value: 1 },
+    { label: 'February', value: 2 },
+    { label: 'March', value: 3 },
+    { label: 'April', value: 4 },
+    { label: 'May', value: 5 },
+    { label: 'June', value: 6 },
+    { label: 'July', value: 7 },
+    { label: 'August', value: 8 },
+    { label: 'September', value: 9 },
+    { label: 'October', value: 10 },
+    { label: 'November', value: 11 },
+    { label: 'December', value: 12 },
 ];
 const Home = ({ navigation }) => {
     const [openIcoms, setOpenIcoms] = useState(false);
-    const { accountBalance } = useData();
-    const [months, setMonths] = useState("");
+    const { accountBalance,hTransaction } = useData();
+    const [Transaction,setTransaction]=useState([]);
+    const [months, setMonths] = useState(new Date().getMonth()+1);
+    //Lấy dữ liệu chi tiêu trong tháng
+    useEffect(()=>{
+        const dt=[];
+        const yearNow = new Date().getFullYear();
+        //const monthNow= new Date().getMonth()+1;
+        hTransaction.sort((a, b) => b.date - a.date);
+        hTransaction.map((item) => {
+            //console.log(item);
+            if (item.date.getMonth() + 1 === months && yearNow === item.date.getFullYear()) {
+                dt.push(item);
+            }
+        })
+        setTransaction(dt);
+    },[months,hTransaction])
     const renderItem = item => {
         return (
             <View style={styles.item}>
@@ -92,13 +108,14 @@ const Home = ({ navigation }) => {
         paddingVertical: 10, 
     }
     return (
-        <View style={{ flexDirection: 'column', flex: 1 }}>
+        <ScrollView style={{ flexDirection: 'column', flex: 1 }}>
             <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
                 <TouchableOpacity
                     onPress={() => navigation.openDrawer()}
                     style={{ justifyContent: 'center', alignItems: 'center', marginRight: 'auto' }}>
                     <Octicons name='three-bars' size={30} color='#000' />
                 </TouchableOpacity>
+                
                 <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                     <Dropdown
                         style={styles.dropdown}
@@ -115,6 +132,8 @@ const Home = ({ navigation }) => {
                         value={months}
                         onChange={item => {
                             setMonths(item.value);
+                            //setTypeChart(1);
+                            setTypeChart(2);
                         }}
                         renderLeftIcon={() => (
                             <AntDesign style={styles.icon} color="black" name="calendar" size={20} />
@@ -168,7 +187,7 @@ const Home = ({ navigation }) => {
                     typeChart==1 ?
                     <ChartHomeWeek></ChartHomeWeek> :
                     typeChart==2 ?
-                    <ChartHomeMonth></ChartHomeMonth> :
+                    <ChartHomeMonth monthNow={months}></ChartHomeMonth> :
                     <ChartHomeYear></ChartHomeYear>
                 }
             </View>
@@ -203,27 +222,25 @@ const Home = ({ navigation }) => {
                 </View>
             </View>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#000', marginEnd: 'auto' }}>Recent Transaction</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#000', marginEnd: 'auto' }}>Các chi tiêu trong tháng</Text>
                 <View style={{ borderWidth: 1, borderRadius: 15, padding: 5, backgroundColor: '' }}>
                     <Text style={{ color: 'black' }}>See all</Text>
                 </View>
             </View>
-            <ScrollView>
-                <View style={{ flexDirection: 'row', marginVertical: 5, marginHorizontal: 25 }}>
-                    <View style={{ backgroundColor: '#FCEED4', padding: 10, borderRadius: 10 }}>
-                        <FontAwesome6 name='bowl-food' size={30} color='#FCAC12' />
-                    </View>
-                    <View style={{ flexDirection: 'column', marginStart: 10 }}>
-                        <Text style={{ fontSize: 18, marginBottom: 9, fontWeight: 'bold', color: '#000' }}>Shopping</Text>
-                        <Text style={{ fontSize: 15 }}>Buy some sextoy</Text>
-                    </View>
-                    <View style={{ flexDirection: 'column', marginStart: 'auto' }}>
-                        <Text style={{ fontSize: 18, marginBottom: 9, color: 'red', fontWeight: 'bold' }}>-$120</Text>
-                        <Text style={{ fontSize: 15 }}>10:00 AM</Text>
-                    </View>
-                </View>
-            </ScrollView>
-        </View>
+            
+            {
+                Transaction.length >0 && 
+                Transaction.map((item, index) => {
+                        const isDifferentMonth = index === 0 || item.date.getMonth() !== hTransaction[index - 1].date.getMonth();
+                        return (
+                            <View key={index}>
+                                <ItemTransaction item={item}></ItemTransaction>
+                            </View>
+                        );
+                    })
+            }
+            
+        </ScrollView>
     )
 }
 

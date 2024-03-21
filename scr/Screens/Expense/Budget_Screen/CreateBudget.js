@@ -60,11 +60,13 @@ const CreateBudget = () => {
     };
     const [checked, setChecked] = useState(false);
     const handleAdd = () => {
+        const time = new Date;
         const item = {
             nameBudget: typeBudget,
             value: ValueBudget,
             messageBudget: messageBudget,
-            remaining: ValueBudget
+            remaining: ValueBudget,
+            time: time
         }
         //console.log(item);
          addBudget(item);

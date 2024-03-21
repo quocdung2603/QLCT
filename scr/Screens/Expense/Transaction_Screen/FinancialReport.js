@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -14,12 +14,82 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-
+import CharReport from '../../../Components/CharReport';
+import { useData } from '../../../../DataContext';
+import ItemTransaction from '../../../Components/ItemTransaction';
+const checkType={
+    checkE: { 
+        backgroundColor: 'blue', 
+        borderColor: '#7F3DFF', 
+        borderWidth: 1, 
+        paddingHorizontal: 20, 
+        paddingVertical: 5, 
+        borderTopLeftRadius: 10, 
+        borderBottomLeftRadius: 10 
+    },
+    unCheckE: { 
+        borderColor: '#7F3DFF', 
+        borderWidth: 1, 
+        paddingHorizontal: 20, 
+        paddingVertical: 5, 
+        borderTopLeftRadius: 10, 
+        borderBottomLeftRadius: 10 
+    },
+    checkI: {
+        backgroundColor: 'blue', 
+        borderColor:'#7F3DFF', 
+        borderWidth:1, 
+        paddingHorizontal:20,
+        paddingVertical:5
+        ,borderTopRightRadius:10, 
+        borderBottomRightRadius:10
+    },
+    unCheckI: {
+        borderColor:'#7F3DFF', 
+        borderWidth:1, 
+        paddingHorizontal:20,
+        paddingVertical:5
+        ,borderTopRightRadius:10, 
+        borderBottomRightRadius:10
+    }
+}
 const FinancialReport = ({navigation})  => {
+    const [typeReport,setTypeRepory]=useState(0);
+    const [sumMoney,setSumMoney]=useState(0);
+    const [sumMoneyStr,setSumMoneyStr]=useState(0);
+    const { hTransaction } = useData();
+    const [add,setAdd]=useState([]);
+    const [str,setStr]=useState([]);
+    useEffect(()=>{
+        let sum=0;
+        let sumStr=0;
+        const monthNow = new Date().getMonth()+1;
+        const yearNow = new Date().getFullYear();
+        hTransaction.sort((a, b) => a.date - b.date);
+        const ad=[];
+        const st=[];
+        hTransaction.map((item) => {
+            //console.log(item);
+            if (item.typeTransaction==="add" && item.date.getMonth() + 1 === monthNow && yearNow === item.date.getFullYear()) {
+                const tmp = parseInt(item.money);
+                sum+=tmp;
+                ad.push(item);
+            }
+            if (item.typeTransaction==="str" && item.date.getMonth() + 1 === monthNow && yearNow === item.date.getFullYear()) {
+                const tmp = parseInt(item.money);
+                sumStr+=tmp;
+                st.push(item);
+            }
+        })
+        setSumMoneyStr(sumStr);
+        setSumMoney(sum);
+        setAdd(ad);
+        setStr(st);
+    },[hTransaction])
     return (
-        <View style={{flex:1, flexDirection:'column', padding:10}}>
+        <ScrollView style={{flex:1, flexDirection:'column', padding:10}}>
             <TouchableOpacity   
-                onPress={() => {navigation.navigate("Transaction")}}
+                onPress={() => {navigation.navigate("Home")}}
                 style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
                 <View style={{ marginRight: 'auto' }}>
                     <AntDesign name='arrowleft' size={30} color='#000' />
@@ -44,20 +114,18 @@ const FinancialReport = ({navigation})  => {
                 </View>
             </View>
             <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', marginRight:'auto', margin:10}}>
-                <Text style={{fontSize:20, color:'black', fontWeight:'bold'}}>$300</Text>
+                <Text style={{fontSize:20, color:'black', fontWeight:'bold'}}>${typeReport===0 ? sumMoneyStr : sumMoney}</Text>
             </View>
-            <View style={{backgroundColor:'yellow', height:200}}>
-                {/* bieu do chi tieu cac kieu */}
+            <View style={{ height:220, marginHorizontal: 5,alignItems: 'center',justifyContent: 'center'}}>
+                <CharReport typeReport={typeReport}></CharReport>
             </View>
             <View style={{flexDirection:'row', marginHorizontal:15, marginVertical:10, justifyContent:'center', alignContent:'center'}}>
-                <View style={{borderColor:'#7F3DFF', borderWidth:1, paddingHorizontal:20,paddingVertical:5
-                ,borderTopLeftRadius:10,borderBottomLeftRadius:10}}>
-                    <Text style={{fontWeight:'bold', fontSize:20, color:'black'}}>Expense</Text>
-                </View>
-                <View style={{borderColor:'#7F3DFF', borderWidth:1, paddingHorizontal:20,paddingVertical:5
-                ,borderTopRightRadius:10, borderBottomRightRadius:10}}>
-                    <Text style={{fontWeight:'bold', fontSize:20, color:'black'}}>Income</Text>
-                </View>
+                <TouchableOpacity onPress={()=>{setTypeRepory(0)}} style={typeReport===0 ? checkType.checkE : checkType.unCheckE}>
+                        <Text style={{fontWeight:'bold', fontSize:20, color:'black'}}>Expense</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>{setTypeRepory(1)}} style={typeReport===1 ? checkType.checkI : checkType.unCheckI}> 
+                        <Text style={{fontWeight:'bold', fontSize:20, color:'black'}}>Income</Text>
+                </TouchableOpacity>
             </View>
             <View style={{flexDirection:'row', margin:10, justifyContent:'center', alignItems:'center'}}>
                 <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', borderWidth:1, borderColor:'grey', paddingHorizontal:10, borderRadius:10, marginEnd:'auto'}} >
@@ -68,22 +136,24 @@ const FinancialReport = ({navigation})  => {
                     <FontAwesome5 name='sort-amount-down' size={20} color='black'/>
                 </View>
             </View>
-            <ScrollView>
-                <View style={{flexDirection:'row', marginVertical:5, marginHorizontal:25}}>
-                    <View style={{backgroundColor:'#FCEED4', padding:10, borderRadius:10}}>
-                        <FontAwesome6 name='bowl-food' size={30} color='#FCAC12'/>
-                    </View>
-                    <View style={{flexDirection:'column', marginStart:10}}>
-                        <Text style={{fontSize:18, marginBottom:9, fontWeight:'bold', color:'#000'}}>Shopping</Text>
-                        <Text style={{fontSize:15}}>Buy some sextoy</Text>
-                    </View>
-                    <View style={{flexDirection:'column', marginStart:'auto'}}>
-                        <Text style={{fontSize:18, marginBottom:9, color:'red', fontWeight:'bold'}}>-$120</Text>
-                        <Text style={{fontSize:15}}>10:00 AM</Text>
-                    </View>
-                </View>
-            </ScrollView>
-        </View>
+            {
+                typeReport===1 ? 
+                add.map((item,index)=>{
+                    return (
+                            <View key={index}>
+                                <ItemTransaction item={item}></ItemTransaction>
+                            </View>
+                        );
+                }) :
+                str.map((item,index)=>{
+                    return (
+                            <View key={index}>
+                                <ItemTransaction item={item}></ItemTransaction>
+                            </View>
+                        );
+                })
+            }
+        </ScrollView>
     );
 }
 
