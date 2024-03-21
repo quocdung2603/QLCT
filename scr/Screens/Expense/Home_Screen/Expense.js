@@ -189,7 +189,7 @@ const Expense = ({navigation}) => {
                     transparent={true}
                     visible={DateModalS}
                     onRequestClose={() => { setDateModalS(false) }}
-                    style={{borderW:1, backgroundColor:'green'}}
+                    style={{borderWidth:1, backgroundColor:'green'}}
                 >
                     <TouchableOpacity
                         style={styles.modalBackground}
