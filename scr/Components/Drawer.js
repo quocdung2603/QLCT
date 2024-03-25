@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 const DrawerList = [
     {icon: 'home-outline', label: 'Home', navigateTo: 'Home'},
     {icon: 'bookshelf', label: 'Schedule', navigateTo: 'Schedule'},
+    {icon: 'bookshelf', label: 'Health', navigateTo: 'Health'},
 ];
 const DrawerL=()=>{
     const navigation = useNavigation();

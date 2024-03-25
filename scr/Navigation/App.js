@@ -31,6 +31,8 @@ import DetailSchedule from '../Screens/Schedule/Home_Screens/DetailSchedule';
 import AddNote from '../Screens/Schedule/Note_Screens/AddNote';
 import DetailNote from '../Screens/Schedule/Note_Screens/DetailNote';
 import EditNote from '../Screens/Schedule/Note_Screens/EditNote';
+//Health
+import TabarHealth from './TabarHealth';
 const Stack= createStackNavigator();
 const Drawer= createDrawerNavigator();
 
@@ -61,6 +63,8 @@ function App(props) {
                     <Drawer.Screen name='AddNote' component={AddNote} options={{headerShown:false}}/>
                     <Drawer.Screen name='DetailNote' component={DetailNote} options={{headerShown:false}}/>
                     <Drawer.Screen name='EditNote' component={EditNote} options={{headerShown:false}}/>
+                    {/* Health */}
+                    <Drawer.Screen name='Health' component={TabarHealth} options={{headerShown:false}}/>
                 </Drawer.Navigator>
             </NavigationContainer>
         </DataProvider>
