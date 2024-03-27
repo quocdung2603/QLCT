@@ -65,7 +65,6 @@ const ClockHome = ()  => {
     const onTimerComplete = () => {
         console.log('Timer completed!');
     };
-
     return (
         <View style={{flex:1, backgroundColor:'white'}}>
             <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', marginVertical:50}}>

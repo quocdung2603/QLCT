@@ -19,7 +19,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
-const DetailNote = () => {
+const DetailNote = ({navigation,route}) => {
+    const item = route.params?.item || "Null";
     return (
         <View style={{flex:1, flexDirection:'column', margin: 10}}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
@@ -30,10 +31,10 @@ const DetailNote = () => {
             </View>
             <View style={{margin:10, flexDirection:'row'}}>
                 <Ionicons name="star" size={30} color="#FD3C4A" />
-                <Text style={{fontSize:23, fontWeight:'bold', color:'#7F3DFF', marginStart:10}}>Mạng trường như c*c</Text>
+                <Text style={{fontSize:23, fontWeight:'bold', color:'#7F3DFF', marginStart:10}}>{item.title}</Text>
             </View>
             <View style={{margin:10, borderWidth:1, borderRadius:10, borderColor:'#D3BDFF', backgroundColor:'#D3BDFF'}}>
-                <Text style={{fontSize:18}}>con cof maf ddi awn ddem</Text>
+                <Text style={{fontSize:18}}>{item.content}</Text>
             </View>
         </View>
     );

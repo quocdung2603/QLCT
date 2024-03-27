@@ -260,7 +260,7 @@ const DataProvider = ({ children }) => {
     }
     getBudget();
     },[budget])
-    
+
   return (
     <DataContext.Provider value={{ accountBalance,collect,hTransaction,budget, 
           updateAccountBalanece,
@@ -270,12 +270,13 @@ const DataProvider = ({ children }) => {
           addBudget,
           deletehTransaction,
           getBudget,
-          deleteBudget
+          deleteBudget,
      }}>
-      {children}
+        {children}
     </DataContext.Provider>
   );
 };
+
 
 const useData = () => {
   return useContext(DataContext);

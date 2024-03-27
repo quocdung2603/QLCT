@@ -19,7 +19,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 //datetime 
 import { TimeDatePicker, Modes } from "react-native-time-date-picker";
 import moment from "moment";
+import { useDataSchedule } from "../../../Context/ScheduleContext";
+import { useNavigation } from "@react-navigation/native";
 const AddSchedule = ({navigation}) => {
+    const { schedule, addSchedule} =useDataSchedule();
     const now = moment().valueOf();
     const [DateModalS, setDateModalS]= useState(false);
     const [valueDateS, setValueDateS]= useState('Pick Date');
@@ -29,9 +32,55 @@ const AddSchedule = ({navigation}) => {
     const [valueDateE, setValueDateE]= useState('Pick Date');
     const [TimeModalE, setTimeModalE]= useState(false);
     const [valueTimeE, setValueTimeE]= useState('Pick Time');
+
+    const [alarm, setAlarm]= useState(0);
+    const [note, setNote]= useState("");
+    const [title,setTitle]=useState("");
     //Switch
     const [AlarmSwitch, setAlarmSwitch]= useState(false);
     const [NoteSwitch, setNoteSwitch]= useState(false);
+    const formatTime = (time) => {
+        const selectedDate = new Date(time);
+        const hours = selectedDate.getHours();
+        const minutes = selectedDate.getMinutes();
+        const formattedHours = hours < 10 ? '0' + hours : hours;
+        const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+        const period = hours >= 12 ? 'PM' : 'AM';
+        return `${formattedHours}:${formattedMinutes} ${period}`;
+    };
+    const formatDate = (dateT) =>{
+        const selectedDate = new Date(dateT);
+        const date= selectedDate.getDate();
+        const month= selectedDate.getMonth()+1;
+        const year = selectedDate.getFullYear();
+        return `${date}/${month}/${year}`;
+    }
+    const handleAdd = ()=>{
+        const timeS=formatTime(valueTimeS);
+        const dateS=formatDate(valueDateS);
+        const timeE=formatTime(valueTimeE);
+        const dateE=formatDate(valueDateE);
+        const id = schedule.length > 0 ? schedule[schedule.length-1].id + 1 : 0;
+        const item = {
+            id: id,
+            title: title,
+            dateS: dateS,
+            dateE: dateE,
+            timeS: timeS,
+            timeE: timeE,
+            alarm: alarm,
+            note: note
+        }
+        addSchedule(item);
+        setTitle("");
+        setValueDateS("PickDate");
+        setValueDateE("Pick Date");
+        setValueTimeS("Pick Time");
+        setValueTimeE("Pick Time");
+        setAlarm(0);
+        setNote("");
+        navigation.navigate('HomeSchedule')
+    }
     return ( 
         <View style={{flex:1, backgroundColor:'white', flexDirection:'column', padding:10}}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
@@ -44,9 +93,11 @@ const AddSchedule = ({navigation}) => {
                 <View style={{ flexDirection: 'row', marginHorizontal:10, alignItems:'center', marginVertical:10 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Title</Text>
                     <TextInput
+                        value={title}
                         autoComplete='false'
                         keyboardType='text'
                         placeholder="Enter schedule's title"
+                        onChangeText={txt => setTitle(txt)}
                         style={{ backgroundColor: '#fff',borderColor: '#000', marginHorizontal: 10, marginVertical: 10, borderBottomWidth:1, width:300}} />
                 </View>
                 {/* start */}
@@ -104,6 +155,7 @@ const AddSchedule = ({navigation}) => {
                                     console.log("month: ", month);
                                 }}
                                 onSelectedChange={(selected) => {
+                                    setValueDateS(selected);
                                     console.log("selected: ", selected);
                                 }}
                                 onTimeChange={(time) => {
@@ -136,13 +188,8 @@ const AddSchedule = ({navigation}) => {
                                     },
                                     is24Hour: true,
                                 }}
-                                onMonthYearChange={(month) => {
-                                    console.log("month: ", month);
-                                }}
-                                onSelectedChange={(selected) => {
-                                    console.log("selected: ", selected);
-                                }}
                                 onTimeChange={(time) => {
+                                    setValueTimeS(time);
                                     console.log("time: ", time);
                                 }}
                             />
@@ -168,6 +215,7 @@ const AddSchedule = ({navigation}) => {
                                     console.log("month: ", month);
                                 }}
                                 onSelectedChange={(selected) => {
+                                    setValueDateE(selected);
                                     console.log("selected: ", selected);
                                 }}
                                 onTimeChange={(time) => {
@@ -208,6 +256,7 @@ const AddSchedule = ({navigation}) => {
                                 }}
                                 onTimeChange={(time) => {
                                     console.log("time: ", time);
+                                    setValueTimeE(time);
                                 }}
                             />
                         </View>
@@ -225,9 +274,10 @@ const AddSchedule = ({navigation}) => {
                     <View style={{marginHorizontal:20, flexDirection:'row', padding:10, alignItems:'center'}}>
                         <Text style={{color:'black', fontSize:18, marginEnd:'auto'}}>Send notification before: </Text>
                         <TextInput
+                        value={alarm}
                         autoComplete='false'
                         keyboardType='text'
-                        placeholder="10"
+                        onChangeText={txt => setAlarm(txt)}
                         style={{ backgroundColor: '#fff',borderColor: '#000', borderBottomWidth:1, fontSize:18}} />
                         <Text style={{color:'black', fontSize:18, marginStart:'auto'}}>minutes</Text>
                     </View>
@@ -242,16 +292,18 @@ const AddSchedule = ({navigation}) => {
                 {NoteSwitch === true ? (
                     <View style={{marginHorizontal:20,padding:10, flexDirection:'row', borderRadius:10, height:200, borderColor:'#EEE5FF', backgroundColor:'#EEE5FF'}}>
                         <TextInput
+                        value={note}
                         autoComplete='false'
                         keyboardType='text'
                         placeholder="Enter your note"
+                        onChangeText={txt=>setNote(txt)}
                         style={{fontSize:18}} />
                     </View>
                 ) : ''}
             </View>
-            <View style={{ marginTop: 100, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginVertical: 20, marginHorizontal: 50, backgroundColor: '#7F3DFF', borderRadius: 20, paddingVertical: 10 }}>
+            <TouchableOpacity onPress={handleAdd}  style={{ marginTop: 100, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginVertical: 20, marginHorizontal: 50, backgroundColor: '#7F3DFF', borderRadius: 20, paddingVertical: 10 }}>
                     <Text style={{ fontSize: 20, color: 'white' }}>Continue</Text>
-            </View>
+            </TouchableOpacity>
         </View>
     );
 }

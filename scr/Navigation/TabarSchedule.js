@@ -13,6 +13,9 @@ import { AddButton2 } from '../Components/AddButton2';
 import { Alert } from 'react-native';
 import test from '../Screens/Test';
 import SettingSchedule from '../Screens/Schedule/Setting_Screens/SettingSchedule';
+import { useDataSchedule } from '../Context/ScheduleContext';
+import { useData } from '../../DataContext';
+
 //Screen names
 const homeName = "HomeSchedule";
 const noteName="TakeNote";
