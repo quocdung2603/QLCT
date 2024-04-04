@@ -40,7 +40,7 @@ const EditNote = ({navigation,route}) => {
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
                 <TouchableOpacity 
                     style={{ marginRight: 'auto' }} 
-                    onPress={() => {navigation.navigate("TakeNote")}}
+                    onPress={() => {navigation.goBack()}}
                 >
                     <AntDesign name='arrowleft' size={30} color='#000' />
                 </TouchableOpacity>
