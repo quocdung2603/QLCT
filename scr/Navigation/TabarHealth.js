@@ -8,11 +8,13 @@ import HomeHealth from '../Screens/Health/Home_Screen/HomeHealth';
 import CategoryMain from '../Screens/Health/Categories_Screen/CategoryMain';
 import PlanMain from '../Screens/Health/Plan_Screen/PlanMain';
 import SettingMain from '../Screens/Health/Setting_Screen/SettingMain';
+import ExcersiseMain from '../Screens/Health/Excersise_Screen/ExcersiseMain';
 //Screen names
 const homeName = "HomeHealth";
 const categoryName="CategoryMain";
 const planName = "PlanMain";
 const settingName="SettingMain";
+const excersiseName="ExcersiseMain";
 
 const Tab = createBottomTabNavigator();
 function TabarHealth({route}) {
@@ -28,16 +30,13 @@ function TabarHealth({route}) {
                             iconName = focused ? 'home' : 'home-outline';
 
                         } else if (rn === categoryName) {
-                            iconName = focused ? 'barbell' : 'barbell-outline';
+                            iconName = focused ? 'library' : 'library-outline';
                         } 
+                        else if (rn === excersiseName) {
+                            iconName = focused ? 'barbell' : 'barbell-outline';
+                        }
                         else if (rn === planName) {
                             iconName = focused ? 'clipboard' : 'clipboard-outline';
-                        }
-                        else if (rn === settingName) {
-                            iconName = focused ? 'settings' : 'settings-outline';
-                        }
-                        else if(rn === otherscreenName) {
-                            return <AddButton2/>
                         }
                         return <Ionicons name={iconName} size={size} color={color} />;
                     },
@@ -51,8 +50,9 @@ function TabarHealth({route}) {
             >
                 <Tab.Screen name={homeName} component={HomeHealth} options={{ headerShown: false }} />
                 <Tab.Screen name={categoryName} component={CategoryMain} options={{ headerShown: false }} />
+                <Tab.Screen name={excersiseName} component={ExcersiseMain} options={{ headerShown: false }} />
                 <Tab.Screen name={planName} component={PlanMain} options={{ headerShown: false }} />
-                <Tab.Screen name={settingName} component={SettingMain} options={{ headerShown: false }} />
+                
             </Tab.Navigator>
     );
 }

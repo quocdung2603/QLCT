@@ -10,6 +10,7 @@ import {
     View,
     Image,
     TextInput,
+    Modal
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -20,12 +21,18 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Entypo from 'react-native-vector-icons/Entypo';
 import Home from '../../Expense/Home_Screen/Home';
 
+// 
+import ExcersiseItem from '../Excersise_Screen/ExcersiseItem';
+
 const CategoryMain = ({ navigation }) => {
     const [Shouder, setShouder] = useState(1)
     const [Back, setBack] = useState(0)
     const [Chest, setChest] = useState(0)
     const [Pack, setPack] = useState(0)
     const [Leg, setLeg] = useState(0)
+
+    //
+    const [MChiTietBT, setMChiTietBT] = useState(false);
     return (
         <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
             <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
@@ -71,14 +78,16 @@ const CategoryMain = ({ navigation }) => {
             <Text style={{margin:10, fontSize:22, fontWeight:'bold', color:'#000'}}>Các bài tập</Text>
             {Shouder === 1 ? (
                 <ScrollView style={{flex:1, flexDirection:'column', backgroundColor:'#fff'}}>
-                    <View style={{ marginVertical: 4, marginHorizontal:30, flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 10, alignItems:'center' }}>
+                    <TouchableOpacity 
+                        onPress={() => {setMChiTietBT(true)}}
+                        style={{ marginVertical: 4, marginHorizontal:30, flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 10, alignItems:'center' }}>
                         <Text style={{ fontSize: 20, color: '#000', fontWeight: 'bold' }}>Nghiêng vai với tạ đơn</Text>
                         <View style={{ marginStart: 'auto', backgroundColor: 'yellow' }}>
                             <Text>Hình ảnh</Text>
                             <Text>Hình ảnh</Text>
                             <Text>Hình ảnh</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
             </ScrollView>
             ) : ""}
             {Chest === 1 ? (
@@ -93,6 +102,13 @@ const CategoryMain = ({ navigation }) => {
             {Leg === 1 ? (
                 <View style={{flex:1,flexDirection:'column', backgroundColor:'#fff'}}></View>
             ) : ""}
+            <Modal animationType='slide' transparent={true} visible={MChiTietBT} onRequestClose={() => { setMChiTietBT(false) }} >
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                    <View style={{flexDirection:'column', backgroundColor: 'white', width: 400, height: 700, borderRadius: 10,  padding: 20 }}>
+                        <ExcersiseItem TatModal={setMChiTietBT} />
+                    </View>
+                </View>
+            </Modal>
         </View>
     )
 }

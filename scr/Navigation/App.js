@@ -33,46 +33,47 @@ import DetailNote from '../Screens/Schedule/Note_Screens/DetailNote';
 import EditNote from '../Screens/Schedule/Note_Screens/EditNote';
 //Health
 import TabarHealth from './TabarHealth';
-import { DataProviderSchedule, ScheduleContext } from '../Context/ScheduleContext';
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
+import ExcersiseItem from '../Screens/Health/Excersise_Screen/ExcersiseItem';
+import PlanList from '../Screens/Health/Plan_Screen/PlanList';
+import CreatePlan from '../Screens/Health/Plan_Screen/CreatePlan';
+const Stack= createStackNavigator();
+const Drawer= createDrawerNavigator();
 
 function App(props) {
-    return (
-        <DataProviderSchedule>
-            <DataProvider>
-                <NavigationContainer screenOptions={{
-                    headerShown: false
-                }}>
-                    <Drawer.Navigator
-                        drawerContent={props => <DrawerDesign {...props} />}
-                    >
-                        {/* Expense */}
-                        <Drawer.Screen name='Home' component={Tabar} options={{ headerShown: false }} />
-                        <Drawer.Screen name='Income' component={Income} options={{ headerShown: false }} />
-                        <Drawer.Screen name='Expense' component={Expense} options={{ headerShown: false }} />
-                        <Drawer.Screen name='Notification' component={Notification} options={{ headerShown: false }} />
-                        <Drawer.Screen name='Budget' component={Budget} options={{ headerShown: false }} />
-                        <Drawer.Screen name='CreateBudget' component={CreateBudget} options={{ headerShown: false }} />
-                        <Drawer.Screen name='DetailBudget' component={DetailBudget} options={{ headerShown: false }} />
-                        <Drawer.Screen name='Transaction' component={Transaction} options={{ headerShown: false }} />
-                        <Drawer.Screen name='FinancialReport' component={FinancialReport} options={{ headerShown: false }} />
-                        <Drawer.Screen name='DetailTransaction' component={DetailTransaction} options={{ headerShown: false }} />
-                        {/* Schedule */}
-                        <Drawer.Screen name='Schedule' options={{ headerShown: false }} component={TabarSchedule}/>
-                        <Drawer.Screen name='AddSchedule' options={{ headerShown: false }} component={AddSchedule}/>
-                        <Drawer.Screen name='EditSchedule' options={{ headerShown: false }} component={EditSchedule}/>
-                        <Drawer.Screen name='DetailSchedule'  options={{ headerShown: false }} component={DetailSchedule}/>
-                        <Drawer.Screen name='AddNote' component={AddNote} options={{ headerShown: false }}/>
-                        <Drawer.Screen name='DetailNote' options={{ headerShown: false }} component={DetailNote}/>
-                        <Drawer.Screen name='EditNote' options={{ headerShown: false }} component={EditNote}/>
-
-                        {/* Health */}
-                        <Drawer.Screen name='Health' component={TabarHealth} options={{ headerShown: false }} />
-                    </Drawer.Navigator>
-                </NavigationContainer>
-            </DataProvider>
-        </DataProviderSchedule>
+    return ( 
+        <DataProvider>
+            <NavigationContainer  screenOptions={{     
+                headerShown: false}}>
+                <Drawer.Navigator
+                    drawerContent={props=><DrawerDesign {...props}/>}
+                >
+                    {/* Expense */}
+                    <Drawer.Screen name='Home' component={Tabar} options={{headerShown:false}}/>
+                    <Drawer.Screen name='Income' component={Income} options={{headerShown:false}}/>
+                    <Drawer.Screen name='Expense' component={Expense} options={{headerShown:false}}/>
+                    <Drawer.Screen name='Notification' component={Notification} options={{headerShown:false}}/>
+                    <Drawer.Screen name='Budget' component={Budget} options={{headerShown:false}}/>
+                    <Drawer.Screen name='CreateBudget' component={CreateBudget} options={{headerShown:false}}/>
+                    <Drawer.Screen name='DetailBudget' component={DetailBudget} options={{headerShown:false}}/>
+                    <Drawer.Screen name='Transaction' component={Transaction} options={{headerShown:false}}/>
+                    <Drawer.Screen name='FinancialReport' component={FinancialReport} options={{headerShown:false}}/>
+                    <Drawer.Screen name='DetailTransaction' component={DetailTransaction} options={{headerShown:false}}/>
+                    {/* Schedule */}
+                    <Drawer.Screen name='Schedule' component={TabarSchedule} options={{headerShown:false}}/>
+                    <Drawer.Screen name='AddSchedule' component={AddSchedule} options={{headerShown:false}}/>
+                    <Drawer.Screen name='EditSchedule' component={EditSchedule} options={{headerShown:false}}/>
+                    <Drawer.Screen name='DetailSchedule' component={DetailSchedule} options={{headerShown:false}}/>
+                    <Drawer.Screen name='AddNote' component={AddNote} options={{headerShown:false}}/>
+                    <Drawer.Screen name='DetailNote' component={DetailNote} options={{headerShown:false}}/>
+                    <Drawer.Screen name='EditNote' component={EditNote} options={{headerShown:false}}/>
+                    {/* Health */}
+                    <Drawer.Screen name='Health' component={TabarHealth} options={{headerShown:false}}/>
+                    <Drawer.Screen name='ExcersiseItem' component={ExcersiseItem} options={{headerShown:false}}/>
+                    <Drawer.Screen name='PlanList' component={PlanList} options={{headerShown:false}}/>
+                    <Drawer.Screen name='CreatePlan' component={CreatePlan} options={{headerShown:false}}/>
+                </Drawer.Navigator>
+            </NavigationContainer>
+        </DataProvider>
     );
 }
 
