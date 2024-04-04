@@ -132,6 +132,7 @@ const DataProvider = ({ children }) => {
 
         //save data
         await AsyncStorage.setItem("budget", JSON.stringify(tmp));
+        getBudget();
       } catch (error) {
         console.log("Lỗi thêm dữ liệu");
       }
