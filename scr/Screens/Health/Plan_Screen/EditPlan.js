@@ -22,7 +22,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Home from '../../Expense/Home_Screen/Home';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const CreatePlan = ({ navigation }) => {
+const EditPlan = ({ navigation }) => {
     const [MThemBT, setMThemBT] = useState(false)
     return (
         <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
@@ -30,6 +30,7 @@ const CreatePlan = ({ navigation }) => {
                 <TouchableOpacity style={{ marginRight: 'auto' }} onPress={() => { navigation.goBack() }}>
                     <AntDesign name='arrowleft' size={30} color='#000' />
                 </TouchableOpacity>
+                <Text style={{fontSize:22, fontWeight:'bold', color:'#000'}}>Tập Vai</Text>
                 <TouchableOpacity 
                     style={{ marginStart: 'auto' }} 
                     onPress={() => { 
@@ -37,10 +38,6 @@ const CreatePlan = ({ navigation }) => {
                 }}>
                     <AntDesign name='check' size={30} color='#000' />
                 </TouchableOpacity>
-            </View>
-            <View style={{flexDirection:'row', alignItems:'center', margin:10}}>
-                <Text style={{fontSize:20, fontWeight:'bold', color:'#000', marginEnd:10}}>Tên danh sách</Text>
-                <TextInput keyboardType='default' placeholder='Nhập tên danh sách' style={{borderWidth:1, borderRadius:10, maxHeight:40, width:240}} />
             </View>
             <Text style={{margin:10, fontSize:20, fontWeight:'bold', color:'#000'}}>Danh sách bài tập</Text>
             <ScrollView style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
@@ -109,4 +106,4 @@ const CreatePlan = ({ navigation }) => {
         </View>
     )
 }
-export default CreatePlan;
+export default EditPlan;
