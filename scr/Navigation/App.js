@@ -36,6 +36,8 @@ import TabarHealth from './TabarHealth';
 import ExcersiseItem from '../Screens/Health/Excersise_Screen/ExcersiseItem';
 import PlanList from '../Screens/Health/Plan_Screen/PlanList';
 import CreatePlan from '../Screens/Health/Plan_Screen/CreatePlan';
+import EditPlan from '../Screens/Health/Plan_Screen/EditPlan';
+// data
 import { DataProviderSchedule } from '../Context/ScheduleContext';
 const Stack= createStackNavigator();
 const Drawer= createDrawerNavigator();
@@ -73,6 +75,7 @@ function App(props) {
                         <Drawer.Screen name='ExcersiseItem' component={ExcersiseItem} options={{headerShown:false}}/>
                         <Drawer.Screen name='PlanList' component={PlanList} options={{headerShown:false}}/>
                         <Drawer.Screen name='CreatePlan' component={CreatePlan} options={{headerShown:false}}/>
+                        <Drawer.Screen name='EditPlan' component={EditPlan} options={{headerShown:false}}/>
                     </Drawer.Navigator>
                 </NavigationContainer>
             </DataProviderSchedule>
