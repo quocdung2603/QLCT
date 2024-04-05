@@ -21,7 +21,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useDataSchedule } from "../../../Context/ScheduleContext";
 
 const TakeNote = ({ navigation }) => {
-    const { notes, deleteNote } = useDataSchedule();
+    const { notes, deleteNote, choiceFlag } = useDataSchedule();
+  
     const formatTime = (time) => {
         const selectedDate = new Date(time);
         const hours = selectedDate.getHours();
@@ -61,6 +62,9 @@ const TakeNote = ({ navigation }) => {
                             <Text style={{ fontSize: 20, color: '#7F3DFF', marginEnd: 'auto', fontWeight: 'bold' }}>{formatTime(item.time)}</Text>
                             <TouchableOpacity
                                 style={{ marginStart: 'auto' }}
+                                onPress={()=>{
+                                    choiceFlag(item);
+                                }}
                             >
                                 <Ionicons name="flag" size={30} color='#FD3C4A' />
                             </TouchableOpacity>

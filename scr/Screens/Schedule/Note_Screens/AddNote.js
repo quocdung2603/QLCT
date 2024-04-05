@@ -30,7 +30,8 @@ const AddNote = ({navigation}) => {
             id: id,
             title: title,
             content: content,
-            time: time
+            time: time,
+            flag: false
         }
         addNote(item);
         setTitle("");

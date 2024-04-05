@@ -5,44 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const DataProviderSchedule = ({ children }) => {
     const [schedule,setSchedule]=useState([]);
     const [notes,setNote]=useState([]);
-    const getNote = ()=>{
-        AsyncStorage.getItem("notes").then(value =>{
-            if(value!=null)
-            {
-                const tmp = JSON.parse(value);
-                setNote(tmp);
-            }
-        })
-    }
-    const addNote = async (newData)=>{
-        //console.log(newData);
-        try {
-            const dt=notes;
-            dt.push(newData);
-            await AsyncStorage.setItem("notes",JSON.stringify(dt));
-            getNote();
-        } catch (error) {
-            console.log("Lỗi rồi");
-        }   
-    }
-    const updateNote = async (newData)=>{
-        const dt=notes;
-        const id = dt.findIndex(a=> a.id===newData.id);
-        try {
-            dt[id]=newData;
-            await AsyncStorage.setItem("notes",JSON.stringify(dt));
-            getNote();
-        } catch (error) {
-            console.log("lỗi");
-        } 
-    }
-    const deleteNote = async (deleteData) =>{
-        const id = notes.findIndex(it=>it.id===deleteData.id);
-        console.log("Phần tử đã xóa "+ id);
-        notes.splice(id,1);
-        await AsyncStorage.setItem("notes",JSON.stringify(notes));
-        getNote();
-    }
+    //Schedule start
     const getSchedule = ()=>{
         AsyncStorage.getItem("schedule").then(value =>{
             if(value!=null)
@@ -82,6 +45,76 @@ const DataProviderSchedule = ({ children }) => {
             console.log("Lỗi")
         }
     }
+    //Schedule end
+
+    //Note start
+    //Lấy note
+    const getNote = ()=>{
+        AsyncStorage.getItem("notes").then(value =>{
+            if(value!=null)
+            {
+                const tmp = JSON.parse(value);
+                const dt = tmp.filter(it => it.flag === true);
+                const dt1 = tmp.filter(it => it.flag === false);
+                dt1.sort((a, b) => b.id - a.id); // Sắp xếp mảng dt1
+                const final = [...dt, ...dt1];
+                final.forEach((item) => {
+                    if (item.flag === false)
+                        console.log(item);
+                });
+                setNote(final);
+            }
+        })
+    }
+    //Thêm note
+    const addNote = async (newData)=>{
+        //console.log(newData);
+        try {
+            const dt=notes;
+            dt.push(newData);
+            await AsyncStorage.setItem("notes",JSON.stringify(dt));
+            getNote();
+        } catch (error) {
+            console.log("Lỗi rồi");
+        }   
+    }
+    //Cập nhật note
+    const updateNote = async (newData)=>{
+        const dt=notes;
+        const id = dt.findIndex(a=> a.id===newData.id);
+        try {
+            dt[id]=newData;
+            await AsyncStorage.setItem("notes",JSON.stringify(dt));
+            getNote();
+        } catch (error) {
+            console.log("lỗi");
+        } 
+    }
+    //Xóa note
+    const deleteNote = async (deleteData) =>{
+        const id = notes.findIndex(it=>it.id===deleteData.id);
+        console.log("Phần tử đã xóa "+ id);
+        notes.splice(id,1);
+        await AsyncStorage.setItem("notes",JSON.stringify(notes));
+        getNote();
+    }
+    //Đặt cờ cho note
+    const choiceFlag = async (data)=>{
+        const id = notes.findIndex(it=>it.id===data.id);
+        if(notes[id].flag===true)
+        {
+            notes[id].flag=false;
+        }
+        else
+        {
+            notes[id].flag=true;
+        }
+        await AsyncStorage.setItem("notes",JSON.stringify(notes));
+        getNote();
+    }
+    //note end
+
+    //Load data
     useEffect(()=>{
         const getSchedule = ()=>{
             AsyncStorage.getItem("schedule").then(value =>{
@@ -96,7 +129,7 @@ const DataProviderSchedule = ({ children }) => {
         getNote();
     },[])
     return (
-        <DataContext.Provider value={{ schedule,notes,addSchedule,deleteSchedule,updateSchedule,addNote,updateNote,deleteNote}}>
+        <DataContext.Provider value={{ schedule,notes,addSchedule,deleteSchedule,updateSchedule,addNote,updateNote,deleteNote,choiceFlag}}>
             {children}
         </DataContext.Provider>
     );
