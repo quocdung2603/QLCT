@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     SafeAreaView,
     View,
@@ -12,12 +12,12 @@ import Swiper from 'react-native-swiper';
 import Octicons from 'react-native-vector-icons/Octicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useDataHealth } from '../../../Context/HealthContext';
+import ChartHomeHealth from '../../../Components/ChartHomeHealth';
 
 const { width } = Dimensions.get('window');
 
 const HomeHealth = ({navigation}) => {
-    const {test}=useDataHealth();
-    console.log(test);
+    const {historyExercise}=useDataHealth();
     const swiper = useRef();
     const [value, setValue] = useState(new Date());
     const [week, setWeek] = useState(0);
@@ -121,6 +121,7 @@ const HomeHealth = ({navigation}) => {
                             <View style={{flexDirection:'column', margin:10}}>
                                 <View style={{height:250, backgroundColor:'yellow'}}>
                                     {/* biểu đồ tròn thể hiện calo */}
+                                    <ChartHomeHealth timeNow={value}></ChartHomeHealth>
                                 </View>
                                 <View style={{flexDirection:'column', marginVertical:10}}>
                                     <Text style={{fontSize:20, fontWeight:'bold', color:'#000', textAlign:'center'}}>Tổng Thời Gian Luyện Tập</Text>

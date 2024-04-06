@@ -21,12 +21,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Entypo from 'react-native-vector-icons/Entypo';
 import Home from '../../Expense/Home_Screen/Home';
 //
-import { CheckBox } from '@rneui/base';
+import { Button, CheckBox } from '@rneui/base';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useDataHealth } from '../../../Context/HealthContext';
 
 const ExcersiseMain = ({navigation}) => {
-    const {allExercise, getExercise}=useDataHealth();
+    const {allExercise, getExercise,addHistory,historyExercise}=useDataHealth();
     const [dataEx,setDataEx] = useState([]);
     const [exercises,setExercises]=useState([]);
     useEffect(()=>{
@@ -43,7 +43,6 @@ const ExcersiseMain = ({navigation}) => {
                 dt.push(it);
             });
             setDataEx(dt);
-            console.log(dataEx);
             setExercises(allExercise[0].exercises);
         }
     },[allExercise])
@@ -92,20 +91,24 @@ const ExcersiseMain = ({navigation}) => {
     const [minute,setMinute]=useState(0);
     const [seconds,setSconds]=useState(0);
     const [carlo,setCarlo]=useState(0);
+    const [selectExercise,setSelectExercise]=useState(null);
     useEffect(()=>{
         if(SE==1)
         {
             setTimeout(()=>{
+                if(selectExercise!=null)
+                setCarlo(carlo+selectExercise.carlo);
+                else
+                setCarlo(carlo+1);
+
                 if(seconds+1===60)
                 {
                     setSconds(0);
                     setMinute(minute+1);
-                    setCarlo(carlo+1);
                 }
                 else
                 {
                     setSconds(seconds+1);
-                    setCarlo(carlo+1);
                 }
             },1000)
         }
@@ -122,6 +125,29 @@ const ExcersiseMain = ({navigation}) => {
         return "0"+value;
         else
         return value;
+    }
+    const handleSelectExersicec = (item)=>{
+        setSelectExercise(item);
+    }
+    const handleUnSelectExersicec = ()=>{
+        setSelectExercise(null);
+    }
+    const handleSave = ()=>{
+        const time = new Date();
+        const timeE= formattime(minute)+":"+formattime(seconds);
+        const id = historyExercise.length;
+        const idBt = selectExercise==null ? "orther" : selectExercise.id;
+        const nameBt = selectExercise==null ? "Bài tập tự do" : selectExercise.name;
+        const data = {
+            id: id,
+            idBt: idBt,
+            nameBt: nameBt,
+            timeComple: time,
+            timeExercise: timeE,
+            sumCarlo: carlo
+        }
+        addHistory(data);
+        setSE(0);
     }
     return(
         allExercise.length> 0 && dataEx.length>0 ?
@@ -157,7 +183,7 @@ const ExcersiseMain = ({navigation}) => {
                     renderItem={renderItem}
                 />
                 <TouchableOpacity
-                    onPress={() => { SE === 0 ? setSE(1) : setSE(0)}}
+                    onPress={() => { SE === 0 ? setSE(1) : handleSave()}}
                     style={{marginStart:'auto', marginEnd:10,padding:5, borderWidth:1, borderRadius:10}}>
                     {SE === 0 ? (
                         <Text style={{fontSize:20}}>Bắt đầu</Text>
@@ -185,7 +211,7 @@ const ExcersiseMain = ({navigation}) => {
                             <TouchableOpacity
                                 onPress={() => { navigation.navigate('ExcersiseItem') }}
                                 style={{ margin: 10, marginEnd: 'auto', flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 10, alignItems: 'center' }}>
-                                <View style={{ marginEnd: 'auto', width: 250 }}>
+                                <View style={{ marginEnd: 'auto', width: 220 }}>
                                     <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>{item.name}</Text>
                                     <Text style={{ fontSize: 15, color: '#000' }}>15 lần / hiệp</Text>
                                 </View>
@@ -197,7 +223,11 @@ const ExcersiseMain = ({navigation}) => {
                                     />
                                 </View>
                             </TouchableOpacity>
-                            <CheckBox value={isChecked} onValueChange={handleCheckboxChange}/>
+                            {
+                                selectExercise === item ?
+                                    <Button onPress={() => { handleUnSelectExersicec() }}>Hủy chọn</Button> :
+                                    <Button onPress={() => { handleSelectExersicec(item) }}>Chọn</Button>
+                            }
                         </View>
                     ))
                 }

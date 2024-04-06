@@ -35,9 +35,6 @@ function TabarHealth({route}) {
                         else if (rn === excersiseName) {
                             iconName = focused ? 'barbell' : 'barbell-outline';
                         }
-                        else if (rn === planName) {
-                            iconName = focused ? 'clipboard' : 'clipboard-outline';
-                        }
                         return <Ionicons name={iconName} size={size} color={color} />;
                     },
                 })}
@@ -51,8 +48,7 @@ function TabarHealth({route}) {
                 <Tab.Screen name={homeName} component={HomeHealth} options={{ headerShown: false }} />
                 <Tab.Screen name={categoryName} component={CategoryMain} options={{ headerShown: false }} />
                 <Tab.Screen name={excersiseName} component={ExcersiseMain} options={{ headerShown: false }} />
-                <Tab.Screen name={planName} component={PlanMain} options={{ headerShown: false }} />
-                
+    
             </Tab.Navigator>
     );
 }
