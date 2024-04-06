@@ -11,10 +11,13 @@ import moment from 'moment';
 import Swiper from 'react-native-swiper';
 import Octicons from 'react-native-vector-icons/Octicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useDataHealth } from '../../../Context/HealthContext';
 
 const { width } = Dimensions.get('window');
 
 const HomeHealth = ({navigation}) => {
+    const {test}=useDataHealth();
+    console.log(test);
     const swiper = useRef();
     const [value, setValue] = useState(new Date());
     const [week, setWeek] = useState(0);

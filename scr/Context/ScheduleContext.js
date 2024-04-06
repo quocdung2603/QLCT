@@ -58,10 +58,6 @@ const DataProviderSchedule = ({ children }) => {
                 const dt1 = tmp.filter(it => it.flag === false);
                 dt1.sort((a, b) => b.id - a.id); // Sắp xếp mảng dt1
                 const final = [...dt, ...dt1];
-                final.forEach((item) => {
-                    if (item.flag === false)
-                        console.log(item);
-                });
                 setNote(final);
             }
         })

@@ -23,20 +23,42 @@ import Home from '../../Expense/Home_Screen/Home';
 //
 import { CheckBox } from '@rneui/base';
 import { Dropdown } from 'react-native-element-dropdown';
-const dataEx = [
-    { label: 'Tập ngực', value: 1 },
-    { label: 'Tập tay', value: 2 },
-    { label: 'Tập bụng', value: 3 },
-    { label: 'Tập chân', value: 4 },
-];
+import { useDataHealth } from '../../../Context/HealthContext';
 
 const ExcersiseMain = ({navigation}) => {
+    const {allExercise, getExercise}=useDataHealth();
+    const [dataEx,setDataEx] = useState([]);
+    const [exercises,setExercises]=useState([]);
+    useEffect(()=>{
+        if(allExercise.length<=0)
+        getExercise();
+        else
+        {   
+            const dt = [];
+            allExercise.map((item,index)=>{
+                const it = {
+                    label: item.name,
+                    value: index
+                }
+                dt.push(it);
+            });
+            setDataEx(dt);
+            console.log(dataEx);
+            setExercises(allExercise[0].exercises);
+        }
+    },[allExercise])
     const [SE, setSE] = useState(0)
     const [isChecked, setIsChecked] = useState(false);
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
+        console.log("haha");
     };
 
+    //NGười dùng chọn vào mục cần tập sau đó hiển thị bài tập trong mục lớn 
+    
+    function handleChangeDropdown (id){
+        setExercises(allExercise[id].exercises);
+    }
     const [PlanExx, setPlanExx] = useState("")
     const renderItem = item => {
         return (
@@ -65,7 +87,34 @@ const ExcersiseMain = ({navigation}) => {
             console.log(error);
         }
     }
+
+    //Xử lý khi bấm bắt đầu tập
+    const [minute,setMinute]=useState(0);
+    const [seconds,setSconds]=useState(0);
+    useEffect(()=>{
+        if(SE==1)
+        {
+            setTimeout(()=>{
+                if(seconds+1===60)
+                {
+                    setSconds(0);
+                    setMinute(minute+1);
+                }
+                else
+                {
+                    setSconds(seconds+1);
+                }
+            },1000)
+        }
+    },[SE,minute,seconds])
+    function formattime(value) {
+        if(value<10)
+        return "0"+value;
+        else
+        return value;
+    }
     return(
+        allExercise.length> 0 && dataEx.length>0 ?
         <View style={{flex:1, flexDirection:'column', backgroundColor:'#fff'}}>
             <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
                 <TouchableOpacity
@@ -90,7 +139,7 @@ const ExcersiseMain = ({navigation}) => {
                     searchPlaceholder="Search..."
                     value={PlanExx}
                     onChange={item => {
-                        setPlanExx(item.value);
+                        handleChangeDropdown(item.value);
                     }}
                     renderLeftIcon={() => (
                         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
@@ -110,7 +159,7 @@ const ExcersiseMain = ({navigation}) => {
             
             <View style={{ flexDirection: 'column', margin: 10 }}>
                 <Text style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}>Tổng thời gian tập luyện</Text>
-                <Text style={{fontSize:20, fontWeight:'bold', textAlign:'center'}}>00:00</Text>
+                <Text style={{fontSize:20, fontWeight:'bold', textAlign:'center'}}>{formattime(minute)}:{formattime(seconds)}</Text>
             </View>
 
             <View style={{ flexDirection: 'column', margin: 10 }}>
@@ -120,41 +169,32 @@ const ExcersiseMain = ({navigation}) => {
             <View style={{ flexDirection: 'column', marginStart:10}}>
                 <Text style={{fontSize:18, margin:10, fontWeight:'bold'}}>Danh sách bài tập</Text>
                 {/* bt 1 */}
-                <View style={{flexDirection:'row', alignItems:'center'}}>
-                    <TouchableOpacity
-                        onPress={() => { navigation.navigate('ExcersiseItem') }}
-                        style={{ margin:10, marginEnd:'auto', flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 10, alignItems: 'center' }}>
-                        <View style={{marginEnd:'auto', width:250}}>
-                            <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Nghiêng vai với tạ đơn</Text>
-                            <Text style={{ fontSize: 15, color: '#000' }}>15 lần / hiệp</Text>
+                {
+                    exercises.length>0 && exercises.map((item,index) => (
+                        <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <TouchableOpacity
+                                onPress={() => { navigation.navigate('ExcersiseItem') }}
+                                style={{ margin: 10, marginEnd: 'auto', flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 10, alignItems: 'center' }}>
+                                <View style={{ marginEnd: 'auto', width: 250 }}>
+                                    <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>{item.name}</Text>
+                                    <Text style={{ fontSize: 15, color: '#000' }}>15 lần / hiệp</Text>
+                                </View>
+                                <View style={{ marginStart: 'auto', backgroundColor: 'yellow' }}>
+                                    <Image
+                                        source={{ uri: item.image }}
+                                        width={50}
+                                        height={50}
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                            <CheckBox value={isChecked} onValueChange={handleCheckboxChange}/>
                         </View>
-                        <View style={{ marginStart:'auto', backgroundColor: 'yellow' }}>
-                            <Text>Hình ảnh</Text>
-                            <Text>Hình ảnh</Text>
-                            <Text>Hình ảnh</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <CheckBox value={isChecked} onValueChange={handleCheckboxChange} />
-                </View>
-                {/* bt2 */}
-                <View style={{flexDirection:'row', alignItems:'center'}}>
-                    <TouchableOpacity
-                        onPress={() => { navigation.navigate('ExcersiseItem') }}
-                        style={{ margin:10, marginEnd:'auto', flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 10, alignItems: 'center' }}>
-                        <View style={{marginEnd:'auto', width:250}}>
-                            <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Nghiêng vai với tạ đơn</Text>
-                            <Text style={{ fontSize: 15, color: '#000' }}>15 lần / hiệp</Text>
-                        </View>
-                        <View style={{ marginStart:'auto', backgroundColor: 'yellow' }}>
-                            <Text>Hình ảnh</Text>
-                            <Text>Hình ảnh</Text>
-                            <Text>Hình ảnh</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <CheckBox value={isChecked} onValueChange={handleCheckboxChange} />
-                </View>
-                
+                    ))
+                }
             </View>
+        </View>:
+        <View style={{alignItems: 'center', justifyContent: 'center', height: '100%'}}>
+            <Text style={{fontSize: 25, fontWeight: 'bold'}}>Loading...</Text>
         </View>
     )
 }

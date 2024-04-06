@@ -23,17 +23,29 @@ import Home from '../../Expense/Home_Screen/Home';
 
 // 
 import ExcersiseItem from '../Excersise_Screen/ExcersiseItem';
+import { useDataHealth } from '../../../Context/HealthContext';
 
 const CategoryMain = ({ navigation }) => {
-    const [Shouder, setShouder] = useState(1)
-    const [Back, setBack] = useState(0)
-    const [Chest, setChest] = useState(0)
-    const [Pack, setPack] = useState(0)
-    const [Leg, setLeg] = useState(0)
-
-    //
+    const {allExercise, getExercise}=useDataHealth();
+    const [exercises,setExercises]=useState([]);
+    const [checkChange,setCheckChange]=useState(0);
+    useEffect(()=>{
+        if(allExercise.length<=0)
+        getExercise();
+        else
+        {
+            setExercises(allExercise[0].exercises);
+        }
+    },[allExercise])
+    
+    const handleChange = (id)=>{
+        setExercises(allExercise[id].exercises);
+        setCheckChange(id);
+    }
+    const [exercise,setExercise]=useState(null);
     const [MChiTietBT, setMChiTietBT] = useState(false);
     return (
+        allExercise.length> 0 ?
         <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
             <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
                 <TouchableOpacity
@@ -49,66 +61,50 @@ const CategoryMain = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'row', margin: 10, maxHeight: 40 }}>
-                <TouchableOpacity 
-                    onPress={() => {setShouder(1), setChest(0), setPack(0), setLeg(0), setBack(0)}}
-                    style={{width:68, borderWidth: 1, borderRadius: 10, padding: 5, marginHorizontal: 5, backgroundColor: Shouder === 1 ? "#8F57FF" : "#fff", borderColor: Shouder === 1 ? "#8F57FF" : "grey" }}>
-                    <Text style={{textAlign:'center', fontSize: 20, fontWeight: 'bold', color: Shouder === 1 ? "#fff" : "#000" }}>Vai</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    onPress={() => {setShouder(0), setChest(0), setPack(0), setLeg(0), setBack(1)}}
-                    style={{width:68, borderWidth: 1, borderRadius: 10, padding: 5, marginHorizontal: 5, backgroundColor: Back === 1 ? "#8F57FF" : "#fff", borderColor: Back === 1 ? "#8F57FF" : "grey" }}>
-                    <Text style={{textAlign:'center', fontSize: 20, fontWeight: 'bold', color: Back === 1 ? "#fff" : "#000" }}>Lưng</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    onPress={() => {setShouder(0), setChest(1), setPack(0), setLeg(0), setBack(0)}}
-                    style={{width:68, borderWidth: 1, borderRadius: 10, padding: 5, marginHorizontal: 5, backgroundColor: Chest === 1 ? "#8F57FF" : "#fff", borderColor: Chest === 1 ? "#8F57FF" : "grey" }}>
-                    <Text style={{textAlign:'center', fontSize: 20, fontWeight: 'bold', color: Chest === 1 ? "#fff" : "#000" }}>Ngực</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    onPress={() => {setShouder(0), setChest(0), setPack(0), setLeg(1), setBack(0)}}
-                    style={{width:68, borderWidth: 1, borderRadius: 10, padding: 5, marginHorizontal: 5, backgroundColor: Leg === 1 ? "#8F57FF" : "#fff", borderColor: Leg === 1 ? "#8F57FF" : "grey" }}>
-                    <Text style={{textAlign:'center', fontSize: 20, fontWeight: 'bold', color: Leg === 1 ? "#fff" : "#000" }}>Chân</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    onPress={() => {setShouder(0), setChest(0), setPack(1), setLeg(), setBack(0)}}
-                    style={{width:68, borderWidth: 1, borderRadius: 10, padding: 5, marginHorizontal: 5, backgroundColor: Pack === 1 ? "#8F57FF" : "#fff", borderColor: Pack === 1 ? "#8F57FF" : "grey" }}>
-                    <Text style={{textAlign:'center', fontSize: 20, fontWeight: 'bold', color: Pack === 1 ? "#fff" : "#000" }}>Bụng</Text>
-                </TouchableOpacity>
+                {
+                    allExercise.map((item,index) => (
+                        <TouchableOpacity
+                            key={index}
+                            onPress={() => { handleChange(index) }}
+                            style={{ borderWidth: 1, borderRadius: 10, padding: 5, marginHorizontal: 5, backgroundColor: checkChange === index ? "#8F57FF" : "#fff", borderColor: checkChange === index ? "#8F57FF" : "grey" }}>
+                            <Text style={{ textAlign: 'center', fontSize: 20, fontWeight: 'bold', color: checkChange === index ? "#fff" : "#000" }}>{item.name}</Text>
+                        </TouchableOpacity>
+                    ))
+                }
             </View>
             <Text style={{margin:10, fontSize:22, fontWeight:'bold', color:'#000'}}>Các bài tập</Text>
-            {Shouder === 1 ? (
-                <ScrollView style={{flex:1, flexDirection:'column', backgroundColor:'#fff'}}>
-                    <TouchableOpacity 
-                        onPress={() => {setMChiTietBT(true)}}
-                        style={{ marginVertical: 4, marginHorizontal:30, flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 10, alignItems:'center' }}>
-                        <Text style={{ fontSize: 20, color: '#000', fontWeight: 'bold' }}>Nghiêng vai với tạ đơn</Text>
-                        <View style={{ marginStart: 'auto', backgroundColor: 'yellow' }}>
-                            <Text>Hình ảnh</Text>
-                            <Text>Hình ảnh</Text>
-                            <Text>Hình ảnh</Text>
+            <ScrollView style={{flex:1, flexDirection:'column', backgroundColor:'#fff'}}>
+                    {
+                        exercises.length >0 ? exercises.map((item,index) => (
+                            <TouchableOpacity
+                                key={index}
+                                onPress={() => {setMChiTietBT(true), setExercise(item) }}
+                                style={{ marginVertical: 4, marginHorizontal: 30, flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 10, alignItems: 'center' }}>
+                                <Text style={{ fontSize: 20, color: '#000', fontWeight: 'bold' }}>{item.name}</Text>
+                                <View style={{ marginStart: 'auto', backgroundColor: 'yellow' }}>
+                                    <Image
+                                         source={{ uri: item.image }}
+                                         width={80}
+                                         height={60}
+                                    />
+                                </View>
+                            </TouchableOpacity> 
+                        )):
+                        <View style={{height: '100%', alignItems: 'center',justifyContent:'center'}}>
+                            <Text style={{fontSize: 30, fontWeight: 'bold'}}>Chưa có bài tập nào cả</Text>
                         </View>
-                    </TouchableOpacity>
+                    }  
             </ScrollView>
-            ) : ""}
-            {Chest === 1 ? (
-                <View style={{flex:1,flexDirection:'column', backgroundColor:'#fff'}}></View>
-            ) : ""}
-            {Back === 1 ? (
-                <View style={{flex:1,flexDirection:'column', backgroundColor:'#fff'}}></View>
-            ) : ""}
-            {Pack === 1 ? (
-                <View style={{flex:1,flexDirection:'column', backgroundColor:'#fff'}}></View>
-            ) : ""}
-            {Leg === 1 ? (
-                <View style={{flex:1,flexDirection:'column', backgroundColor:'#fff'}}></View>
-            ) : ""}
             <Modal animationType='slide' transparent={true} visible={MChiTietBT} onRequestClose={() => { setMChiTietBT(false) }} >
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                     <View style={{flexDirection:'column', backgroundColor: 'white', width: 400, height: 700, borderRadius: 10,  padding: 20 }}>
-                        <ExcersiseItem TatModal={setMChiTietBT} />
+                        <ExcersiseItem TatModal={setMChiTietBT} exercise={exercise} />
                     </View>
                 </View>
             </Modal>
+        </View>:
+        <View style={{alignItems: 'center', justifyContent: 'center', height: '100%'}}>
+            <Text style={{fontSize: 25, fontWeight: 'bold'}}>Loading...</Text>
         </View>
     )
 }
