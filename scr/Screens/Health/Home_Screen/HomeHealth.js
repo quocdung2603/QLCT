@@ -5,19 +5,23 @@ import {
     TouchableWithoutFeedback,
     Text,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+    Modal,
+    ScrollView,
 } from 'react-native';
 import moment from 'moment';
 import Swiper from 'react-native-swiper';
 import Octicons from 'react-native-vector-icons/Octicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useDataHealth } from '../../../Context/HealthContext';
-
+import DetailDay from './DetailDay';
 const { width } = Dimensions.get('window');
 
 const HomeHealth = ({navigation}) => {
     const {test}=useDataHealth();
     console.log(test);
+
+    const [Mxemchitiet, setMxemchitiet] = useState(false)
     const swiper = useRef();
     const [value, setValue] = useState(new Date());
     const [week, setWeek] = useState(0);
@@ -130,14 +134,21 @@ const HomeHealth = ({navigation}) => {
                                     <Text style={{fontSize:20, fontWeight:'bold', color:'#000', textAlign:'center'}}>Tổng Calo Tiêu Tốn</Text>
                                     <Text style={{fontSize:25, fontWeight:'bold', color:'#000', textAlign:'center'}}>320 Kcals</Text>
                                 </View>
-                                <View style={{flexDirection:'row', justifyContent:'center', alignSelf:'center', borderWidth:1, borderRadius:10, borderColor:'#7F3DFF', backgroundColor:'#7F3DFF', padding:10, margin:10, width:200}}>
+                                <TouchableOpacity 
+                                    onPress={() => {setMxemchitiet(true)}}
+                                    style={{flexDirection:'row', justifyContent:'center', alignSelf:'center', borderWidth:1, borderRadius:10, borderColor:'#7F3DFF', backgroundColor:'#7F3DFF', padding:10, margin:10, width:200}}>
                                     <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>Xem Chi Tiết</Text>
-                                </View>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
                 </View>
             </View>
+            <Modal animationType='slide' transparent={true} visible={Mxemchitiet} onRequestClose={() => { setMxemchitiet(false) }} >
+                <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                    <DetailDay TatModal={setMxemchitiet} />
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 }
