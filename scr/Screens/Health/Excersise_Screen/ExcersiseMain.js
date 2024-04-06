@@ -91,6 +91,7 @@ const ExcersiseMain = ({navigation}) => {
     //Xử lý khi bấm bắt đầu tập
     const [minute,setMinute]=useState(0);
     const [seconds,setSconds]=useState(0);
+    const [carlo,setCarlo]=useState(0);
     useEffect(()=>{
         if(SE==1)
         {
@@ -99,12 +100,21 @@ const ExcersiseMain = ({navigation}) => {
                 {
                     setSconds(0);
                     setMinute(minute+1);
+                    setCarlo(carlo+1);
                 }
                 else
                 {
                     setSconds(seconds+1);
+                    setCarlo(carlo+1);
                 }
             },1000)
+        }
+        else
+        {
+            setCarlo(0);
+            setMinute(0);
+            setSconds(0);
+            setSE(0);
         }
     },[SE,minute,seconds])
     function formattime(value) {
@@ -164,7 +174,7 @@ const ExcersiseMain = ({navigation}) => {
 
             <View style={{ flexDirection: 'column', margin: 10 }}>
                 <Text style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}>Tổng số calo tiêu hao</Text>
-                <Text style={{fontSize:20, fontWeight:'bold', textAlign:'center'}}>320</Text>
+                <Text style={{fontSize:20, fontWeight:'bold', textAlign:'center'}}>{carlo}</Text>
             </View>        
             <View style={{ flexDirection: 'column', marginStart:10}}>
                 <Text style={{fontSize:18, margin:10, fontWeight:'bold'}}>Danh sách bài tập</Text>
