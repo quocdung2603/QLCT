@@ -8,7 +8,7 @@ const DataProviderHealth = ({ children }) => {
     const [test,setTest]=useState(null);
     const [allExercise,setAllExercise]=useState([]);
     const [historyExercise,setHistotyExercise]=useState([]);
-
+    const [allPost,setAllPost]=useState([]);
     //Lịch sử luyện tập
     const getHistory = ()=>{
         AsyncStorage.getItem("historyExercise")
@@ -23,11 +23,6 @@ const DataProviderHealth = ({ children }) => {
               dt.push(t);
             })
             const sortedTransactions = dt.sort((a, b) => b.timeComple - a.timeComple);
-            console.log("Bắt đầu nek");
-            sortedTransactions.map((item)=>{
-                console.log("bài tập: "+item.id);
-                console.log(item);
-            })
             setHistotyExercise(sortedTransactions);
           }
           else
@@ -56,15 +51,32 @@ const DataProviderHealth = ({ children }) => {
             setTest(error)
         }
     }
+
+    //Lấy toàn bộ bài viết
+    const getPost=async ()=>{
+        try {
+            const q = collection(db,"post");
+            const docSnap = await getDocs(q);
+            const dt=[];
+            docSnap.docs.map((item)=>{
+                dt.push(item.data());
+            })
+            console.log(dt);
+            setAllPost(dt);
+        } catch (error) {
+            setTest(error)
+        }
+    }
     useEffect(()=>{
         getHistory();
+        getPost();
         return ()=>{
             getExercise();
         }
     },[])
     
     return (
-        <DataContext.Provider value={{allExercise,getExercise,historyExercise, addHistory}}>
+        <DataContext.Provider value={{allExercise,getExercise,historyExercise, addHistory,allPost,getPost}}>
             { 
                 children 
             }

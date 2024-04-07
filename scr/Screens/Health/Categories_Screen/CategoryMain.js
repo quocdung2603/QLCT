@@ -26,8 +26,9 @@ import ExcersiseItem from '../Excersise_Screen/ExcersiseItem';
 import { useDataHealth } from '../../../Context/HealthContext';
 
 const CategoryMain = ({ navigation }) => {
-    const { allExercise, getExercise } = useDataHealth();
+    const { allExercise, getExercise,allPost,getPost } = useDataHealth();
     const [exercises, setExercises] = useState([]);
+    const [posts,setPosts]=useState([]);
     const [checkChange, setCheckChange] = useState(0);
     useEffect(() => {
         if (allExercise.length <= 0)
@@ -35,7 +36,15 @@ const CategoryMain = ({ navigation }) => {
         else {
             setExercises(allExercise[0].exercises);
         }
-    }, [allExercise])
+        if(allPost.length<=0)
+        {
+            getPost();
+        }
+        else
+        {
+            setPosts(allPost);
+        }
+    }, [allExercise,allPost])
 
     const handleChange = (id) => {
         setExercises(allExercise[id].exercises);
@@ -123,15 +132,31 @@ const CategoryMain = ({ navigation }) => {
                         <Text style={{ fontSize: 25, fontWeight: 'bold' }}>Loading...</Text>
                     </View>
             ) : (
-                <View style={{flexDirection:'column', flex:1}}>
-                    <View style={{flexDirection:'column', margin:10, borderWidth:1, borderRadius:10, padding:5}}>
-                        <Text style={{textAlign:'center',fontSize:20, fontWeight:'bold', color:'#000'}}>Bài viết về sức khỏe</Text>
-                        <Text style={{textAlign:'justify', fontSize:16, marginHorizontal:10}}>Từ khi bước 1 chân vào cái ngành này, có thể hiểu là bước 1 chân vào chiếc quan tài đá, một chân dưới địa ngục. Địt mẹ cái ngành này!</Text>
-                        <View style={{margin:10, borderWidth:1, height:200, backgroundColor:'yellow'}}>
-                            {/* hình ảnh / video kèm thêm */}
-                        </View>
-                    </View>
-                </View>
+                    <ScrollView>
+                        {
+                            posts.length > 0 ?
+                                posts.map((item,index) => (
+                                    <View key={index} style={{ flexDirection: 'column', flex: 1 }}>
+                                        <View style={{ flexDirection: 'column', margin: 10, borderWidth: 1, borderRadius: 10, padding: 5 }}>
+                                            <Text style={{ textAlign: 'center', fontSize: 20, fontWeight: 'bold', color: '#000' }}>{item.title}</Text>
+                                            <Text style={{ textAlign: 'justify', fontSize: 16, marginHorizontal: 10 }}>
+                                                {item.content}
+                                            </Text>
+                                            <View style={{ margin: 10, borderWidth: 1, height: 300, backgroundColor: 'yellow' }}>
+                                                {/* hình ảnh / video kèm thêm */}
+                                                <Image
+                                                    source={{ uri: item.img }}
+                                                    width="100%"
+                                                    height={300}
+                                                />
+                                            </View>
+                                        </View>
+                                    </View>
+                                ))
+                            :
+                            <Text>Chưa có bài viết nào cả</Text>
+                        }
+                    </ScrollView>
             )}
         </View>
 

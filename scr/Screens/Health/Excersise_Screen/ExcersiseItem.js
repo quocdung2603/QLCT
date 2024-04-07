@@ -22,7 +22,7 @@ import Home from '../../Expense/Home_Screen/Home';
 import VideoPlayer from 'react-native-video-player';
 import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../../firebase';
-const ExcersiseItem = ({ navigation, TatModal, exercise }) => {
+const ExcersiseItem = ({ TatModal, exercise }) => {
     const handleTest = async ()=>{
         try {
             const tmp ={

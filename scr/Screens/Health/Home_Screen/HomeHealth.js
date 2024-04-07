@@ -39,6 +39,49 @@ const HomeHealth = ({navigation}) => {
             });
         });
     }, [week]);
+    const [sumCarlo,setSumCalo]=useState(0);
+    function timeStringToMinutes(timeString) {
+        var parts = timeString.split(":");
+        var hours = parseInt(parts[0]);
+        var minutes = parseInt(parts[1]);
+        return hours * 60 + minutes;
+    }
+    function formatTotalTime(totalSeconds) {
+        var hours = Math.floor(totalSeconds / 3600); // Tính số giờ
+        var remainingSeconds = totalSeconds % 3600; // Số giây còn lại sau khi tính giờ
+        var minutes = Math.floor(remainingSeconds / 60); // Tính số phút
+        var seconds = remainingSeconds % 60; // Số giây còn lại
+    
+        // Format chuỗi giờ, phút, giây
+        var formattedTime = hours.toString().padStart(2, '0') + ":" +
+                            minutes.toString().padStart(2, '0') + ":" +
+                            seconds.toString().padStart(2, '0');
+    
+        return formattedTime;
+    }
+    const [sumTimeExercise,setSumTimeExercise]=useState(0);
+    useEffect(()=>{
+        if(historyExercise.length>0)
+        {
+            historyExercise.sort((a,b)=>a.timeComple-b.timeComple);
+            let sum=0;
+            let sum1=0;
+            historyExercise.map((item)=>{
+                if(item.timeComple.getDate()===value.getDate() && item.timeComple.getMonth()===value.getMonth() && value.getFullYear()===item.timeComple.getFullYear())
+                {
+                    sum1+=item.sumCarlo;
+                    sum+=timeStringToMinutes(item.timeExercise);
+                }
+            })
+            setSumCalo(sum1)
+            setSumTimeExercise(formatTotalTime(sum));
+        }
+        else
+        {
+            getHistory();
+        }
+
+    },[historyExercise,value])
     const handleSave = ()=>{
         const time = new Date();
         const timeE= "00:50";
@@ -145,11 +188,11 @@ const HomeHealth = ({navigation}) => {
                                 </View>
                                 <View style={{flexDirection:'column', marginVertical:10}}>
                                     <Text style={{fontSize:20, fontWeight:'bold', color:'#000', textAlign:'center'}}>Tổng Thời Gian Luyện Tập</Text>
-                                    <Text style={{fontSize:25, fontWeight:'bold', color:'#000', textAlign:'center'}}>02:00</Text>
+                                    <Text style={{fontSize:25, fontWeight:'bold', color:'#000', textAlign:'center'}}>{sumTimeExercise}</Text>
                                 </View>
                                 <View style={{flexDirection:'column', marginVertical:10}}>
                                     <Text style={{fontSize:20, fontWeight:'bold', color:'#000', textAlign:'center'}}>Tổng Calo Tiêu Tốn</Text>
-                                    <Text style={{fontSize:25, fontWeight:'bold', color:'#000', textAlign:'center'}}>320 Kcals</Text>
+                                    <Text style={{fontSize:25, fontWeight:'bold', color:'#000', textAlign:'center'}}>{sumCarlo}</Text>
                                 </View>
                                 <TouchableOpacity 
                                     onPress={() => {setMxemchitiet(true)}}
