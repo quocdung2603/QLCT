@@ -20,7 +20,7 @@ import DetailDay from './DetailDay';
 const { width } = Dimensions.get('window');
 
 const HomeHealth = ({navigation}) => {
-    const {historyExercise}=useDataHealth();
+    const {historyExercise, addHistory}=useDataHealth();
     const swiper = useRef();
     const [value, setValue] = useState(new Date());
     const [week, setWeek] = useState(0);
@@ -39,7 +39,21 @@ const HomeHealth = ({navigation}) => {
             });
         });
     }, [week]);
+    const handleSave = ()=>{
+        const time = new Date();
+        const timeE= "00:50";
 
+        const data = {
+            id: 0,
+            idBt: "bt1",
+            nameBt: "Tập vai lưng",
+            timeComple: time,
+            timeExercise: timeE,
+            sumCarlo: 24
+        }
+        addHistory(data);
+    }
+    const [Mxemchitiet,setMxemchitiet]=useState(false);
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1, paddingVertical: 24 }}>
@@ -53,6 +67,9 @@ const HomeHealth = ({navigation}) => {
                         <View style={{}}>
                             <Text style={{ color: 'black', fontSize: 25, fontWeight: 'bold' }}>You Schedule</Text>
                         </View>
+                        <TouchableOpacity onPress={handleSave}>
+                            <Text>Test </Text>
+                        </TouchableOpacity>
                     </View>
                     <TouchableOpacity
                         onPress={() => { navigation.navigate("Notification") }}
@@ -146,7 +163,7 @@ const HomeHealth = ({navigation}) => {
             </View>
             <Modal animationType='slide' transparent={true} visible={Mxemchitiet} onRequestClose={() => { setMxemchitiet(false) }} >
                 <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                    <DetailDay TatModal={setMxemchitiet} />
+                    <DetailDay TatModal={setMxemchitiet}  timeNow={value}/>
                 </View>
             </Modal>
         </SafeAreaView>

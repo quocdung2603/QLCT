@@ -32,7 +32,7 @@ function ChartHomeHealth(props) {
         const timeNow= props.timeNow;
         const dt =[];
         const tt=[];
-        historyExercise.sort((a,b)=>a.date-b.date);
+        historyExercise.sort((a,b)=>a.timeComple-b.timeComple);
         historyExercise.map((item)=>{
             //console.log(item);
             if(item.timeComple.getDate()===timeNow.getDate() && item.timeComple.getMonth()===timeNow.getMonth() && timeNow.getFullYear()===item.timeComple.getFullYear())
@@ -63,7 +63,7 @@ function ChartHomeHealth(props) {
             legend: ["Rainy Days"] // optional
         };
         setData(dt1);
-    },[historyExercise])
+    },[historyExercise,props.timeNow])
     return (
         <View>
             {    
