@@ -172,8 +172,8 @@ const HomeHealth = ({navigation}) => {
                     <Text style={{ fontSize: 17, fontWeight: '600', color: '#999999', marginBottom: 12 }}>{value.toDateString()}</Text>
                     <View style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0, height: 400, marginTop: 0, padding: 0, backgroundColor: 'transparent' }}>
                         <View style={{ borderWidth: 4, borderColor: '#e5e7eb', borderStyle: 'dashed', borderRadius: 9, flexGrow: 1, flexShrink: 1, flexBasis: 0 }}>
-                            <View style={{flexDirection:'column', margin:10}}>
-                                <View style={{height:250, backgroundColor:'yellow'}}>
+                            <View style={{flexDirection:'column', marginVertical:10}}>
+                                <View style={{}}>
                                     {/* biểu đồ tròn thể hiện calo */}
                                     <ChartHomeHealth timeNow={value}></ChartHomeHealth>
                                 </View>

@@ -20,28 +20,26 @@ const chartConfig = {
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false, // optional\
-   
 };
 function ChartHomeHealth(props) {
 
-    const {historyExercise}=useDataHealth();
-    const [dataChart,setDataChart]=useState([]);
-    const [titleChart,setTitleChart]=useState([]);
-    const [data,setData]=useState(null);
-    useEffect(()=>{
-        const timeNow= props.timeNow;
-        const dt =[];
-        const tt=[];
-        historyExercise.sort((a,b)=>a.timeComple-b.timeComple);
-        historyExercise.map((item)=>{
+    const { historyExercise } = useDataHealth();
+    const [dataChart, setDataChart] = useState([]);
+    const [titleChart, setTitleChart] = useState([]);
+    const [data, setData] = useState(null);
+    useEffect(() => {
+        const timeNow = props.timeNow;
+        const dt = [];
+        const tt = [];
+        historyExercise.sort((a, b) => a.timeComple - b.timeComple);
+        historyExercise.map((item) => {
             //console.log(item);
-            if(item.timeComple.getDate()===timeNow.getDate() && item.timeComple.getMonth()===timeNow.getMonth() && timeNow.getFullYear()===item.timeComple.getFullYear())
-            {
+            if (item.timeComple.getDate() === timeNow.getDate() && item.timeComple.getMonth() === timeNow.getMonth() && timeNow.getFullYear() === item.timeComple.getFullYear()) {
                 const tmp = parseInt(item.sumCarlo);
                 dt.push(tmp);
-                const h=item.timeComple.getHours();
-                const m=item.timeComple.getMinutes();
-                const time= h+":"+m;
+                const h = item.timeComple.getHours();
+                const m = item.timeComple.getMinutes();
+                const time = h + ":" + m;
                 //console.log(time);
                 tt.push(time);
             }
@@ -50,31 +48,31 @@ function ChartHomeHealth(props) {
         //console.log(dt);
         setDataChart(dt);
         setTitleChart(tt);
-        const dt1={
+        const dt1 = {
             labels: tt,
             datasets: [
                 {
                     data: dt,
                     color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-                    strokeWidth: 2 ,// optional
+                    strokeWidth: 2,// optional
                     height: 12
                 }
             ],
             legend: ["Rainy Days"] // optional
         };
         setData(dt1);
-    },[historyExercise,props.timeNow])
+    }, [historyExercise, props.timeNow])
     return (
         <View>
-            {    
-                dataChart.length>0 && titleChart && <LineChart
+            {
+                dataChart.length > 0 && titleChart && <LineChart
                     data={data}
                     width={screenWidth}
                     height={220}
                     verticalLabelRotation={0}
                     chartConfig={chartConfig}
                     bezier
-                /> 
+                />
             }
         </View>
     );
