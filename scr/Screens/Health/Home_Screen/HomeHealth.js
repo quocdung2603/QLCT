@@ -93,7 +93,7 @@ const HomeHealth = ({navigation}) => {
     const [Mxemchitiet, setMxemchitiet] = useState(false);
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ flex: 1, paddingVertical: 24 }}>
+            <View style={{ flex: 1}}>
                 <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
                     <TouchableOpacity
                         onPress={() => navigation.openDrawer()}
@@ -102,11 +102,8 @@ const HomeHealth = ({navigation}) => {
                     </TouchableOpacity>
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                         <View style={{}}>
-                            <Text style={{ color: 'black', fontSize: 25, fontWeight: 'bold' }}>You Schedule</Text>
+                            <Text style={{ color: 'black', fontSize: 25, fontWeight: 'bold' }}>Lịch trình sức khỏe</Text>
                         </View>
-                        <TouchableOpacity onPress={handleSave}>
-                            <Text>Test </Text>
-                        </TouchableOpacity>
                     </View>
                     <TouchableOpacity
                         onPress={() => { navigation.navigate("Notification") }}
@@ -175,8 +172,8 @@ const HomeHealth = ({navigation}) => {
                     <Text style={{ fontSize: 17, fontWeight: '600', color: '#999999', marginBottom: 12 }}>{value.toDateString()}</Text>
                     <View style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0, height: 400, marginTop: 0, padding: 0, backgroundColor: 'transparent' }}>
                         <View style={{ borderWidth: 4, borderColor: '#e5e7eb', borderStyle: 'dashed', borderRadius: 9, flexGrow: 1, flexShrink: 1, flexBasis: 0 }}>
-                            <View style={{ flexDirection: 'column', margin: 10 }}>
-                                <View style={{ height: 250, backgroundColor: 'yellow' }}>
+                            <View style={{flexDirection:'column', margin:10}}>
+                                <View style={{height:250, backgroundColor:'yellow'}}>
                                     {/* biểu đồ tròn thể hiện calo */}
                                     <ChartHomeHealth timeNow={value}></ChartHomeHealth>
                                 </View>

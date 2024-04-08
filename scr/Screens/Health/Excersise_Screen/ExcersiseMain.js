@@ -158,6 +158,8 @@ const ExcersiseMain = ({navigation}) => {
                     style={{ justifyContent: 'center', alignItems: 'center', marginRight: 'auto' }}>
                     <Octicons name='three-bars' size={30} color='#000' />
                 </TouchableOpacity>
+                <Text style={{ color: 'black', fontSize: 25, fontWeight: 'bold' }}>Luyện tập</Text>
+                <View style={{marginStart:'auto', marginEnd:10}}></View>
             </View>
             <View style={{flexDirection:'row', alignItems:'center', margin:10}}>
                 <Dropdown
@@ -171,7 +173,7 @@ const ExcersiseMain = ({navigation}) => {
                     maxHeight={300}
                     labelField="label"
                     valueField="value"
-                    placeholder="Select item"
+                    placeholder="Chọn danh sách bài tập"
                     searchPlaceholder="Search..."
                     value={PlanExx}
                     onChange={item => {
@@ -184,11 +186,11 @@ const ExcersiseMain = ({navigation}) => {
                 />
                 <TouchableOpacity
                     onPress={() => { SE === 0 ? setSE(1) : handleSave()}}
-                    style={{marginStart:'auto', marginEnd:10,padding:5, borderWidth:1, borderRadius:10}}>
+                    style={{marginStart:'auto', marginEnd:10,padding:5, borderWidth:1, borderRadius:10, borderColor:'#7F3DFF', backgroundColor:'#7F3DFF'}}>
                     {SE === 0 ? (
-                        <Text style={{fontSize:20}}>Bắt đầu</Text>
+                        <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>Bắt đầu</Text>
                     ) : (
-                        <Text style={{fontSize:20}}>Kết thúc</Text>
+                        <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>Kết thúc</Text>
                     )}
                 </TouchableOpacity>
             </View> 
@@ -211,7 +213,7 @@ const ExcersiseMain = ({navigation}) => {
                             <TouchableOpacity
                                 onPress={() => { navigation.navigate('ExcersiseItem') }}
                                 style={{ margin: 10, marginEnd: 'auto', flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 10, alignItems: 'center' }}>
-                                <View style={{ marginEnd: 'auto', width: 220 }}>
+                                <View style={{ marginEnd: 'auto', width: 210 }}>
                                     <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>{item.name}</Text>
                                     <Text style={{ fontSize: 15, color: '#000' }}>15 lần / hiệp</Text>
                                 </View>
@@ -225,8 +227,16 @@ const ExcersiseMain = ({navigation}) => {
                             </TouchableOpacity>
                             {
                                 selectExercise === item ?
-                                    <Button onPress={() => { handleUnSelectExersicec() }}>Hủy chọn</Button> :
-                                    <Button onPress={() => { handleSelectExersicec(item) }}>Chọn</Button>
+                                    <TouchableOpacity 
+                                        style={{marginEnd:10, backgroundColor:'#7F3DFF', borderWidth:1, borderRadius:10, borderColor:'#7F3DFF', padding:5}} 
+                                        onPress={() => { handleUnSelectExersicec() }}>
+                                        <Text style={{fontSize:18, fontWeight:'bold', color:'#fff'}}>Hủy chọn</Text>
+                                    </TouchableOpacity> :
+                                    <TouchableOpacity 
+                                        style={{marginEnd:10, backgroundColor:'#7F3DFF', borderWidth:1, borderRadius:10, borderColor:'#7F3DFF', padding:5}} 
+                                        onPress={() => { handleSelectExersicec(item) }}>
+                                        <Text style={{fontSize:18, fontWeight:'bold', color:'#fff'}}>Chọn</Text>
+                                    </TouchableOpacity>
                             }
                         </View>
                     ))

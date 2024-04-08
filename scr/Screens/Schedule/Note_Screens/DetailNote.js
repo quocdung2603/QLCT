@@ -27,7 +27,8 @@ const DetailNote = ({navigation,route}) => {
                 <TouchableOpacity style={{ marginRight: 'auto' }} onPress={() => {navigation.navigate('TakeNote')}}>
                     <AntDesign name='arrowleft' size={30} color='#000' />
                 </TouchableOpacity>
-                <Text style={{ color: '#000', fontSize: 25, marginEnd: 'auto', fontWeight:'bold' }}>Detail Note</Text>
+                <Text style={{ color: '#000', fontSize: 25, marginEnd: 'auto', fontWeight:'bold' }}>Chi tiết ghi chú</Text>
+                <View style={{marginStart:'auto', marginEnd:10}}></View>
             </View>
             <View style={{margin:10, flexDirection:'row'}}>
                 <Ionicons name="star" size={30} color="#FD3C4A" />

@@ -9,8 +9,8 @@ import {
 import { Dimensions } from "react-native";
 import { useData } from '../../DataContext';
 import { useDataHealth } from '../Context/HealthContext';
-const screenWidth = Dimensions.get("window").width;
-
+//const screenWidth = Dimensions.get("window").width;
+const screenWidth = 373;
 const chartConfig = {
     backgroundGradientFrom: "#000000",
     backgroundGradientFromOpacity: 1,

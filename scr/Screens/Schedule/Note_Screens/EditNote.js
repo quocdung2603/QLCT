@@ -44,15 +44,15 @@ const EditNote = ({navigation,route}) => {
                 >
                     <AntDesign name='arrowleft' size={30} color='#000' />
                 </TouchableOpacity>
-                <Text style={{ color: '#000', fontSize: 25, fontWeight:'bold'}}>Edit Note</Text>
+                <Text style={{ color: '#000', fontSize: 25, fontWeight:'bold'}}>Chỉnh sửa ghi chú</Text>
                 <View 
-                    style={{ marginStart: 'auto' }} 
+                    style={{ marginStart: 'auto', marginEnd:10 }} 
                     //onPress={() => {navigation.navigate("TakeNote")}}
                 >
                 </View>
             </View>
             <View style={{ flexDirection: 'row', marginHorizontal: 10, alignItems: 'center', marginVertical: 10 }}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Title</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Tên</Text>
                 <TextInput
                     value={title}
                     autoComplete='false'
@@ -61,7 +61,7 @@ const EditNote = ({navigation,route}) => {
                     onChangeText={txt=>setTitle(txt)}
                     style={{ backgroundColor: '#fff', borderColor: '#000', marginHorizontal: 10, marginVertical: 10, borderBottomWidth: 1, width: 300 }} />
             </View>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Main content</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Nội dung chính</Text>
             <View style={{flexDirection: 'column', marginHorizontal: 10, marginVertical: 10, borderWidth:1, borderRadius:10, borderColor:'#D3BDFF', height:300, backgroundColor:'#D3BDFF'}}>
                 <TextInput
                     value={content}

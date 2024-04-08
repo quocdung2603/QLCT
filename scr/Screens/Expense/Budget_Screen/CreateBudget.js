@@ -69,8 +69,8 @@ const CreateBudget = () => {
             time: time
         }
         //console.log(item);
-         addBudget(item);
-         setTypeBudget(0);
+        addBudget(item);
+        setTypeBudget(0);
         setMessageBudget(0);
         setValueBudget(0);
         navigation.navigate("Home");
@@ -80,16 +80,12 @@ const CreateBudget = () => {
         <View style={{ flex: 1, backgroundColor: '#7F3DFF', flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
                 <TouchableOpacity style={{ marginRight: 'auto' }} onPress={() => { navigation.goBack() }}>
-                    <AntDesign name='arrowleft' size={20} color='white' />
+                    <AntDesign name='arrowleft' size={30} color='white' style={{fontWeight:'bold'}} />
                 </TouchableOpacity>
-                <Text style={{ color: 'white', fontSize: 20, marginEnd: 'auto' }}>Create Budget</Text>
             </View>
             <View style={{ flexDirection: 'column', marginHorizontal: 20, marginTop: 'auto' }}>
-                <Text style={{ fontSize: 15, color: '#BEBEBE' }}>How Much do you want to spend? </Text>
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ fontSize: 60, color: 'white' }}>
-                        $
-                    </Text>
+                <Text style={{ fontSize: 15, color: '#fff', fontWeight:'bold', fontSize:18 }}>Bạn muốn để dành bao nhiêu tiền ? </Text>
+                <View style={{ flexDirection: 'row', alignItems:'center' }}>
                     <TextInput
                         onChangeText={(txt) => setValueBudget(txt)}
                     >
@@ -97,6 +93,9 @@ const CreateBudget = () => {
                             {ValueBudget}
                         </Text>
                     </TextInput>
+                    <Text style={{ fontSize: 50, color: 'white' }}>
+                        đ
+                    </Text>
                 </View>
             </View>
             <View style={{ height: 400, flexDirection: 'column', borderWidth: 1, borderColor: 'white', borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: 'white', paddingVertical: 20 }}>
@@ -125,11 +124,12 @@ const CreateBudget = () => {
                 <View style={{ height: 120, padding: 10 }}>
                     <View style={{ flexDirection: 'row', margin: 10 }}>
                         <View style={{ flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
-                            <Text style={{ color: 'black', fontSize: 20, marginRight: 'auto' }}>Receive Alert</Text>
-                            <Text style={{ color: 'grey', fontSize: 15, marginRight: 'auto' }}>Receive alert when it reachs some points</Text>
+                            <Text style={{ color: 'black', fontSize: 20, marginRight: 'auto' }}>Nhận cảnh báo</Text>
+                            <Text style={{ color: 'grey', fontSize: 15, marginRight: 'auto' }}>Nhận thông báo khi chạm đến hạn mức</Text>
                         </View>
                         <View style={{ marginStart: 'auto', justifyContent: 'center', alignContent: 'center' }}>
                             <Switch
+                                color='#7F3DFF'
                                 value={checked}
                                 onValueChange={(value) => setChecked(value)}
                             />
@@ -164,7 +164,7 @@ const CreateBudget = () => {
                     }
                 </View>
                 <TouchableOpacity onPress={handleAdd} style={{ marginTop: 100, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginVertical: 20, marginHorizontal: 50, backgroundColor: '#7F3DFF', borderRadius: 20, paddingVertical: 10 }}>
-                    <Text style={{ fontSize: 20, color: 'white' }}>Save</Text>
+                    <Text style={{ fontSize: 20, color: 'white', fontWeight:'bold' }}>Hoàn tất</Text>
                 </TouchableOpacity>
             </View>
         </View>
