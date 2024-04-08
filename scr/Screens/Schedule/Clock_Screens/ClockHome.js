@@ -6,9 +6,9 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const ClockHome = ({ navigation }) => {
-    const [TabA, setTabA] = useState(1);
+    const [TabA, setTabA] = useState(0);
     const [TabB, setTabB] = useState(0);
-    const [TabC, setTabC] = useState(0);
+    const [TabC, setTabC] = useState(1);
 
     const [isRunning, setIsRunning] = useState(false);
     const stopwatchRef = useRef(null);
@@ -132,19 +132,29 @@ const ClockHome = ({ navigation }) => {
     };
 
     const renderItem = ({ item, index }) => (
-        <View style={{ marginBottom: 10, borderWidth: 1, padding: 10, borderRadius: 10 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Text>{item.hour.toString().padStart(2, '0')}:{item.minute.toString().padStart(2, '0')} - {item.message}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TouchableOpacity 
+            onPress={() => handleEditAlarm(index)}
+            style={{ marginVertical: 10, borderWidth: 1, padding: 10, borderRadius: 10, width:300, backgroundColor:'#D3BDFF', borderColor:'#D3BDFF'}}>
+            <View style={{ flexDirection: 'column'}}>
+                <View style={{flexDirection:'row', alignItems:'center', marginBottom:5}}>
+                    <Text style={{marginEnd:'auto', fontSize:16, fontWeight:'bold', color:'#000'}}>{item.message}</Text>
                     <Switch
-                        value={item.active}
-                        onValueChange={() => handleToggleSwitch(index)}
-                    />
-                    <Button title="Edit" onPress={() => handleEditAlarm(index)} />
-                    <Button title="Delete" onPress={() => handleDeleteAlarm(index)} />
+                            style={{color:"#7F3DFF"}}
+                            value={item.active}
+                            onValueChange={() => handleToggleSwitch(index)}
+                        />
+                </View>
+                <View style={{flexDirection:'row', alignItems:'center', marginTop:5}}>
+                    <Text style={{marginEnd:'auto', fontSize:35, fontWeight:'bold', color:'#000'}}>{item.hour.toString().padStart(2, '0')}:{item.minute.toString().padStart(2, '0')}</Text>
+                    <TouchableOpacity
+                        onPress={() => handleDeleteAlarm(index)}
+                        style={{ borderWidth: 1, borderRadius: 10, borderColor: '#7F3DFF', backgroundColor: '#7F3DFF', padding: 5, marginStart: 'auto'}}
+                    >
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#fff' }}>Xóa</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 
     return (
@@ -256,7 +266,12 @@ const ClockHome = ({ navigation }) => {
                 </View>
             ) : (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Button title="Add Alarm" onPress={() => setModalVisible(true)} />
+                    <TouchableOpacity
+                        onPress={() => setModalVisible(true)}
+                        style={{borderWidth:1, borderRadius:10, borderColor:'#7F3DFF', backgroundColor:'#7F3DFF', padding:5, marginStart:'auto', marginEnd:20}}
+                        >
+                        <Text style={{fontSize:16, fontWeight:'bold', color:'#fff'}}>Đặt báo thức</Text>
+                    </TouchableOpacity>
                     <FlatList
                         data={alarms}
                         renderItem={renderItem}
@@ -272,31 +287,51 @@ const ClockHome = ({ navigation }) => {
                         }}
                     >
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
-                                <Text style={{ fontSize: 18, marginBottom: 10 }}>Set Alarm</Text>
-                                <TextInput
-                                    style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingHorizontal: 10 }}
+                            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, width:300, height:300 }}>
+                                <Text style={{ fontSize: 20,fontWeight:'bold', color:'#7F3DFF', marginBottom: 10, textAlign:'center' }}>Tùy chỉnh báo thức</Text>
+                                <View style={{flexDirection:'row', alignItems:'center', marginVertical:10}}>
+                                    <Text style={{fontSize:18, color:'#7F3DFF', marginEnd:'auto'}}>Tên</Text>
+                                    <TextInput
+                                        style={{ maxHeight: 40, width:210, borderColor: 'gray', borderWidth: 1, paddingHorizontal: 10 }}
+                                        onChangeText={text => setAlarmMessage(text)}
+                                        value={alarmMessage}
+                                        placeholder="Nhập tên báo thức"
+                                    />
+                                </View>
+                                <View style={{flexDirection:'row', alignItems:'center', marginVertical:10}}>
+                                    <Text style={{fontSize:18, color:'#7F3DFF', marginEnd:'auto'}}>Giờ</Text>
+                                    <TextInput
+                                    style={{ maxHeight: 40, width:210, borderColor: 'gray', borderWidth: 1, paddingHorizontal: 10 }}
                                     onChangeText={text => setSelectedHour(text)}
                                     value={selectedHour}
                                     keyboardType="numeric"
-                                    placeholder="Hour"
+                                    placeholder="Nhập giờ"
                                 />
-                                <TextInput
-                                    style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingHorizontal: 10 }}
+                                </View>
+                                <View style={{flexDirection:'row', alignItems:'center', marginVertical:10}}>
+                                    <Text style={{fontSize:18, color:'#7F3DFF', marginEnd:'auto'}}>Phút</Text>
+                                    <TextInput
+                                    style={{ height: 40, width:210, borderColor: 'gray', borderWidth: 1, paddingHorizontal: 10 }}
                                     onChangeText={text => setSelectedMinute(text)}
                                     value={selectedMinute}
                                     keyboardType="numeric"
-                                    placeholder="Minute"
+                                    placeholder="Nhập phút"
                                 />
-                                <TextInput
-                                    style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingHorizontal: 10 }}
-                                    onChangeText={text => setAlarmMessage(text)}
-                                    value={alarmMessage}
-                                    placeholder="Alarm Message"
-                                />
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Button title="Cancel" onPress={() => setModalVisible(false)} />
-                                    <Button title="OK" onPress={handleAddAlarm} />
+                                </View>
+                                
+                                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems:'center' }}>
+                                    <TouchableOpacity
+                                        onPress={() => setModalVisible(false)}
+                                        style={{borderWidth:1, borderRadius:10, borderColor:'#7F3DFF', backgroundColor:'#7F3DFF', padding:5, marginStart:'auto', marginEnd:20}}
+                                    >
+                                        <Text style={{fontSize:16, fontWeight:'bold', color:'#fff'}}>Hủy bỏ</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={handleAddAlarm}
+                                        style={{borderWidth:1, borderRadius:10, borderColor:'#7F3DFF', backgroundColor:'#7F3DFF', padding:5, marginStart:'auto', marginEnd:20}}
+                                    >
+                                        <Text style={{fontSize:16, fontWeight:'bold', color:'#fff'}}>Hoàn tất</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </View>
