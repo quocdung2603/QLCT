@@ -39,7 +39,7 @@ const HomeHealth = ({navigation}) => {
             });
         });
     }, [week]);
-    const [sumCarlo,setSumCalo]=useState(0);
+    const [sumCarlo, setSumCalo] = useState(0);
     function timeStringToMinutes(timeString) {
         var parts = timeString.split(":");
         var hours = parseInt(parts[0]);
@@ -51,40 +51,34 @@ const HomeHealth = ({navigation}) => {
         var remainingSeconds = totalSeconds % 3600; // Số giây còn lại sau khi tính giờ
         var minutes = Math.floor(remainingSeconds / 60); // Tính số phút
         var seconds = remainingSeconds % 60; // Số giây còn lại
-    
+
         // Format chuỗi giờ, phút, giây
         var formattedTime = hours.toString().padStart(2, '0') + ":" +
-                            minutes.toString().padStart(2, '0') + ":" +
-                            seconds.toString().padStart(2, '0');
-    
+            minutes.toString().padStart(2, '0') + ":" +
+            seconds.toString().padStart(2, '0');
+
         return formattedTime;
     }
-    const [sumTimeExercise,setSumTimeExercise]=useState(0);
-    useEffect(()=>{
-        if(historyExercise.length>0)
-        {
-            historyExercise.sort((a,b)=>a.timeComple-b.timeComple);
-            let sum=0;
-            let sum1=0;
-            historyExercise.map((item)=>{
-                if(item.timeComple.getDate()===value.getDate() && item.timeComple.getMonth()===value.getMonth() && value.getFullYear()===item.timeComple.getFullYear())
-                {
-                    sum1+=item.sumCarlo;
-                    sum+=timeStringToMinutes(item.timeExercise);
-                }
-            })
-            setSumCalo(sum1)
-            setSumTimeExercise(formatTotalTime(sum));
-        }
-        else
-        {
-            getHistory();
-        }
+    const [sumTimeExercise, setSumTimeExercise] = useState(0);
+    useEffect(() => {
 
-    },[historyExercise,value])
-    const handleSave = ()=>{
+        historyExercise.sort((a, b) => a.timeComple - b.timeComple);
+        let sum = 0;
+        let sum1 = 0;
+        historyExercise.map((item) => {
+            if (item.timeComple.getDate() === value.getDate() && item.timeComple.getMonth() === value.getMonth() && value.getFullYear() === item.timeComple.getFullYear()) {
+                sum1 += item.sumCarlo;
+                sum += timeStringToMinutes(item.timeExercise);
+            }
+        })
+        setSumCalo(sum1)
+        setSumTimeExercise(formatTotalTime(sum));
+
+
+    }, [historyExercise, value])
+    const handleSave = () => {
         const time = new Date();
-        const timeE= "00:50";
+        const timeE = "00:50";
 
         const data = {
             id: 0,
@@ -96,7 +90,7 @@ const HomeHealth = ({navigation}) => {
         }
         addHistory(data);
     }
-    const [Mxemchitiet,setMxemchitiet]=useState(false);
+    const [Mxemchitiet, setMxemchitiet] = useState(false);
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1, paddingVertical: 24 }}>
@@ -181,23 +175,23 @@ const HomeHealth = ({navigation}) => {
                     <Text style={{ fontSize: 17, fontWeight: '600', color: '#999999', marginBottom: 12 }}>{value.toDateString()}</Text>
                     <View style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0, height: 400, marginTop: 0, padding: 0, backgroundColor: 'transparent' }}>
                         <View style={{ borderWidth: 4, borderColor: '#e5e7eb', borderStyle: 'dashed', borderRadius: 9, flexGrow: 1, flexShrink: 1, flexBasis: 0 }}>
-                            <View style={{flexDirection:'column', margin:10}}>
-                                <View style={{height:250, backgroundColor:'yellow'}}>
+                            <View style={{ flexDirection: 'column', margin: 10 }}>
+                                <View style={{ height: 250, backgroundColor: 'yellow' }}>
                                     {/* biểu đồ tròn thể hiện calo */}
                                     <ChartHomeHealth timeNow={value}></ChartHomeHealth>
                                 </View>
-                                <View style={{flexDirection:'column', marginVertical:10}}>
-                                    <Text style={{fontSize:20, fontWeight:'bold', color:'#000', textAlign:'center'}}>Tổng Thời Gian Luyện Tập</Text>
-                                    <Text style={{fontSize:25, fontWeight:'bold', color:'#000', textAlign:'center'}}>{sumTimeExercise}</Text>
+                                <View style={{ flexDirection: 'column', marginVertical: 10 }}>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', textAlign: 'center' }}>Tổng Thời Gian Luyện Tập</Text>
+                                    <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#000', textAlign: 'center' }}>{sumTimeExercise}</Text>
                                 </View>
-                                <View style={{flexDirection:'column', marginVertical:10}}>
-                                    <Text style={{fontSize:20, fontWeight:'bold', color:'#000', textAlign:'center'}}>Tổng Calo Tiêu Tốn</Text>
-                                    <Text style={{fontSize:25, fontWeight:'bold', color:'#000', textAlign:'center'}}>{sumCarlo}</Text>
+                                <View style={{ flexDirection: 'column', marginVertical: 10 }}>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', textAlign: 'center' }}>Tổng Calo Tiêu Tốn</Text>
+                                    <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#000', textAlign: 'center' }}>{sumCarlo}</Text>
                                 </View>
-                                <TouchableOpacity 
-                                    onPress={() => {setMxemchitiet(true)}}
-                                    style={{flexDirection:'row', justifyContent:'center', alignSelf:'center', borderWidth:1, borderRadius:10, borderColor:'#7F3DFF', backgroundColor:'#7F3DFF', padding:10, margin:10, width:200}}>
-                                    <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>Xem Chi Tiết</Text>
+                                <TouchableOpacity
+                                    onPress={() => { setMxemchitiet(true) }}
+                                    style={{ flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, borderRadius: 10, borderColor: '#7F3DFF', backgroundColor: '#7F3DFF', padding: 10, margin: 10, width: 200 }}>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#fff' }}>Xem Chi Tiết</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -206,7 +200,7 @@ const HomeHealth = ({navigation}) => {
             </View>
             <Modal animationType='slide' transparent={true} visible={Mxemchitiet} onRequestClose={() => { setMxemchitiet(false) }} >
                 <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                    <DetailDay TatModal={setMxemchitiet}  timeNow={value}/>
+                    <DetailDay TatModal={setMxemchitiet} timeNow={value} />
                 </View>
             </Modal>
         </SafeAreaView>

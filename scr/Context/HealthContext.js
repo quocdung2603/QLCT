@@ -76,7 +76,7 @@ const DataProviderHealth = ({ children }) => {
     },[])
     
     return (
-        <DataContext.Provider value={{allExercise,getExercise,historyExercise, addHistory,allPost,getPost}}>
+        <DataContext.Provider value={{allExercise,getExercise,historyExercise, addHistory,getHistory,allPost,getPost}}>
             { 
                 children 
             }
