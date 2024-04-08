@@ -92,7 +92,7 @@ export default function HomeSchedule() {
     };
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ flex: 1, paddingVertical: 24 }}>
+            <View style={{ flex: 1}}>
                 <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
                     <TouchableOpacity
                         onPress={() => navigation.openDrawer()}
@@ -100,9 +100,7 @@ export default function HomeSchedule() {
                         <Octicons name='three-bars' size={30} color='#000' />
                     </TouchableOpacity>
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                        <View style={{}}>
-                            <Text style={{ color: 'black', fontSize: 25, fontWeight: 'bold' }}>You Schedule</Text>
-                        </View>
+                        <Text style={{ color: 'black', fontSize: 25, fontWeight: 'bold' }}>Lịch trình của bạn</Text>
                     </View>
                     <TouchableOpacity
                         onPress={() => { navigation.navigate("Notification") }}

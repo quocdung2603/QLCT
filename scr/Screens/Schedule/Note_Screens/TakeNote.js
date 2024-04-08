@@ -18,7 +18,9 @@ import { useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Octicons from 'react-native-vector-icons/Octicons'
 import { useDataSchedule } from "../../../Context/ScheduleContext";
+
 
 const TakeNote = ({ navigation }) => {
     const { notes, deleteNote, choiceFlag } = useDataSchedule();
@@ -42,7 +44,12 @@ const TakeNote = ({ navigation }) => {
     return (
         <View style={{ flex: 1, flexDirection: 'column', margin: 10 }}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
-                <Text style={{ color: '#000', fontSize: 25, marginStart: 'auto', fontWeight: 'bold' }}>Notes</Text>
+                <TouchableOpacity
+                    onPress={() => navigation.openDrawer()}
+                    style={{ justifyContent: 'center', alignItems: 'center', marginRight: 'auto' }}>
+                    <Octicons name='three-bars' size={30} color='#000' />
+                </TouchableOpacity>
+                <Text style={{ color: '#000', fontSize: 25, fontWeight: 'bold' }}>Bảng ghi chú</Text>
                 <TouchableOpacity
                     style={{ marginStart: 'auto' }}
                     onPress={() => { navigation.navigate("AddNote") }}

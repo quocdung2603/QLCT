@@ -19,7 +19,7 @@ import { useData } from '../../../../DataContext';
 import ItemTransaction from '../../../Components/ItemTransaction';
 const checkType={
     checkE: { 
-        backgroundColor: 'blue', 
+        backgroundColor: '#7F3DFF', 
         borderColor: '#7F3DFF', 
         borderWidth: 1, 
         paddingHorizontal: 20, 
@@ -36,7 +36,7 @@ const checkType={
         borderBottomLeftRadius: 10 
     },
     checkI: {
-        backgroundColor: 'blue', 
+        backgroundColor: '#7F3DFF', 
         borderColor:'#7F3DFF', 
         borderWidth:1, 
         paddingHorizontal:20,
@@ -94,15 +94,8 @@ const FinancialReport = ({navigation})  => {
                 <View style={{ marginRight: 'auto' }}>
                     <AntDesign name='arrowleft' size={30} color='#000' />
                 </View>
-                <Text style={{ color: '#000', fontSize: 20, marginEnd: 'auto' }}>Financial Report</Text>
             </TouchableOpacity>
             <View style={{flexDirection:'row', margin:10}}>
-                <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', borderWidth:1, borderColor:'grey', paddingHorizontal:5, borderRadius:10, marginEnd:'auto'}} >
-                    <View>
-                        <AntDesign name='down' size={25} color='#000' />
-                    </View>
-                    <Text style={{fontSize:20, color:'black'}}>Month</Text>
-                </View>
                 <View style={{justifyContent:'center', alignContent:'center', marginStart:'auto',flexDirection:'row'}}>
 
                     <View style={{borderWidth:1,borderTopLeftRadius:10,borderBottomLeftRadius:10, borderColor:'white', backgroundColor:'#7F3DFF',padding:5}}>
@@ -121,19 +114,19 @@ const FinancialReport = ({navigation})  => {
             </View>
             <View style={{flexDirection:'row', marginHorizontal:15, marginVertical:10, justifyContent:'center', alignContent:'center'}}>
                 <TouchableOpacity onPress={()=>{setTypeRepory(0)}} style={typeReport===0 ? checkType.checkE : checkType.unCheckE}>
-                        <Text style={{fontWeight:'bold', fontSize:20, color:'black'}}>Expense</Text>
+                        <Text style={{fontWeight:'bold', fontSize:20, color:typeReport === 0 ? "#fff" : "#000"}}>Expense</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{setTypeRepory(1)}} style={typeReport===1 ? checkType.checkI : checkType.unCheckI}> 
-                        <Text style={{fontWeight:'bold', fontSize:20, color:'black'}}>Income</Text>
+                        <Text style={{fontWeight:'bold', fontSize:20, color:typeReport === 1 ? "#fff" : "#000"}}>Income</Text>
                 </TouchableOpacity>
             </View>
             <View style={{flexDirection:'row', margin:10, justifyContent:'center', alignItems:'center'}}>
-                <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', borderWidth:1, borderColor:'grey', paddingHorizontal:10, borderRadius:10, marginEnd:'auto'}} >
-                    <AntDesign name='down' size={25} color='#000' />
-                    <Text style={{fontSize:20, color:'black'}}>Transaction</Text>
+                <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', alignContent:'center', borderWidth:1, borderColor:'#7F3DFF',backgroundColor:'#7F3DFF', paddingVertical:5, paddingHorizontal:10, borderRadius:10, marginEnd:'auto'}} >
+                    <AntDesign name='down' size={25} color='#fff' />
+                    <Text style={{fontSize:20, color:'#fff', fontWeight:'bold', marginStart:5}}>Transaction</Text>
                 </View>
-                <View style={{borderWidth:1, borderRadius:5, padding:5, backgroundColor:''}}>
-                    <FontAwesome5 name='sort-amount-down' size={20} color='black'/>
+                <View style={{borderWidth:1, borderRadius:5, padding:5, backgroundColor:'#7F3DFF', borderColor:'#7F3DFF'}}>
+                    <FontAwesome5 name='sort-amount-down' size={25} color='#fff'/>
                 </View>
             </View>
             {

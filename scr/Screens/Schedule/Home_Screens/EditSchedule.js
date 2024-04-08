@@ -91,11 +91,12 @@ const EditSchedule = ({ navigation, route }) => {
                 <TouchableOpacity style={{ marginRight: 'auto' }} onPress={() => { navigation.navigate('HomeSchedule') }}>
                     <AntDesign name='arrowleft' size={30} color='#000' />
                 </TouchableOpacity>
-                <Text style={{ color: '#000', fontSize: 20, marginEnd: 'auto' }}>Edit Schedule</Text>
+                <Text style={{ color: '#000', fontSize: 25, fontWeight:'bold'}}>Chỉnh sửa lịch trình</Text>
+                <View style={{marginStart:'auto', marginEnd:10}}></View>
             </View>
             <View style={{ flexDirection: 'column', margin: 10 }}>
                 <View style={{ flexDirection: 'row', marginHorizontal: 10, alignItems: 'center', marginVertical: 10 }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Title</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Tên</Text>
                     <TextInput
                         value={title}
                         autoComplete='false'
@@ -105,40 +106,44 @@ const EditSchedule = ({ navigation, route }) => {
                         style={{ backgroundColor: '#fff', borderColor: '#000', marginHorizontal: 10, marginVertical: 10, borderBottomWidth: 1, width: 300 }} />
                 </View>
                 {/* start */}
-                <View style={{ flexDirection: 'row', marginHorizontal: 10, marginVertical: 10, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Start</Text>
-                    <TouchableOpacity
-                        onPress={() => { setDateModalS(true) }}
-                        style={{ borderWidth: 1, borderRadius: 10, marginLeft: 10, padding: 10, flexDirection: 'row' }}
-                    >
-                        <Text style={{ fontSize: 15, marginRight: 15 }}>{valueDateS}</Text>
-                        <AntDesign name='calendar' size={20} style={{ marginLeft: 15 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => { setTimeModalS(true) }}
-                        style={{ borderWidth: 1, borderRadius: 10, marginLeft: 30, padding: 10, flexDirection: 'row' }}
-                    >
-                        <Text style={{ fontSize: 15, marginRight: 10 }}>{valueTimeS}</Text>
-                        <AntDesign name='clockcircleo' size={20} style={{ marginLeft: 10 }} />
-                    </TouchableOpacity>
+                <View style={{ flexDirection: 'column', marginHorizontal: 10, marginVertical: 10, alignItems: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', marginBottom:10 }}>Thời gian bắt đầu</Text>
+                    <View style={{flexDirection:'row', alignItems:'center'}}>
+                        <TouchableOpacity
+                            onPress={() => { setDateModalS(true) }}
+                            style={{ borderWidth: 1, borderRadius: 10, marginLeft: 10, padding: 10, flexDirection: 'row' }}
+                        >
+                            <Text style={{ fontSize: 15, marginRight: 15 }}>{valueDateS}</Text>
+                            <AntDesign name='calendar' size={20} style={{ marginLeft: 15 }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => { setTimeModalS(true) }}
+                            style={{ borderWidth: 1, borderRadius: 10, marginLeft: 30, padding: 10, flexDirection: 'row' }}
+                        >
+                            <Text style={{ fontSize: 15, marginRight: 10 }}>{valueTimeS}</Text>
+                            <AntDesign name='clockcircleo' size={20} style={{ marginLeft: 10 }} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 {/* end */}
-                <View style={{ flexDirection: 'row', marginHorizontal: 10, marginVertical: 10, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>End  </Text>
-                    <TouchableOpacity
-                        onPress={() => { setDateModalE(true) }}
-                        style={{ borderWidth: 1, borderRadius: 10, marginLeft: 10, padding: 10, flexDirection: 'row' }}
-                    >
-                        <Text style={{ fontSize: 15, marginRight: 15 }}>{valueDateE}</Text>
-                        <AntDesign name='calendar' size={20} style={{ marginLeft: 15 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => { setTimeModalE(true) }}
-                        style={{ borderWidth: 1, borderRadius: 10, marginLeft: 30, padding: 10, flexDirection: 'row' }}
-                    >
-                        <Text style={{ fontSize: 15, marginRight: 10 }}>{valueTimeE}</Text>
-                        <AntDesign name='clockcircleo' size={20} style={{ marginLeft: 10 }} />
-                    </TouchableOpacity>
+                <View style={{ flexDirection: 'column', marginHorizontal: 10, marginVertical: 10, alignItems: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', marginBottom:10 }}>Thời gian kết thúc</Text>
+                    <View style={{flexDirection:'row', alignItems:'center'}}>
+                        <TouchableOpacity
+                            onPress={() => { setDateModalE(true) }}
+                            style={{ borderWidth: 1, borderRadius: 10, marginLeft: 10, padding: 10, flexDirection: 'row' }}
+                        >
+                            <Text style={{ fontSize: 15, marginRight: 15 }}>{valueDateE}</Text>
+                            <AntDesign name='calendar' size={20} style={{ marginLeft: 15 }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => { setTimeModalE(true) }}
+                            style={{ borderWidth: 1, borderRadius: 10, marginLeft: 30, padding: 10, flexDirection: 'row' }}
+                        >
+                            <Text style={{ fontSize: 15, marginRight: 10 }}>{valueTimeE}</Text>
+                            <AntDesign name='clockcircleo' size={20} style={{ marginLeft: 10 }} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 {/*date time start */}
                 <Modal
@@ -268,7 +273,7 @@ const EditSchedule = ({ navigation, route }) => {
                 </Modal>
                 {/* Alarm */}
                 <View style={{ flexDirection: 'row', margin: 10 }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', marginEnd: 'auto' }}>Alarm</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', marginEnd: 'auto' }}>Nhắc nhở</Text>
                     <Switch
                         value={AlarmSwitch}
                         onValueChange={(value) => { setAlarmSwitch(value) }}
@@ -276,18 +281,18 @@ const EditSchedule = ({ navigation, route }) => {
                 </View>
                 {AlarmSwitch === true ? (
                     <View style={{ marginHorizontal: 20, flexDirection: 'row', padding: 10, alignItems: 'center' }}>
-                        <Text style={{ color: 'black', fontSize: 18, marginEnd: 'auto' }}>Send notification before: </Text>
+                        <Text style={{ color: 'black', fontSize: 18, marginEnd: 'auto' }}>Gửi thông báo trước: </Text>
                         <TextInput
                             value={alarm}
                             autoComplete='false'
                             keyboardType='text'
                             onChangeText={txt => setAlarm(txt)}
                             style={{ backgroundColor: '#fff', borderColor: '#000', borderBottomWidth: 1, fontSize: 18 }} />
-                        <Text style={{ color: 'black', fontSize: 18, marginStart: 'auto' }}>minutes</Text>
+                        <Text style={{ color: 'black', fontSize: 18, marginStart: 'auto' }}>phút</Text>
                     </View>
                 ) : ''}
                 <View style={{ flexDirection: 'row', margin: 10 }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', marginEnd: 'auto' }}>Note</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', marginEnd: 'auto' }}>Ghi chú</Text>
                     <Switch
                         value={NoteSwitch}
                         onValueChange={(value) => { setNoteSwitch(value) }}
@@ -299,14 +304,14 @@ const EditSchedule = ({ navigation, route }) => {
                             value={note}
                             autoComplete='false'
                             keyboardType='text'
-                            placeholder="Enter your note"
+                            placeholder="Nhập ghi chú"
                             onChangeText={txt => setNote(txt)}
                             style={{ fontSize: 18 }} />
                     </View>
                 ) : ''}
             </View>
             <TouchableOpacity onPress={handleAdd} style={{ marginTop: 100, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginVertical: 20, marginHorizontal: 50, backgroundColor: '#7F3DFF', borderRadius: 20, paddingVertical: 10 }}>
-                <Text style={{ fontSize: 20, color: 'white' }}>Continue</Text>
+                <Text style={{ fontSize: 20, color: 'white' }}>Lưu</Text>
             </TouchableOpacity>
         </View>
     );

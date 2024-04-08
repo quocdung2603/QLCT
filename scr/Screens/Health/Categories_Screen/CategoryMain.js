@@ -63,6 +63,7 @@ const CategoryMain = ({ navigation }) => {
                     style={{ justifyContent: 'center', alignItems: 'center', marginRight: 'auto' }}>
                     <Octicons name='three-bars' size={30} color='#000' />
                 </TouchableOpacity>
+                <Text style={{ color: 'black', fontSize: 25, fontWeight: 'bold' }}>Kho bài tập</Text>
                 <TouchableOpacity
                     onPress={() => { navigation.navigate("Notification") }}
                     style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 'auto' }}

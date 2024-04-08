@@ -9,24 +9,32 @@ import {
     TouchableOpacity
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Octicons from 'react-native-vector-icons/Octicons'
 import LisCardBudget from '../../../Components/ListCardBudget';
 import ItemBudget from '../../../Components/ItemBudget';
 import { useData } from '../../../../DataContext';
 const Budget = ({ navigation }) => {
     const {budget}=useData();
     return (
-        <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#7F3DFF' }}>
-            <ScrollView>       
-                <View style={{ flexDirection: 'row', marginTop: 50, marginBottom: 40, marginHorizontal: 20, justifyContent: 'center', alignContent: 'center' }}>
-                    <View style={{ marginEnd: 'auto' }}>
-                        <AntDesign name='left' size={25} color='#fff' />
-                    </View>
-                    <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#fff' }}>May</Text>
-                    <View style={{ marginStart: 'auto' }}>
-                        <AntDesign name='right' size={25} color='#fff' />
-                    </View>
+        <View style={{ flex: 1, flexDirection: 'column' }}>
+            <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
+                <TouchableOpacity
+                    onPress={() => navigation.openDrawer()}
+                    style={{ justifyContent: 'center', alignItems: 'center', marginRight: 'auto' }}>
+                    <Octicons name='three-bars' size={30} color='#000' />
+                </TouchableOpacity>
+                <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                    <Text style={{ color: 'black', fontSize: 25, fontWeight: 'bold' }}>Ngân sách chi tiêu</Text>
                 </View>
-                <View style={{ flexDirection: 'column', flex: 1, backgroundColor: 'white', borderTopLeftRadius: 25, borderTopRightRadius: 25}}>
+                <TouchableOpacity
+                    onPress={() => { navigation.navigate("Notification") }}
+                    style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 'auto' }}
+                >
+                    <AntDesign name='bells' size={30} color='black' />
+                </TouchableOpacity>
+            </View>
+            <ScrollView>       
+                <View style={{ flexDirection: 'column', flex: 1}}>
                     <View style={{ flexDirection: 'column', justifyContent: 'center', alignContent: 'center', flex: 1 }}>
                         <View style={{padding: 20}}>
                             {
@@ -40,7 +48,7 @@ const Budget = ({ navigation }) => {
                     </View>
                 </View>
             </ScrollView>
-            <View style={{backgroundColor: 'white', paddingBottom: 30}}>
+            <View style={{paddingBottom: 30}}>
                 <TouchableOpacity
                     onPress={() => { navigation.navigate("CreateBudget") }}
                     style={{
@@ -50,7 +58,7 @@ const Budget = ({ navigation }) => {
                         marginHorizontal: 20,
                         borderRadius: 10
                     }}>
-                    <Text style={{ fontSize: 20, color: 'white', paddingVertical: 10, }}>Create a Budget</Text>
+                    <Text style={{ fontSize: 20, color: 'white', paddingVertical: 10, }}>Tạo ngân sách</Text>
                 </TouchableOpacity>
             </View>
         </View>

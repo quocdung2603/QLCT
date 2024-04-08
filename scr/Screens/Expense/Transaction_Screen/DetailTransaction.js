@@ -41,7 +41,7 @@ const DetailTransaction = ({ navigation, route }) => {
                 <TouchableOpacity style={{ marginRight: 'auto' }} onPress={() => { navigation.goBack() }}>
                     <AntDesign name='arrowleft' size={30} color='white' />
                 </TouchableOpacity>
-                <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>Detail Transaction</Text>
+                <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>Chi tiết giao dịch</Text>
                 <TouchableOpacity style={{ marginStart: 'auto' }} onPress={() => { setIsConfirmationVisible(true) }}>
                     <Ionicons name='trash' size={30} color='white' />
                 </TouchableOpacity>
@@ -53,7 +53,7 @@ const DetailTransaction = ({ navigation, route }) => {
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                         <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
-                            <Text>Bạn xác nhận muốn xóa khum</Text>
+                            <Text>Bạn xác nhận muốn xóa không</Text>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
                                 <Button title="Hủy" onPress={handleCloseConfirmation} />
                                 <Button title="Xác nhận" onPress={handleConfirm} />
@@ -63,8 +63,8 @@ const DetailTransaction = ({ navigation, route }) => {
                 </Modal>
             </View>
             <View style={{ flexDirection: 'column', backgroundColor: '#00A86B', justifyContent: 'center', alignItems: 'center', paddingTop: 40 }}>
-                <Text style={{ color: '#fff', fontSize: 35, fontWeight: 'bold' }}>${item.money}</Text>
-                <Text style={{ color: '#fff', fontSize: 18, marginTop: 10 }}>Buy some cocain</Text>
+                <Text style={{ color: '#fff', fontSize: 35, fontWeight: 'bold' }}>{item.money}đ</Text>
+                <Text style={{ color: '#fff', fontSize: 18, marginTop: 10 }}>Mua cái gì đó</Text>
             </View>
             <View style={{ backgroundColor: '#00A86B', flexDirection: 'row', justifyContent: 'center', alignContent: 'center', paddingBottom: 40, borderBottomEndRadius: 25, borderBottomStartRadius: 25 }}>
                 <Text style={{ color: '#fff', fontSize: 18, marginEnd: 10 }}>{item.date.getDate()}/{item.date.getMonth() + 1}/{item.date.getFullYear()}</Text>
@@ -72,34 +72,36 @@ const DetailTransaction = ({ navigation, route }) => {
             </View>
             <View style={{ backgroundColor: '#fff', flexDirection: 'row', padding: 4, marginStart: 15, marginEnd: 15, marginTop: -25, borderTopRightRadius: 10, borderTopLeftRadius: 10, borderWidth: 0.5, borderColor: 'grey', padding: 10 }}>
                 <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginEnd: 'auto' }}>
-                    <Text style={{ fontSize: 18, color: 'grey' }}>Type</Text>
+                    <Text style={{ fontSize: 18, color: 'grey' }}>Loại</Text>
                     <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#000' }}>{item.typeTransaction}</Text>
                 </View>
                 <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 18, color: 'grey' }}>Category</Text>
+                    <Text style={{ fontSize: 18, color: 'grey' }}>Mục đích</Text>
                     <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#000' }}>{item.category}</Text>
                 </View>
                 <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginStart: 'auto' }}>
-                    <Text style={{ fontSize: 18, color: 'grey' }}>Budget</Text>
+                    <Text style={{ fontSize: 18, color: 'grey' }}>Ngân sách</Text>
                     <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#000' }}>{item.budget == "" ? "None" : item.budget}</Text>
                 </View>
             </View>
             <View style={{ borderWidth: 3, borderStyle: 'dashed', margin: 10, borderColor: 'grey' }}></View>
             <View style={{ flexDirection: 'column', margin: 10 }}>
-                <Text style={{ marginEnd: 'auto', fontSize: 18, color: 'grey', }}>Description</Text>
+                <Text style={{ marginEnd: 'auto', fontSize: 18, color: 'grey', }}>Nội dung giao dịch</Text>
                 <View style={{ flexDirection: 'column', marginHorizontal: 10 }}>
                     <Text>{item.description}</Text>
                 </View>
             </View>
             <View style={{ flexDirection: 'column', margin: 10 }}>
-                <Text style={{ marginEnd: 'auto', fontSize: 18, color: 'grey' }}>Attachment</Text>
+                <Text style={{ marginEnd: 'auto', fontSize: 18, color: 'grey' }}>Đính kèm</Text>
                 <View style={{ flexDirection: 'column', marginHorizontal: 10, height: 170, backgroundColor: 'yellow' }}>
 
                 </View>
             </View>
-            <View style={{ marginTop: 100, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginVertical: 20, marginHorizontal: 50, backgroundColor: '#7F3DFF', borderRadius: 20, paddingVertical: 10 }}>
-                <Text style={{ fontSize: 20, color: 'white' }}>Edit</Text>
-            </View>
+            <TouchableOpacity
+                onPress={() => {navigation.navigate("EditDetailTransaction")}}
+                style={{ marginTop: 100, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginVertical: 20, marginHorizontal: 50, backgroundColor: '#7F3DFF', borderRadius: 20, paddingVertical: 10 }}>
+                <Text style={{ fontSize: 20, color: 'white' }}>Chỉnh sửa</Text>
+            </TouchableOpacity>
         </View>
     );
 };

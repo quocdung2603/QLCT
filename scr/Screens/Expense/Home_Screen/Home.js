@@ -100,8 +100,10 @@ const Home = ({ navigation }) => {
         alignItems: 'center', 
         paddingVertical: 10, 
         borderWidth: 1, 
-        backgroundColor: "yellow", 
-        paddingHorizontal: 20, borderRadius: 10 
+        backgroundColor: "#7F3DFF", 
+        paddingHorizontal: 20, 
+        borderRadius: 10,
+        borderColor: "#7F3DFF",
     }
     const customStyleNone={
         alignItems: 'center', 
@@ -109,7 +111,7 @@ const Home = ({ navigation }) => {
     }
     return (
         <ScrollView style={{ flexDirection: 'column', flex: 1 }}>
-            <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row',marginHorizontal:10, alignItems: 'center' }}>
                 <TouchableOpacity
                     onPress={() => navigation.openDrawer()}
                     style={{ justifyContent: 'center', alignItems: 'center', marginRight: 'auto' }}>
@@ -149,35 +151,35 @@ const Home = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', margin: 5 }}>
-                <Text style={{ fontSize: 20 }}>Account Balance</Text>
+                <Text style={{ fontSize: 20 }}>Tổng Thu Chi</Text>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', margin: 5 }}>
-                <Text style={{ fontSize: 30, color: 'black', fontWeight: 'bold' }}>{accountBalance}</Text>
+                <Text style={{ fontSize: 30, color: 'black', fontWeight: 'bold' }}>{accountBalance}đ</Text>
             </View>
             <View style={{ flexDirection: 'row', marginHorizontal: 20, marginVertical: 10 }}>
                 <View style={{
                     flexDirection: 'row', backgroundColor: '#00A86B', marginEnd: 'auto'
-                    , justifyContent: 'center', alignItems: 'center', padding: 5, borderRadius: 10,
+                    , justifyContent: 'center', alignItems: 'center', padding: 5, borderRadius: 10, alignItems:'center'
                 }}>
-                    <AntDesign name='caretdown' size={50} color='white' />
+                    <AntDesign name='caretdown' size={40} color='white' />
                     <View style={{ flexDirection: 'column', marginStart: 5 }}>
-                        <Text style={{ fontSize: 20 }}>Income</Text>
-                        <Text style={{ fontSize: 30 }}>5000</Text>
+                        <Text style={{ fontSize: 20, fontWeight:'bold', color:'#fff' }}>Thu tiền</Text>
+                        <Text style={{ fontSize: 30, fontWeight:'bold' }}>5000đ</Text>
                     </View>
                 </View>
                 <View style={{
                     flexDirection: 'row', backgroundColor: '#FD3C4A', marginStart: 'auto'
-                    , justifyContent: 'center', alignItems: 'center', padding: 5, borderRadius: 10
+                    , justifyContent: 'center', alignItems: 'center', padding: 5, borderRadius: 10, alignItems:'center'
                 }}>
-                    <AntDesign name='caretup' size={50} color='white' />
+                    <AntDesign name='caretup' size={40} color='white' />
                     <View style={{ flexDirection: 'column', marginStart: 5 }}>
-                        <Text style={{ fontSize: 20 }}>Income</Text>
-                        <Text style={{ fontSize: 30 }}>5000</Text>
+                        <Text style={{ fontSize: 20, fontWeight:'bold', color:'#fff' }}>Chi tiền</Text>
+                        <Text style={{ fontSize: 30, fontWeight:'bold' }}>5000đ</Text>
                     </View>
                 </View>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginRight: 'auto', margin: 10 }}>
-                <Text style={{ fontSize: 20, color: 'black', fontWeight: 'bold' }}>Spend Frequence</Text>
+                <Text style={{ fontSize: 20, color: 'black', fontWeight: 'bold' }}>Biểu đồ chi tiêu</Text>
             </View>
             <View style={{  height: 250, marginBottom: 5 }}>
                 {/* bieu do chi tieu cac kieu */}
@@ -196,35 +198,35 @@ const Home = ({ navigation }) => {
                 <TouchableOpacity onPress={() => {
                         setTypeChart(0);
                     }}>
-                        <Text>Today</Text>
+                        <Text style={{color:typeChart === 0 ? "#fff" : "#000", fontWeight: typeChart === 0 ? "bold" : "normal"}}>Hôm nay</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={typeChart===1 ? customStyle : customStyleNone}>
                     <TouchableOpacity onPress={() => {
                         setTypeChart(1);
                     }}>
-                        <Text>Week</Text>
+                        <Text style={{color:typeChart === 1 ? "#fff" : "#000", fontWeight: typeChart === 1 ? "bold" : "normal"}}>Tuần này</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={typeChart===2 ? customStyle : customStyleNone}>
                     <TouchableOpacity onPress={() => {
                         setTypeChart(2);
                     }}>
-                        <Text>Month</Text>
+                        <Text style={{color:typeChart === 2 ? "#fff" : "#000", fontWeight: typeChart === 2 ? "bold" : "normal"}}>Tháng này</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={typeChart===3 ? customStyle : customStyleNone}>
                 <TouchableOpacity onPress={() => {
                         setTypeChart(3);
                     }}>
-                        <Text>Year</Text>
+                        <Text style={{color:typeChart === 3 ? "#fff" : "#000", fontWeight: typeChart === 3 ? "bold" : "normal"}}>Năm này</Text>
                     </TouchableOpacity>
                 </View>
             </View>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#000', marginEnd: 'auto' }}>Các chi tiêu trong tháng</Text>
-                <View style={{ borderWidth: 1, borderRadius: 15, padding: 5, backgroundColor: '' }}>
-                    <Text style={{ color: 'black' }}>See all</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#000', marginEnd: 'auto' }}>Danh sách chi tiêu</Text>
+                <View style={{ borderWidth: 1, borderRadius: 15, padding: 5, paddingHorizontal:10, backgroundColor: "#7F3DFF", borderColor:'#7F3DFF' }}>
+                    <Text style={{ color: '#fff', fontWeight:'bold' }}>Tất cả</Text>
                 </View>
             </View>
             

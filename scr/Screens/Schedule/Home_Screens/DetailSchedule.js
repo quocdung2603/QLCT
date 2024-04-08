@@ -36,7 +36,7 @@ const DetailSchedule = ({navigation,route}) => {
                 <TouchableOpacity style={{ marginRight: 'auto' }} onPress={() => {navigation.navigate('HomeSchedule')}}>
                     <AntDesign name='arrowleft' size={30} color='#000' />
                 </TouchableOpacity>
-                <Text style={{ color: '#000', fontSize: 20, fontWeight:'bold'}}>Detail Schedule</Text>
+                <Text style={{ color: '#000', fontSize: 20, fontWeight:'bold'}}>Chi tiết lịch trình</Text>
                 <View style={{marginStart:'auto'}}></View>
                 <TouchableOpacity
                     style={{ marginStart: 'auto' }}

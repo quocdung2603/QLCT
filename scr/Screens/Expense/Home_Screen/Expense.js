@@ -109,10 +109,11 @@ const Expense = ({navigation}) => {
                 <TouchableOpacity style={{ marginRight: 'auto' }} onPress={() => {navigation.goBack()}}>
                     <AntDesign name='arrowleft' size={30} color='white' />
                 </TouchableOpacity>
-                <Text style={{ color: 'white', fontSize: 20, marginEnd: 'auto' }}>Expense</Text>
+                <Text style={{ color: 'white', fontSize: 25}}>Chi Tiền</Text>
+                <View style={{marginStart:'auto', marginEnd:10}}></View>
             </View>
             <View style={{ marginTop: 20, flexDirection: 'column', marginHorizontal:10 }}>
-                <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'white' }}>How Much ? </Text>
+                <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'white' }}>Nhập số tiền </Text>
                 <TextInput
                     value={money}
                     onChangeText={item => {setMoney(item)}}
@@ -132,7 +133,7 @@ const Expense = ({navigation}) => {
                     maxHeight={300}
                     labelField="label"
                     valueField="value"
-                    placeholder="Select item"
+                    placeholder="Lý do chi tiền"
                     searchPlaceholder="Search..."
                     value={category}
                     onChange={item => {
@@ -154,7 +155,7 @@ const Expense = ({navigation}) => {
                     maxHeight={300}
                     labelField="label"
                     valueField="value"
-                    placeholder="Select item"
+                    placeholder="Loại chi tiền"
                     searchPlaceholder="Search..."
                     value={type}
                     onChange={item => {
@@ -166,21 +167,13 @@ const Expense = ({navigation}) => {
                     renderItem={renderItem}
                 />
                 <View style={{flexDirection:'row', margin:10}}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', alignSelf:'center' }}>Date</Text>
+                    <Text style={{ fontSize: 16, color: 'grey', alignSelf:'center', marginEnd:'auto'}}>Chọn ngày</Text>
                     <TouchableOpacity
                         onPress={() => { setDateModalS(true) }}
                         style={{ borderWidth: 1, borderRadius: 10, marginLeft: 10, padding: 10, flexDirection: 'row' }}
                     >
                         <Text style={{ fontSize: 15, marginRight: 15 }}>{valueDateS}</Text>
                         <AntDesign name='calendar' size={20} style={{ marginLeft: 15 }} />
-                    </TouchableOpacity>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', alignSelf:'center', marginLeft:15 }}>Hour</Text>
-                    <TouchableOpacity
-                        onPress={() => {setTimeModalS(true)}}
-                        style={{borderWidth:1, borderRadius:10, marginLeft:10, padding:10, flexDirection:'row'}}
-                    >
-                        <Text style={{fontSize:15, marginRight:10}}>{valueTimeS}</Text>
-                        <AntDesign name='clockcircleo' size={20} style={{marginLeft:10}} />
                     </TouchableOpacity>
                 </View>
                 {/*date time start */}
@@ -278,7 +271,7 @@ const Expense = ({navigation}) => {
                         onChangeText={item => { setNote(item)}}
                         autoComplete='false'
                         keyboardType='default'
-                        placeholder='Description'
+                        placeholder='Nhập mô tả'
                     />
                 </View>
                 <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:10}}>
@@ -312,7 +305,7 @@ const Expense = ({navigation}) => {
                     </View>
                 </View> */}
                 <TouchableOpacity onPress={handleStr} style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:20, marginHorizontal:50, backgroundColor:'#7F3DFF', borderRadius:20, paddingVertical:10}}>
-                    <Text style={{fontSize:20, color:'white'}}>Save</Text>
+                    <Text style={{fontSize:20, color:'white'}}>Lưu</Text>
                 </TouchableOpacity>
             </View>
         </View>
