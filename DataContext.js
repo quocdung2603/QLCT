@@ -9,6 +9,15 @@ const DataProvider = ({ children }) => {
     const [hTransaction,setHtransaction]=useState([]);
     const [budget,setBudget]=useState([]);
     //AccountBalanece
+    const getAccountBalance=()=>{
+      AsyncStorage.getItem("accountBalance")
+        .then(value =>{
+          if(value!=null)
+          setAccountBalance( parseInt(value));
+          else
+          setAccountBalance(0);
+        })
+    }
     const updateAccountBalanece = async (newData) => {
       const tmp =parseInt(newData)+parseInt(accountBalance);
       setAccountBalance(tmp);
@@ -45,7 +54,19 @@ const DataProvider = ({ children }) => {
       //hTransaction.remove(dataDelete);
       //console.log(hTransaction.length);
       const timeNow =dataDelete.date;
-
+      const cur=accountBalance;
+      if(dataDelete.typeTransaction==="add")
+      {
+          const tmp = parseInt(accountBalance)-parseInt(dataDelete.money);
+          await AsyncStorage.setItem("accountBalance",tmp.toString());
+          getAccountBalance();
+      }
+      else
+      {
+          const tmp = parseInt(accountBalance)+parseInt(dataDelete.money);
+          await AsyncStorage.setItem("accountBalance",tmp.toString());
+          getAccountBalance();
+      }
       const id = hTransaction.findIndex(item => item.date === dataDelete.date);
       console.log(id);
       hTransaction.splice(id,1);
