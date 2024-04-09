@@ -210,8 +210,7 @@ const ExcersiseMain = ({navigation}) => {
                 {
                     exercises.length>0 && exercises.map((item,index) => (
                         <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <TouchableOpacity
-                                onPress={() => { navigation.navigate('ExcersiseItem') }}
+                            <View
                                 style={{ margin: 10, marginEnd: 'auto', flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 10, alignItems: 'center' }}>
                                 <View style={{ marginEnd: 'auto', width: 210 }}>
                                     <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>{item.name}</Text>
@@ -224,7 +223,7 @@ const ExcersiseMain = ({navigation}) => {
                                         height={50}
                                     />
                                 </View>
-                            </TouchableOpacity>
+                            </View>
                             {
                                 selectExercise === item ?
                                     <TouchableOpacity 
