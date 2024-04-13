@@ -11,7 +11,9 @@ import {
     Switch,
     TouchableOpacity,
     Alert,
-    Modal
+    Modal,
+    Image,
+    PermissionsAndroid
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,6 +24,10 @@ import { useData } from '../../../../DataContext';
 import { TimeDatePicker, Modes } from "react-native-time-date-picker";
 import moment from "moment";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// camera
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
 const dataCategory = [
     { label: 'Shopping', value: 'Shopping' },
     { label: 'Market', value: 'Market' },
@@ -103,6 +109,37 @@ const Expense = ({navigation}) => {
         })
         setDataBudget(dt);
     },[])
+
+    // image picker & camera
+    const [selectImage, setselectImage] = useState('');
+    const ImagePicker = () => {
+        let options = {
+            storageOptions: {
+                path:'image',
+            }
+        }
+        launchImageLibrary(options, response => {
+            setselectImage(response.assets[0].uri)
+            console.log(response.assets[0].uri);
+        })
+    }
+    const OpenCamera = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.CAMERA
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("Camera permission given");
+                const result = await launchCamera({ mediaType: 'photo', cameraType: 'front' });
+                setselectImage(result.assets[0].uri);
+            } else {
+                console.log("Camera permission denied");
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+    };
+
     return (
         <View style={{ flex: 1, backgroundColor: '#FD3C4A', flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'center', alignContent: 'center' }}>
@@ -274,36 +311,23 @@ const Expense = ({navigation}) => {
                         placeholder='Nhập mô tả'
                     />
                 </View>
-                <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:10}}>
-                    <Entypo name='attachment' size={25} />
-                    <Text style={{fontSize:19, marginLeft:10}}>Add attachment</Text>
+                <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                    <TouchableOpacity 
+                        onPress={() =>{ OpenCamera() }}
+                        style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:10, marginHorizontal:10}}>
+                        <Entypo name='camera' size={20} />
+                        <Text style={{fontSize:18, marginLeft:10}}>Chụp ảnh</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        onPress={() =>{ ImagePicker() }}
+                        style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:10, marginHorizontal:10}}>
+                        <Entypo name='attachment' size={20} />
+                        <Text style={{fontSize:18, marginLeft:10}}>Đính kèm ảnh</Text>
+                    </TouchableOpacity>
                 </View>
-                <View style={{flexDirection:'row',borderWidth:1,borderColor:'yellow',height:150}}>
-
+                <View style={{flexDirection:'row',alignItems:'center', justifyContent:'center',height:150}}>
+                    <Image style={{height:150, width:150, borderRadius:10}} source={{uri:selectImage}} />
                 </View>
-                {/* <View style={{ flexDirection: 'row', margin: 10}}>
-                    <View style={{flexDirection:'column', justifyContent: 'center', alignContent: 'center' }}>
-                        <Text style={{ color: 'black', fontSize: 20, marginRight:'auto'}}>Repeat</Text>
-                        <Text style={{ color: 'grey', fontSize: 15, marginRight:'auto'}}>Repeat Transaction</Text>
-                    </View>
-                    <View style={{ marginStart: 'auto',justifyContent: 'center', alignContent: 'center'  }}>
-                        <Switch
-                        // trackColor={{ false: 'grey', true: 'skyblue' }}
-                        // thumbColor={isEnabledChangePassword2factor ? 'skyblue' : 'grey'}
-                        // onValueChange={() => {
-                        //     isEnabledChangePassword2factor == false
-                        //         ? (
-                        //             setEnabledChangePassword2factor(true),
-                        //             setCheck2factor(true)
-                        //         ) : (setEnabledChangePassword2factor(false))
-                        // }}
-                        // value={isEnabledChangePassword2factor}
-                        // style={{
-                        //     paddingEnd: 10
-                        // }}
-                        />
-                    </View>
-                </View> */}
                 <TouchableOpacity onPress={handleStr} style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:20, marginHorizontal:50, backgroundColor:'#7F3DFF', borderRadius:20, paddingVertical:10}}>
                     <Text style={{fontSize:20, color:'white'}}>Lưu</Text>
                 </TouchableOpacity>
