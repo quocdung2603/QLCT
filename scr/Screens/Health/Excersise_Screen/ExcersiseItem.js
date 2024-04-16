@@ -48,7 +48,7 @@ const ExcersiseItem = ({ TatModal, exercise }) => {
                     <AntDesign name='close' size={30} color='#000' />
                 </TouchableOpacity>
             </View>
-            <View style={{ backgroundColor: 'yellow', height: 300 }}>
+            <View style={{height: 230 }}>
                 {/* video hoặc hình ảnh */}
                 <VideoPlayer
                     video={{ uri: exercise.video }}
@@ -58,7 +58,7 @@ const ExcersiseItem = ({ TatModal, exercise }) => {
             </View>
             <Text style={{marginVertical:10, fontSize:20, fontWeight:'bold', color:'#000'}}>Hướng dẫn</Text>
             <View style={{flexDirection:'column', marginHorizontal:30}}>
-                <Text style={{fontSize:19, fontWeight:'bold', textAlign:'justify'}}>{exercise.introduction}</Text>
+                <Text style={{fontSize:16, fontWeight:'bold', textAlign:'justify'}}>{exercise.introduction}</Text>
             </View>
         </View>
     )

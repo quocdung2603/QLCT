@@ -32,8 +32,7 @@ const DataProviderHealth = ({ children }) => {
     const addHistory = async (newData)=>{
         const tmp = historyExercise;
         tmp.push(newData);
-        console.log("Lịch sử lưu");
-        console.log(tmp);
+        
         await AsyncStorage.setItem("historyExercise",JSON.stringify(tmp));
         getHistory();
     }
@@ -61,7 +60,7 @@ const DataProviderHealth = ({ children }) => {
             docSnap.docs.map((item)=>{
                 dt.push(item.data());
             })
-            console.log(dt);
+            
             setAllPost(dt);
         } catch (error) {
             setTest(error)

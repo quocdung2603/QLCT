@@ -28,14 +28,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const dataCategory = [
-    { label: 'Shopping', value: 'Shopping' },
-    { label: 'Market', value: 'Market' },
-    { label: 'Item 3', value: '3' },
-    { label: 'Item 4', value: '4' },
-    { label: 'Item 5', value: '5' },
-    { label: 'Item 6', value: '6' },
-    { label: 'Item 7', value: '7' },
-    { label: 'Item 8', value: '8' },
+    { label: 'Mua sắm', value: 'Mua sắm' },
+    { label: 'Đi chợ', value: 'Đi chợ' },
+    { label: 'Đổ xăng', value: 'Đổ xăng' },
+    { label: 'Nước giải khát', value: 'Nước giải khát' },
+    { label: 'Khác', value: 'Khác' },
 ];
 const dataType = [
     { label: 'Tiền mặt', value: '1' },
@@ -151,7 +148,7 @@ const Income = () => {
                     onChangeText={item => {setMoney(item)}}
                     autoComplete='false'
                     keyboardType='decimal-pad'
-                    style={{ backgroundColor: 'white', borderWidth: 1, borderColor: 'white', marginHorizontal: 10, marginVertical: 10, borderRadius: 10 }} />
+                    style={{ backgroundColor: 'white', borderWidth: 1, borderColor: 'white', marginHorizontal: 10, marginVertical: 10, borderRadius: 10, fontSize:20, fontWeight:'bold' }} />
             </View>
             <View style={{flex:1,flexDirection:'column', borderWidth:1, borderColor:'white', borderTopLeftRadius:20, borderTopRightRadius:20, backgroundColor:'white'}}>
                 <Dropdown

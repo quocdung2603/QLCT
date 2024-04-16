@@ -123,9 +123,9 @@ const CategoryMain = ({ navigation }) => {
                         </ScrollView>
                         <Modal animationType='slide' transparent={true} visible={MChiTietBT} onRequestClose={() => { setMChiTietBT(false) }} >
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                                <View style={{ flexDirection: 'column', backgroundColor: 'white', width: 400, height: 700, borderRadius: 10, padding: 20 }}>
+                                <ScrollView style={{ flexDirection: 'column', backgroundColor: 'white', width: 400, height: 700, borderRadius: 10, padding: 20 }}>
                                     <ExcersiseItem TatModal={setMChiTietBT} exercise={exercise} />
-                                </View>
+                                </ScrollView>
                             </View>
                         </Modal>
                     </View> :
@@ -140,15 +140,15 @@ const CategoryMain = ({ navigation }) => {
                                     <View key={index} style={{ flexDirection: 'column', flex: 1 }}>
                                         <View style={{ flexDirection: 'column', margin: 10, borderWidth: 1, borderRadius: 10, padding: 5 }}>
                                             <Text style={{ textAlign: 'center', fontSize: 20, fontWeight: 'bold', color: '#000' }}>{item.title}</Text>
-                                            <Text style={{ textAlign: 'justify', fontSize: 16, marginHorizontal: 10 }}>
+                                            <Text style={{ textAlign: 'justify', fontSize: 16, marginHorizontal: 10, color:'#000' }}>
                                                 {item.content}
                                             </Text>
-                                            <View style={{ margin: 10, borderWidth: 1, height: 300, backgroundColor: 'yellow' }}>
+                                            <View style={{ margin: 10}}>
                                                 {/* hình ảnh / video kèm thêm */}
                                                 <Image
                                                     source={{ uri: item.img }}
-                                                    width="100%"
-                                                    height={300}
+                                                    width= "100%"
+                                                    height={200}
                                                 />
                                             </View>
                                         </View>
